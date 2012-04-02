@@ -212,14 +212,14 @@ def projectNodes(ctx, projects):
 
 					for path in paths:
 
-						#####################################
+						#############################
 
 						opt = node.getStripedAttribute('opt')
 						inc = node.getStripedAttribute('inc')
 
 						targets = node.getItemsByUAttrName('targets')
 
-						#####################################
+						#############################
 
 						dic = {
 							'path': path,

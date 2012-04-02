@@ -231,7 +231,7 @@ def projectNodes(ctx, projects):
 						SRCS.append(dic)
 
 				else:
-					ua.utils.ooops(ctx, 'Invadis path \'%s\' !' % orig)
+					ua.utils.ooops(ctx, 'Invalid path \'%s\' !' % orig)
 
 			#####################################################
 

@@ -53,7 +53,7 @@ def depNodes(ctx, deps):
 		for node in project.childNodes:
 
 			#####################################################
-			# DESC						    #
+			# DESC						    #
 			#####################################################
 
 			if node.nodeName == 'desc':
@@ -200,7 +200,7 @@ def projectNodes(ctx, projects):
 		for node in project.childNodes:
 
 			#####################################################
-			# SHELL						    #
+			# SHELL						    #
 			#####################################################
 
 			if node.nodeName == 'shell':

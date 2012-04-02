@@ -204,25 +204,34 @@ def projectNodes(ctx, projects):
 
 			if node.nodeName == 'src':
 
-				for path in ua.utils.buildPaths(ctx, node.getStripedAttribute('path')):
+				orig = node.getStripedAttribute('path')
 
-					#####################################
+				paths = ua.utils.buildPaths(ctx, orig)
 
-					opt = node.getStripedAttribute('opt')
-					inc = node.getStripedAttribute('inc')
+				if len(paths) > 0:
 
-					targets = node.getItemsByUAttrName('targets')
+					for path in paths:
 
-					#####################################
+						#####################################
 
-					dic = {
-						'path': path,
-						'opt': opt,
-						'inc': inc,
-						'targets': targets,
-					}
+						opt = node.getStripedAttribute('opt')
+						inc = node.getStripedAttribute('inc')
 
-					SRCS.append(dic)
+						targets = node.getItemsByUAttrName('targets')
+
+						#####################################
+
+						dic = {
+							'path': path,
+							'opt': opt,
+							'inc': inc,
+							'targets': targets,
+						}
+
+						SRCS.append(dic)
+
+				else:
+					ua.utils.ooops(ctx, 'Invadis path \'%s\' !' % orig)
 
 			#####################################################
 

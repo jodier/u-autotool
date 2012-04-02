@@ -30,9 +30,9 @@ import os, ua.utils, subprocess
 #############################################################################
 
 def depNodes(ctx, deps):
+	#####################################################################
 
 	for dep in deps:
-
 		#############################################################
 
 		TARGETS = {}
@@ -50,64 +50,84 @@ def depNodes(ctx, deps):
 
 		#############################################################
 
-		for desc in dep.getElementsByTagName('desc'):
+		for node in project.childNodes:
 
 			#####################################################
+			# DESC						    #
+			#####################################################
 
-			for target in desc.getItemsByUAttrName('targets'):
-
-				#############################################
-				ctx.build_targets.add(target)
-				#############################################
-
-				opt = ''
-				opt_resolved = ''
-				inc = ''
-				inc_resolved = ''
-				lib = ''
-				lib_resolved = ''
+			if node.nodeName == 'desc':
 
 				#############################################
-
-				txt = ua.utils.HELLOWORLDS[lang]
-
+				# TARGETS				    #
 				#############################################
 
-				for node in desc.childNodes:
+				for target in desc.getItemsByUAttrName('targets'):
+
+					####################################
+					ctx.build_targets.add(target)
+					#####################################
+
+					opt = ''
+					opt_resolved = ''
+					inc = ''
+					inc_resolved = ''
+					lib = ''
+					lib_resolved = ''
+
+					txt = ua.utils.HELLOWORLDS[lang]
 
 					#####################################
 
-					if node.nodeName == 'opt':
-						value = node.getStripedAttribute('value')
-						opt += ' ' + value.replace('$', '\\$')
-						opt_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+					for node in desc.childNodes:
 
-					if node.nodeName == 'inc':
-						value = node.getStripedAttribute('value')
-						inc += ' ' + value.replace('$', '\\$')
-						inc_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+						#############################
+						# OPT			    #
+						#############################
 
-					if node.nodeName == 'lib':
-						value = node.getStripedAttribute('value')
-						lib += ' ' + value.replace('$', '\\$')
-						lib_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+						if node.nodeName == 'opt':
+							value = node.getStripedAttribute('value')
+							opt += ' ' + value.replace('$', '\\$')
+							opt_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
-					if node.nodeType ==  0x4 :
-						txt = node.nodeValue.rstrip()
+						#############################
+						# INC			    #
+						#############################
 
-				#############################################
+						if node.nodeName == 'inc':
+							value = node.getStripedAttribute('value')
+							inc += ' ' + value.replace('$', '\\$')
+							inc_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
-				dic = {
-					'opt': opt[1: ],
-					'opt_resolved': opt_resolved[1: ],
-					'inc': inc[1: ],
-					'inc_resolved': inc_resolved[1: ],
-					'lib': lib[1: ],
-					'lib_resolved': lib_resolved[1: ],
-					'txt': txt,
-				}
+						#############################
+						# LIB			    #
+						#############################
 
-				TARGETS[target] = dic
+						if node.nodeName == 'lib':
+							value = node.getStripedAttribute('value')
+							lib += ' ' + value.replace('$', '\\$')
+							lib_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+
+						#############################
+						# TXT			    #
+						#############################
+
+						if node.nodeType ==  0x4 :
+							txt = node.nodeValue.rstrip()
+
+					#####################################
+
+					dic = {
+						'opt': opt[1: ],
+						'opt_resolved': opt_resolved[1: ],
+						'inc': inc[1: ],
+						'inc_resolved': inc_resolved[1: ],
+						'lib': lib[1: ],
+						'lib_resolved': lib_resolved[1: ],
+						'txt': txt,
+					}
+
+					TARGETS[target] = dic
 
 		#############################################################
 
@@ -133,9 +153,9 @@ def depNodes(ctx, deps):
 #############################################################################
 
 def projectNodes(ctx, projects):
+	#####################################################################
 
 	for project in projects:
-
 		#############################################################
 
 		SRCS = []
@@ -180,15 +200,21 @@ def projectNodes(ctx, projects):
 		for node in project.childNodes:
 
 			#####################################################
+			# SHELL						    #
+			#####################################################
 
 			if node.nodeName == 'shell':
 
-				for cdata in node.childNodes:
+				for node in node.childNodes:
 
-					if cdata.nodeType == 4:
+					#####################################
+					# CDATA				    #
+					#####################################
+
+					if node.nodeType == 0x004:
 
 						pipe = subprocess.Popen(
-							cdata.nodeValue,
+							node.nodeValue,
 							shell = True,
 							stdout = sys.stdout,
 							stderr = sys.stderr,
@@ -201,6 +227,8 @@ def projectNodes(ctx, projects):
 							sys.exit(pipe.returncode)
 
 			#####################################################
+			# SRC						    #
+			#####################################################
 
 			if node.nodeName == 'src':
 
@@ -208,8 +236,9 @@ def projectNodes(ctx, projects):
 
 				paths = ua.utils.buildPaths(ctx, expr)
 
-				if len(paths) > 0:
-
+				if len(paths) == 0:
+					ua.utils.ooops(ctx, 'Invalid path \'%s\' !' % expr)
+				else:
 					for path in paths:
 
 						#############################
@@ -230,9 +259,8 @@ def projectNodes(ctx, projects):
 
 						SRCS.append(dic)
 
-				else:
-					ua.utils.ooops(ctx, 'Invalid path \'%s\' !' % expr)
-
+			#####################################################
+			# USE						    #
 			#####################################################
 
 			if node.nodeName == 'use':
@@ -246,15 +274,37 @@ def projectNodes(ctx, projects):
 				USES.append(dep)
 
 			#####################################################
+			# OPT						    #
+			#####################################################
 
 			if node.nodeName == 'opt':
 				OPTS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+
+			#####################################################
+			# INC						    #
+			#####################################################
+
 			if node.nodeName == 'inc':
 				INCS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+
+			#####################################################
+			# OBJ						    #
+			#####################################################
+
 			if node.nodeName == 'obj':
 				OBJS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+
+			#####################################################
+			# LIB						    #
+			#####################################################
+
 			if node.nodeName == 'lib':
 				LIBS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+
+			#####################################################
+			# TXT						    #
+			#####################################################
+
 			if node.nodeType == 0x004:
 				TXTS.append(          node.nodeValue.rstrip().replace('$', '\\$'))
 
@@ -298,6 +348,7 @@ def projectNodes(ctx, projects):
 #############################################################################
 
 def linkNodes(ctx, links):
+	#####################################################################
 
 	for link in links:
 
@@ -308,8 +359,6 @@ def linkNodes(ctx, links):
 		dir = os.path.dirname(url)
 		base = os.path.basename(url)
 		rid = os.path.relpath2(dir)
-
-		#############################################################
 
 		TARGETS = link.getItemsByUAttrName('targets')
 

@@ -204,9 +204,9 @@ def projectNodes(ctx, projects):
 
 			if node.nodeName == 'src':
 
-				orig = node.getStripedAttribute('path')
+				expr = node.getStripedAttribute('path')
 
-				paths = ua.utils.buildPaths(ctx, orig)
+				paths = ua.utils.buildPaths(ctx, expr)
 
 				if len(paths) > 0:
 
@@ -231,7 +231,7 @@ def projectNodes(ctx, projects):
 						SRCS.append(dic)
 
 				else:
-					ua.utils.ooops(ctx, 'Invalid path \'%s\' !' % orig)
+					ua.utils.ooops(ctx, 'Invalid path \'%s\' !' % expr)
 
 			#####################################################
 

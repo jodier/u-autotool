@@ -1,0 +1,246 @@
+#!/usr/bin/env python
+
+#############################################################################
+# Author  : Jerome ODIER
+#
+# Email   : jerome.odier@cern.ch
+#
+# Version : 1.0 beta (2010-2012)
+#
+#
+# This file is part of U-AUTOTOOL.
+#
+#  u-autotool is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published
+#  by the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  u-autotool is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#############################################################################
+
+import os, sys, urllib, ua.utils, ua.parse, ua.emit, xml.dom.minidom
+
+#############################################################################
+# U-AUTOTOOL								    #
+#############################################################################
+
+def fixPath(ctx, path, prefix):
+
+	path = ua.utils.resolveEnv(ctx, path)
+
+	if os.path.isabs(path) == False:
+		path = prefix + os.sep + path
+
+	return os.path.normpath(path)
+
+#############################################################################
+
+def codebuilder_load_xml(ctx, fileName):
+	#####################################################################
+
+	if ctx.verbose:
+		print('Loading \'%s\'...' % fileName)
+
+	try:
+		doc = xml.dom.minidom.parse(fileName)
+
+	except:
+		ua.utils.fatal(ctx, 'XML error in file `%s`, %s !' % (fileName, sys.exc_info()[1]))
+
+		sys.exit(1)
+
+	#####################################################################
+
+	dirName = fixPath(ctx, os.path.dirname(fileName), '.')
+
+	#####################################################################
+
+	nodes = doc.getElementsByTagName('*')
+
+	for node in nodes:
+
+		n = node.getAttributeNode('url')
+
+		if not n is None:
+
+			n.nodeValue = fixPath(ctx, n.nodeValue, dirName)
+
+	#####################################################################
+
+	includes = doc.getElementsByTagName('include')
+
+	for include in includes:
+
+		fileName = include.getAttribute('url')
+
+		subdoc = codebuilder_load_xml(
+			ctx
+			,
+			fileName
+		)
+
+		for node in subdoc.documentElement.childNodes:
+
+			include.parentNode.appendChild(node.cloneNode(1))
+
+	#####################################################################
+
+	return doc
+
+#############################################################################
+
+class uautotool(ua.utils.context):
+	#####################################################################
+
+	def __init__(self):
+		ua.utils.context.__init__(self)
+
+	#####################################################################
+
+	def parse(self, fileName):
+		doc = codebuilder_load_xml(self, fileName)
+
+		ua.parse.depNodes(self,
+			doc.getElementsByTagName('dep')
+		)
+
+		ua.parse.projectNodes(self,
+			doc.getElementsByTagName('project')
+		)
+
+		ua.parse.linkNodes(self,
+			doc.getElementsByTagName('link')
+		)
+
+	#####################################################################
+
+	def check(self):
+		ua.utils.status(self)
+
+		if self.error_nr != 0:
+			ua.utils.fatal(self, 'Abort !')
+
+	#####################################################################
+
+	def emit(self):
+		ua.emit.configure(self)
+
+#############################################################################
+# ENTRY POINT								    #
+#############################################################################
+
+from optparse import OptionParser
+
+#############################################################################
+
+def entry_point(argv):
+	#####################################################################
+
+	ctx = uautotool()
+
+	#####################################################################
+
+	parser = OptionParser('usage: %prog [options] [filename]')
+
+	parser.add_option('-a', '--authors',
+			action='store_true', dest='authors', help='show authors')
+	parser.add_option('-v', '--version',
+			action='store_true', dest='version', help='show version')
+	parser.add_option('', '--gpl',
+			action='store_true', help='project under GPL license')
+	parser.add_option('', '--lgpl',
+			action='store_true', help='project under LGPL license')
+	parser.add_option('', '--debug',
+			action='store_true', dest='debug', help='enable debug mode')
+	parser.add_option('', '--gprof',
+			action='store_true', dest='gprof', help='enable gprof mode')
+	parser.add_option('', '--verbose',
+			action='store_true', dest='verbose', help='set Makefile verbose')
+
+	(options, args) = parser.parse_args()
+
+	#####################################################################
+
+	if options.authors:
+		print('Jerome ODIER')
+		sys.exit()
+
+	if options.version:
+		print('u-autotool-1.0b')
+		sys.exit()
+
+	if options.gpl:
+		urllib.urlretrieve('http://www.gnu.org/licenses/gpl.txt', 'gpl.txt')
+
+	if options.lgpl:
+		urllib.urlretrieve('http://www.gnu.org/licenses/lgpl.txt', 'lgpl.txt')
+
+	#####################################################################
+
+	list = [
+		'Makefile.xml',
+		'authors.txt',
+		'versions.txt',
+	]
+
+	if   len(args) == 0:
+		fileName = os.path.normcase(list[0])
+	elif len(args) == 1:
+		fileName = os.path.normcase(args[0])
+	else:
+		parser.error('syntax error')
+		sys.exit(1)
+
+	#####################################################################
+
+	if not os.path.exists(fileName):
+		parser.error('incorrect filename \'%s\'' % fileName)
+		sys.exit(1)
+
+	if not os.path.exists(list[1]):
+		print('Creating \'%s\'...' % list[1])
+		open(list[1], 'w').close()
+
+	if not os.path.exists(list[2]):
+		print('Creating \'%s\'...' % list[2])
+		open(list[2], 'w').close()
+
+	#####################################################################
+
+	if   not options.gprof is None:
+		ctx.debug = '-O0 -g -p'
+		ctx.cmdline += ' --gprof'
+	elif not options.debug is None:
+		ctx.debug = '-O0 -g'
+		ctx.cmdline += ' --debug'
+	else:
+		ctx.debug = '-O2'
+
+	##
+
+	if not options.verbose is None:
+		ctx.verbose = True
+		ctx.cmdline += ' --verbose'
+
+	#####################################################################
+
+	ctx.parse(fileName)
+
+	ctx.check()
+
+	ctx.emit()
+
+#############################################################################
+
+if __name__ == '__main__':
+	sys.exit(entry_point(sys.argv))
+
+#############################################################################
+

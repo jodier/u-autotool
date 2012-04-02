@@ -58,13 +58,9 @@ def depNodes(ctx, deps):
 
 			if node.nodeName == 'desc':
 
-				#############################################
-				# TARGETS				    #
-				#############################################
-
 				for target in desc.getItemsByUAttrName('targets'):
 
-					####################################
+					#####################################
 					ctx.build_targets.add(target)
 					#####################################
 

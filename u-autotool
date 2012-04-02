@@ -67,9 +67,11 @@ def codebuilder_load_xml(ctx, fileName):
 	for node in nodes:
 
 		n = node.getAttributeNode('url')
-
 		if not n is None:
+			n.nodeValue = fixPath(ctx, n.nodeValue, dirName)
 
+		n = node.getAttributeNode('path')
+		if not n is None:
 			n.nodeValue = fixPath(ctx, n.nodeValue, dirName)
 
 	#####################################################################
@@ -106,6 +108,8 @@ class uautotool(ua.utils.context):
 
 	def parse(self, fileName):
 		doc = codebuilder_load_xml(self, fileName)
+
+		print(doc.toxml())
 
 		ua.parse.depNodes(self,
 			doc.getElementsByTagName('dep')

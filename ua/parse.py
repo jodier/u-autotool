@@ -176,12 +176,12 @@ def projectNodes(ctx, projects):
 
 		if True != False:
 			if not type in ctx.build_types:
-				ua.utils.ooops(ctx, '<project name="%s" type="\033[31m%s\033[0m" ...>, value error !' % (name, type))
+				ua.utils.error(ctx, '<project name="%s" type="\033[31m%s\033[0m" ...>, value error !' % (name, type))
 				isOk = False
 
 		if type != 'UND':
 			if not link in ctx.build_links:
-				ua.utils.ooops(ctx, '<project name="%s" link="\033[31m%s\033[0m" ...>, value error !' % (name, link))
+				ua.utils.error(ctx, '<project name="%s" link="\033[31m%s\033[0m" ...>, value error !' % (name, link))
 				isOk = False
 
 		if not isOk:

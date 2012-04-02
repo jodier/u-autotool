@@ -50,15 +50,15 @@ def depNodes(ctx, deps):
 
 		#############################################################
 
-		for node in project.childNodes:
+		for node1 in dep.childNodes:
 
 			#####################################################
 			# DESC						    #
 			#####################################################
 
-			if node.nodeName == 'desc':
+			if node1.nodeName == 'desc':
 
-				for target in desc.getItemsByUAttrName('targets'):
+				for target in node1.getItemsByUAttrName('targets'):
 
 					#####################################
 					ctx.build_targets.add(target)
@@ -75,14 +75,14 @@ def depNodes(ctx, deps):
 
 					#####################################
 
-					for node in desc.childNodes:
+					for node2 in node1.childNodes:
 
 						#############################
 						# OPT			    #
 						#############################
 
-						if node.nodeName == 'opt':
-							value = node.getStripedAttribute('value')
+						if node2.nodeName == 'opt':
+							value = node2.getStripedAttribute('value')
 							opt += ' ' + value.replace('$', '\\$')
 							opt_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
@@ -90,8 +90,8 @@ def depNodes(ctx, deps):
 						# INC			    #
 						#############################
 
-						if node.nodeName == 'inc':
-							value = node.getStripedAttribute('value')
+						if node2.nodeName == 'inc':
+							value = node2.getStripedAttribute('value')
 							inc += ' ' + value.replace('$', '\\$')
 							inc_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
@@ -99,8 +99,8 @@ def depNodes(ctx, deps):
 						# LIB			    #
 						#############################
 
-						if node.nodeName == 'lib':
-							value = node.getStripedAttribute('value')
+						if node2.nodeName == 'lib':
+							value = node2.getStripedAttribute('value')
 							lib += ' ' + value.replace('$', '\\$')
 							lib_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
@@ -108,8 +108,8 @@ def depNodes(ctx, deps):
 						# TXT			    #
 						#############################
 
-						if node.nodeType ==  0x4 :
-							txt = node.nodeValue.rstrip()
+						if node2.nodeType ==  0x4 :
+							txt = node2.nodeValue.rstrip()
 
 					#####################################
 
@@ -193,24 +193,24 @@ def projectNodes(ctx, projects):
 
 		#############################################################
 
-		for node in project.childNodes:
+		for node1 in project.childNodes:
 
 			#####################################################
 			# SHELL						    #
 			#####################################################
 
-			if node.nodeName == 'shell':
+			if node1.nodeName == 'shell':
 
-				for node in node.childNodes:
+				for node2 in node1.childNodes:
 
 					#####################################
 					# CDATA				    #
 					#####################################
 
-					if node.nodeType == 0x004:
+					if node2.nodeType == 0x004:
 
 						pipe = subprocess.Popen(
-							node.nodeValue,
+							node2.nodeValue,
 							shell = True,
 							stdout = sys.stdout,
 							stderr = sys.stderr,
@@ -226,9 +226,9 @@ def projectNodes(ctx, projects):
 			# SRC						    #
 			#####################################################
 
-			if node.nodeName == 'src':
+			if node1.nodeName == 'src':
 
-				expr = node.getStripedAttribute('path')
+				expr = node1.getStripedAttribute('path')
 
 				paths = ua.utils.buildPaths(ctx, expr)
 
@@ -239,10 +239,10 @@ def projectNodes(ctx, projects):
 
 						#############################
 
-						opt = node.getStripedAttribute('opt')
-						inc = node.getStripedAttribute('inc')
+						opt = node1.getStripedAttribute('opt')
+						inc = node1.getStripedAttribute('inc')
 
-						targets = node.getItemsByUAttrName('targets')
+						targets = node1.getItemsByUAttrName('targets')
 
 						#############################
 
@@ -259,10 +259,10 @@ def projectNodes(ctx, projects):
 			# USE						    #
 			#####################################################
 
-			if node.nodeName == 'use':
-				dep = node.getStripedLAttribute('name')
+			if node1.nodeName == 'use':
+				dep = node1.getStripedLAttribute('name')
 
-				if node.getStripedLAttribute('optional') == 'yes':
+				if node1.getStripedLAttribute('optional') == 'yes':
 					ctx.option_deps.add(dep)
 				else:
 					ctx.needed_deps.add(dep)
@@ -273,36 +273,36 @@ def projectNodes(ctx, projects):
 			# OPT						    #
 			#####################################################
 
-			if node.nodeName == 'opt':
-				OPTS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+			if node1.nodeName == 'opt':
+				OPTS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# INC						    #
 			#####################################################
 
-			if node.nodeName == 'inc':
-				INCS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+			if node1.nodeName == 'inc':
+				INCS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# OBJ						    #
 			#####################################################
 
-			if node.nodeName == 'obj':
-				OBJS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+			if node1.nodeName == 'obj':
+				OBJS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# LIB						    #
 			#####################################################
 
-			if node.nodeName == 'lib':
-				LIBS.append(node.getStripedAttribute('value').replace('$', '\\$'))
+			if node1.nodeName == 'lib':
+				LIBS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# TXT						    #
 			#####################################################
 
-			if node.nodeType == 0x004:
-				TXTS.append(          node.nodeValue.rstrip().replace('$', '\\$'))
+			if node1.nodeType == 0x004:
+				TXTS.append(          node1.nodeValue.rstrip().replace('$', '\\$'))
 
 		#############################################################
 

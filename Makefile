@@ -5,9 +5,10 @@ all:
 	python -c "import py_compile ; py_compile.compile(\"u-autotool\")"
 
 install:
-	cp u-autotool /usr/bin
-	cp bussize /usr/bin
-	cp busorder /usr/bin
+	cp u-autotool ~/sandbox/bin
+	cp -r ua ~/sandbox/bin
+	cp bussize ~/sandbox/bin
+	cp busorder ~/sandbox/bin
 
 clean:
 	rm -f ./bussize ./busorder ./u-autotoolc

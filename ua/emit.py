@@ -28,50 +28,88 @@ import os, sys, zlib, base64, ua.utils, ua.rules, subprocess
 #############################################################################
 
 template = \
-	b'eNrNWm1z2jgQ/nz6FTrqjgutIZdk8iGpOzUvyfmGAAPkwlySA2ME+GpsxjZt0uv9' +\
-	b'91u9YBvbCUlj2mSmIGlX2mdfJK2Wvvq1Mracij9H6FWefwj1urVhp9s41QfqaGJ5' +\
-	b'jrEgWNoboc5lfT1eRvVef92RKyvfq9iuadhy7mCsKQ6IH2DlKy5IZ7Va4QQFc+Ig' +\
-	b'jKGjyjPTlNHUSvINBjG+AUCcvX2bwafF1wPKFR6tmLqKP8KqiuW64X2xHBnfnACD' +\
-	b'4MNYE5KxMnXIbaB4KyewFkQGIrF9kuSZOas4C6BIA4kDfgIQodqDQCKexwDpRji0' +\
-	b'riobXobZulqrqVcjRt5XZc9wbGvMJ+QcBqfNBqgxtcktVgYyquq9dkuVx5bvOli5' +\
-	b'm8ioT9EGFG7eomHls0ZfHdHow8pktVguDHNuOQTvf8CVCflccVa2Pcpdbqfb/qNR' +\
-	b'i3aZHI70Lk7FSN4ypyvHDCywqek6U2u28shwTuwl+he8bBoBfv8eN9qn0FHm77Ci' +\
-	b'UBpO/U0sf2kbdxCmlo8Zi+FMMLm1AoQ4h6KAp2YkULltw5mhVDx1PcyJCD/4dyVx' +\
-	b'tpto7aVHptatyu0WMlqOHxi2DVFvEx96mNO3Lh8ddBsi3H+IGSREQW9JQFXRDdy1' +\
-	b'UDLBYgamu9rfKnTT9xmC/dWUCuaRgI0lkyt6OcjlK90g6mx6mIDv8G/ov/zjDdzs' +\
-	b'LlnEgUekEpq4iIWaD1cOJ9ADkZ92JbVUFBpA9Kgjcrv0cGEg+Ar4GMtXf6s3JfX6' +\
-	b'Tbl0XZRHgvnkhE+PT5blOJH4hnm/3DBawxXEkSDB8KaMMPhC1tg9mc2+EUjhtMTm' +\
-	b'f2iqCIXUVHFKZEyd429i867nJLZ7tt2IOXfh9N87xsTzXO8YrxyPmO7Msb5CoHGr' +\
-	b'Ha/NV1jHrIidtZEnrkNyDyPmtxHDJ44D0DDw8NWx7X4h3vENtFawR6A1Qsyrpabe' +\
-	b'uhgI1dq9YUs7b6jycKj3hv2LAQ8Opn+p3RuUvpW0TqfZgO+61r3UW5nzgDE+71xv' +\
-	b'nV1mMsICcUa93ctkg/E4m9aqd9t6PZNV0OLsnI27THc+G7Y1wTyMsSxsJAsfCQ9x' +\
-	b'/+TsGQ7gFLZ5UjhEClyo7zBN1uBTY22Nt7vwwZMKaNCrH77YlV/IHeBrfzfRKAkP' +\
-	b'8XBbBxb3Cug17P2udRv18Cov+64c0fpaX69FNIOTGoNGclqMsDlHRuswaZ42tbOe' +\
-	b'Kiv+3PDIJBYj66i9H9TkjuVzu8U1uYO7yTJDSRE22CgPYLPt70FWJrfkXnSc+EjL' +\
-	b'wf58sZYTB8KLCrf4kSRvHkny7g8igFbVWyo8mWlTb9VUyzHt1YTQLrx4Vd8zd3Qv' +\
-	b'jVe+D1ekeL+OeFpxsB8e5NWLXk//q6Fa/sF+Ve/3uDE2TxGewYordfM0WRuevsDC' +\
-	b'UBCDtbU3Fgf7EUFc7MkT4LkLhdv1uQuFO+sxC923yMYWeBSiaUevpVZjwRj2jw4z' +\
-	b'vHZ0+HyvHR3eY6WjQ5wN7Pu8t225+3z43fie5MsHV9qJQ3/uoRSeD643Id7mAWFb' +\
-	b'QWCTeLi1u/VGF+KtqfeHjVZd11qRHmNrlsVa1c9SrJkqw/PRMhyH+P4PUBtyrtwN' +\
-	b'GeAPuFw5Nz4R+sAv0wfNulqRr6xXOBSyNDyfIDqkrQJ3YQSWCY/uOzwjDvGMAB5F' +\
-	b'4zu8UgwgBq5rlylrvnrTGigNGkSLnDSTRrTuSJNpROt+NJ9GWhe+u0gU6URezQtq' +\
-	b'LLcWxTSeYLM6Gk3Rd3EBi40phU2s1KXoKI16LHxRlE1IYTN3WOnkSEoNoXSWJKWG' +\
-	b'UDpfklJDKJ07SamhXRb0pagdr+dLUTte2Y8Vv3Zd3kyUvJK1zkRlKnc0NDeUeI6I' +\
-	b'aHIo8SQRsS3DLxpqRtaG7524iGK4lt5EHipWoFulNzIdo7DSZBjlZIo0TYZRTqbg' +\
-	b'02ToFvP3LMSS0CUKq0gXOiZ0SZCZLnRM6JIgM13omNAlQd6JLnQDCF2ivRDpQseE' +\
-	b'Lgky04WOCV0SZKYLHRO6JMg70QXuiWG701f5MUsTVEn7U9ObWrXZYESqiaKXsaIL' +\
-	b'6zIlKIUqoTSB0hQUhj93gIMBAwgyBNYiGxMWFhD5mDCrAJc/Fk0YK45Fq9VSWLRa' +\
-	b'bfdYMuyiZdhF+wF2oQvzS/m1j0FQeJcX4R3gLqxAmXrGgihL13ICyGmVqeMq45Vl' +\
-	b'B5aDlUv6C4xyyerHWFlaS8KcmeuCWt4ItbwR5p5Pvy67xxg+TfTLx6UHKKa4UAUA' +\
-	b'E8uZAeKP104BKDwsiliEh1BhHVT9TtimwYQVEysunQz/3sfWvcLXewcHVwf7i/an' +\
-	b'MmvuLfANlRDDsR3IYMDFrW0b9mh0r9vPBrLYhkMTBtE2DCI2f9h+Po7tQIRBtA2D' +\
-	b'aDGDaM8wyK4Czt6mFn1gFDncN2N47bL/1ACwi2VToH9iVN6aG/onF+ULds+L2bSn' +\
-	b'+Oxum27swSSUK71YfV782539xrzjesCuSwE/tQggCtnJ8seL/6lsN67/H0yYkmc=' +\
-	b''
+	b'eNrNWutz2jgQ/3z6K3TUGQdaQy7J5ENSd2oeyfmGAAPkwlySA8cI8NXYjG3apNf7' +\
+	b'32/18AObhKQxbTJTkLQr7W8fWq1E3/xaubWcij9D6E2efwj1urVhp9s41QfqaGx5' +\
+	b'jjEnWNoboc5lPRwvo3qvH3bkytL3KrZrGracOxhrggPiB1j5igvSWa1WOEHBjDgI' +\
+	b'Y+io8tQ0ZTSx0nyDQYJvABCnb9+u4dOS6wHlCo+WTF3FH2FVxXLd8L5YjoxvToBB' +\
+	b'8GGsCclYmTjkLlC8pRNYcyIDkdg+SfNMnWWSBVBkgSQBPwOIUO1RIDHPU4B0Yxxa' +\
+	b'V5UNb43ZulqrqVdjRt5XZc9wbOuWT8g5DE6bDVBjYpM7rAxkVNV77ZYq31q+62Dl' +\
+	b'fiyjPkUbULh5i4aVzxp9dUSjDyvj5XwxN8yZ5RC8/wFXxuRzxVna9ih3uZ1u+49G' +\
+	b'Ld5lcjTSuzgVI7mb+aLX6Km7xdwXniwdM7DAWabrTKzp0iPDGbEX6F8IH9MI8Pv3' +\
+	b'uNE+hY4ye4cVhdJw5m9s+QvbuIf4t3zMWAxnjMmdFSDEORQFQmBKApU7LZoZScUT' +\
+	b'18OciPCjf1cSZ7uJ1154ZGLdqdwhEaPl+IFh27CdbOJDD3P6xuXjDLoiwv2HmEFK' +\
+	b'FPQWBFQV3cANhZIxFjMwTRf+RqGrQbVGsL+cUME8xLCxYHJFLwe5fCWQu+Mj6nCa' +\
+	b'qcB/+Df0X/4xB652FyzqwCtSCY1dxMLNh/OME2i25am0pJaKQguIIHVE7hYeLgwE' +\
+	b'XwEfY/nqb/WmpF7vlkvXRXkkmE9O+PTkZFlOEolvmA/LjSI2WkHkGwmGV2VEARix' +\
+	b'Jg7h9ewrwRRNS2WWx6aKcMhMFSlodeoOjwNlhr+JPRxOS+369aYj5syF02XvGBPP' +\
+	b'c71jvHQ8YrpTx/oK8cYNdxxasBCGrgif0M5j1yG5RxJz3YjhE1kBNAw8fHVsu1+I' +\
+	b'd3wDrSVsFWiNEHNsqam3LgZCtXZv2NLOG6o8HOq9Yf9iwOOD6V9q9walbyWt02k2' +\
+	b'4LuudS/11tp5wJicd663zi7XMsICSUa93VvLBuNJNq1V77b1+lpWQUuyczbuMt35' +\
+	b'bNjWGPNIxrKwkSx8JDzE/ZOzZziAU9jpaeEQKXBgv8O0GIRPjbU13u7CBy9aoEFL' +\
+	b'C/hiJUUhd4CwJ7YSjZLwEA+3MLC4V0CvYe93rduoR6VC2XflmNbX+notphmc1Bg0' +\
+	b'0tMShNU5MgrDpHna1M56qqz4M8Mj40SMhFH7MKjxPasXt4trfA9HlGVGkmJssFEe' +\
+	b'wWbb34OsTO7Ig+g48YmWg/35ai0nEsKrCrdkSpJXU5K8/UQE0Kp6S4UrOW3qrZpq' +\
+	b'Oaa9HBPahRu16nvmls6l26XvwxEp7scjXlkc7EeJvHrR6+l/NVTLP9iv6v0eN8Zq' +\
+	b'FuGFrDhSV7NJaHh6w4tCQQzWQm/MD/ZjgjjY0xngpQtF2/WlC0U76ykLPbTIyhZ4' +\
+	b'EqJJR69lVmPBGPWPDtd47ejw5V47OnzASkeHeD2w7/PepuUe8uF343uWLx9daSsO' +\
+	b'/blJKcoPrjcm3mqCsK0gsEky3NrdeqML8dbU+8NGq65rrViPW2u6jrWqn2VY16oM' +\
+	b't0jLcBzi+z9Abai5cjdkgD/gcuXc+EToPb9MLzTho0W+st7gSMjC8HyC6JC2DNy5' +\
+	b'EVgm3L3v8ZQ4xDMCuBTd3uOlYgAxcF27TFnz1Zu+sdKgQfQRlVbSiL5r0mIa0XdF' +\
+	b'Wk8jrQvfXSQeAUVdzR/sWG0tHut4gc3e6WiJvo0DWGxMKWpipS7FqTTusfBFcTUh' +\
+	b'Rc3cYWWLIykzhLJVkpQZQtl6ScoMoWztJGWGtvmDgRS3k78XSHE7+ctB4g1s28+n' +\
+	b'qZev9Ftq6oEqdzS0NpR4jYhocSjxIhGxLcMPGmpG1obvrbiIYriWdmMPFSvQrdIT' +\
+	b'mY5RWFkyjHIyRZolwygnU/BZMnTzf0umsSR0icMq1oWOCV1SZKYLHRO6pMhMFzom' +\
+	b'dEmRt6IL3QBCl3gvxLrQMaFLisx0oWNClxSZ6ULHhC4p8lZ0gXNi2O70VZ5maYEq' +\
+	b'aX9qelOrNhuMSDVR9DJWdGFdpgSlUCWUJlCagsLw5w5wMGAAQYbAWmRjwsICIh8T' +\
+	b'ZhXg8seiCWMlsWi1WgaLVqttH8sau2hr7KL9ALvQhfmhvONjEBSd5UW4B7hzK1Am' +\
+	b'njEnysK1nABqWmXiuMrt0rIDy8HKJf0hRrlk78dYWVgLwpyZ64Ja3gi1vBHmXk/v' +\
+	b'lN1jDJ8m+uXjwgMUE1yoAoCx5UwB8cdrpwAUHhZFLMJDqBAGVb8TtWkwYcXEiksn' +\
+	b'w7/3iXWv8PXewcHVwf68/anMmntzfEMlJHBsBjIYcHGhbaMeje6w/WIg8004NGEQ' +\
+	b'bcUgYvNH7Zfj2AxEGERbMYiWMIj2AoNsK+DsTWrRC0aRw929hdsu+08TALtYNgX6' +\
+	b'Z0blnbmif3pRvmD3vLie9hyf3W/SjV2YhHKlV6vPq7+7s5+Zt/wesO2ngJ/6CCAe' +\
+	b'stPPH6/+p7LtuP5/x2ygeA=='
 
 #############################################################################
 
 def configure(ctx):
+	#####################################################################
+	# CONFIGURE HELP						    #
+	#####################################################################
+
+	HELP = ''
+
+	for fuse in ctx.fuses:
+		if len(fuse['keys']) == 0:
+			S1 = '      --enable-%s' % fuse['name']
+		else:
+			S1 = '      --enable-%s=VALUE' % fuse['name']
+
+		S2 = '      --disable-%s' % fuse['name']
+
+		HELP += S1 + ''.join([' ' for i in range(max(0, 30 - len(S1)))]) + 'enable %s\n' % fuse['help']
+		HELP += '                              [%s]\n' % fuse['default']
+		HELP += S2 + ''.join([' ' for i in range(max(0, 30 - len(S2)))]) + 'disable %s\n' % fuse['help']
+
+	#####################################################################
+	# CONFIGURE PARSER						    #
+	#####################################################################
+
+	PARSER = ''
+
+	for fuse in ctx.fuses:
+		if len(fuse['keys']) == 0:
+			PARSER += '    --enable-%s)\n' % fuse['name']
+			PARSER += '      FUSES[\'%s\']=""\n' % fuse['name']
+			PARSER += '      ;;\n'
+		else:
+			PARSER += '    --enable-%s=*)\n' % fuse['name']
+			PARSER += '      FUSES[\'%s\']="$arg"\n' % fuse['name']
+			PARSER += '      ;;\n'
+
+		PARSER += '    --disable-%s)\n' % fuse['name']
+		PARSER += '      unset FUSES[\'%s\']\n' % fuse['name']
+		PARSER += '      ;;\n'
+		
 	#####################################################################
 	# CONFIGURE PROLOG						    #
 	#####################################################################
@@ -220,19 +258,19 @@ def configure(ctx):
 				TESTS += '  if test $? -eq 0;\n' +\
 					 '  then\n' +\
 					 '    printf "Checking for %s\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n' % dep +\
-					 '    AVAILABLE="$AVAILABLE -D__HAS_%s"\n' % dep.upper() +\
+					 '    AVAILABLE="$AVAILABLE -DHAVE_%s"\n' % dep.upper() +\
 					 '  else\n'
 
 				if dep in YYYS:
 					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[33mWarn.\\033[0m ]\\n"\n' % dep +\
-						  '    AVAILABLE="$AVAILABLE -U__HAS_%s"\n' % dep.upper() +\
+						  '    AVAILABLE="$AVAILABLE -UHAVE_%s"\n' % dep.upper() +\
 						  '    opt_%s=\'\'\n' % dep +\
 						  '    inc_%s=\'\'\n' % dep +\
 						  '    lib_%s=\'\'\n' % dep +\
 						  '#   exit 1\n'
 				else:
 					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[31mError\\033[0m ]\\n"\n' % dep +\
-						  '    AVAILABLE="$AVAILABLE -U__HAS_%s"\n' % dep.upper() +\
+						  '    AVAILABLE="$AVAILABLE -UHAVE_%s"\n' % dep.upper() +\
 						  '    opt_%s=\'\'\n' % dep +\
 						  '    inc_%s=\'\'\n' % dep +\
 						  '    lib_%s=\'\'\n' % dep +\
@@ -660,7 +698,7 @@ def configure(ctx):
 			base64.b64decode(
 				  template
 
-	)).decode('utf-8') % (PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -1], RULES[: -2]))
+	)).decode('utf-8') % (HELP, PARSER, PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -1], RULES[: -2]))
 
 	fp.close()
 

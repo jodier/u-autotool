@@ -29,11 +29,11 @@ import os, re, sys, glob, xml.dom.minidom
 # XML									    #
 #############################################################################
 
-def getStripedAttribute(self, name):
+def getStripedIAttribute(self, name):
 	return self.getAttribute(name).strip()
 
-xml.dom.minidom.Element.getStripedAttribute = \
-					getStripedAttribute
+xml.dom.minidom.Element.getStripedIAttribute = \
+					getStripedIAttribute
 
 #############################################################################
 
@@ -136,6 +136,7 @@ class context:
 		# TREE							    #
 		#############################################################
 
+		self.fuses = []
 		self.deps = {}
 		self.needed_deps = set([])
 		self.option_deps = set([])

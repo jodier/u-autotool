@@ -26,7 +26,70 @@
 import os, ua.utils, subprocess
 
 #############################################################################
-# DEPENDENCY								    #
+# FUSE									    #
+#############################################################################
+
+def fuseNodes(ctx, fuses):
+	#####################################################################
+
+	for fuse in fuses:
+		#############################################################
+
+		KEYS = []
+
+		#############################################################
+
+		name = fuse.getStripedIAttribute('name')
+		default = fuse.getStripedLAttribute('default')
+		help = fuse.getStripedIAttribute('help')
+
+		#############################################################
+
+		for node1 in fuse.childNodes:
+
+			#####################################################
+			# KEY						    #
+			#####################################################
+
+			if node1.nodeName == 'key':
+
+				#############################################
+
+				name = node1.getStripedLAttribute('name')
+				value = node1.getStripedIAttribute('value')
+
+				#############################################
+
+				dic = {
+					'name': name,
+					'value': value,
+				}
+
+				KEYS.append(dic)
+
+		#############################################################
+
+		dic = {
+			'name': name,
+			'default': default,
+			'help': help,
+
+			'keys': KEYS,
+		}
+
+		ctx.fuses.append(dic)
+
+	#####################################################################
+
+	if ctx.verbose:
+		print('-----------------------------------------------------------------------------')
+		print('| FUSES                                                                     |')
+		print('-----------------------------------------------------------------------------')
+		ua.utils.displayTree(ctx.fuses)
+		print('-----------------------------------------------------------------------------')
+
+#############################################################################
+# DEP									    #
 #############################################################################
 
 def depNodes(ctx, deps):
@@ -82,7 +145,7 @@ def depNodes(ctx, deps):
 						#############################
 
 						if node2.nodeName == 'opt':
-							value = node2.getStripedAttribute('value')
+							value = node2.getStripedIAttribute('value')
 							opt += ' ' + value.replace('$', '\\$')
 							opt_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
@@ -91,7 +154,7 @@ def depNodes(ctx, deps):
 						#############################
 
 						if node2.nodeName == 'inc':
-							value = node2.getStripedAttribute('value')
+							value = node2.getStripedIAttribute('value')
 							inc += ' ' + value.replace('$', '\\$')
 							inc_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
@@ -100,7 +163,7 @@ def depNodes(ctx, deps):
 						#############################
 
 						if node2.nodeName == 'lib':
-							value = node2.getStripedAttribute('value')
+							value = node2.getStripedIAttribute('value')
 							lib += ' ' + value.replace('$', '\\$')
 							lib_resolved += ' ' + ua.utils.resolveVar(ctx, value)
 
@@ -164,7 +227,7 @@ def projectNodes(ctx, projects):
 
 		#############################################################
 
-		name = project.getStripedAttribute ('name')
+		name = project.getStripedIAttribute('name')
 		NAME = project.getStripedUAttribute('name')
 
 		type = project.getStripedUAttribute('type')
@@ -190,6 +253,7 @@ def projectNodes(ctx, projects):
 		#############################################################
 
 		TARGETS = project.getItemsByUAttrName('targets')
+		FUSES = project.getItemsByLAttrName('fuses')
 
 		#############################################################
 
@@ -228,7 +292,7 @@ def projectNodes(ctx, projects):
 
 			if node1.nodeName == 'src':
 
-				expr = node1.getStripedAttribute('path')
+				expr = node1.getStripedIAttribute('path')
 
 				paths = ua.utils.buildPaths(ctx, expr)
 
@@ -239,10 +303,11 @@ def projectNodes(ctx, projects):
 
 						#############################
 
-						opt = node1.getStripedAttribute('opt')
-						inc = node1.getStripedAttribute('inc')
+						opt = node1.getStripedIAttribute('opt')
+						inc = node1.getStripedIAttribute('inc')
 
 						targets = node1.getItemsByUAttrName('targets')
+						fuses = node1.getItemsByLAttrName('fuses')
 
 						#############################
 
@@ -251,6 +316,7 @@ def projectNodes(ctx, projects):
 							'opt': opt,
 							'inc': inc,
 							'targets': targets,
+							'fuses': fuses,
 						}
 
 						SRCS.append(dic)
@@ -274,28 +340,28 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'opt':
-				OPTS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
+				OPTS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# INC						    #
 			#####################################################
 
 			if node1.nodeName == 'inc':
-				INCS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
+				INCS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# OBJ						    #
 			#####################################################
 
 			if node1.nodeName == 'obj':
-				OBJS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
+				OBJS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# LIB						    #
 			#####################################################
 
 			if node1.nodeName == 'lib':
-				LIBS.append(node1.getStripedAttribute('value').replace('$', '\\$'))
+				LIBS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
 
 			#####################################################
 			# TXT						    #
@@ -306,7 +372,7 @@ def projectNodes(ctx, projects):
 
 		#############################################################
 
-		OPTS.append('-Dis%s -Dis%s -D__name__=\\"%s\\"' % (type, link, name))
+		OPTS.append('-D__IS_%s -D__IS_%s -D__name__=\\"%s\\"' % (type, link, name))
 
 		#############################################################
 
@@ -318,6 +384,7 @@ def projectNodes(ctx, projects):
 			'link': link,
 
 			'targets': TARGETS,
+			'fuses': FUSES,
 
 			'srcs': SRCS,
 			'uses': USES,
@@ -350,7 +417,7 @@ def linkNodes(ctx, links):
 
 		#############################################################
 
-		url = link.getStripedAttribute('url')
+		url = link.getStripedIAttribute('url')
 
 		dir = os.path.dirname(url)
 		base = os.path.basename(url)

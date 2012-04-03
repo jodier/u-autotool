@@ -67,6 +67,10 @@ PROJECT_SUFFIX=''
 
 #############################################################################
 
+FUSES=()
+
+#############################################################################
+
 function configure_help
 {
   cat << EOF
@@ -83,6 +87,8 @@ function configure_help
 
       --project-suffix=SUFFIX append SUFFIX to installed project names
                               [$PROJECT_SUFFIX]
+
+%s
 EOF
 
   exit 1
@@ -117,6 +123,7 @@ do
     --project-suffix=*)
       PROJECT_SUFFIX=$arg
       ;;
+%s
     -h | --help)
       configure_help
       ;;

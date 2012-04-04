@@ -301,8 +301,8 @@ def projectNodes(ctx, projects):
 
 				paths = ua.utils.buildPaths(ctx, expr)
 
-				opt = node1.getStripedIAttribute('opt')
-				inc = node1.getStripedIAttribute('inc')
+				opt = node1.getStripedIAttribute('opt').replace('$', '\\$')
+				inc = node1.getStripedIAttribute('inc').replace('$', '\\$')
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')

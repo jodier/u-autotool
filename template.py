@@ -229,7 +229,7 @@ OS_ETC=etc
 
 case `bussize "$GCC"` in
   32)
-    OS_BUSSIZE=is32BITS
+    OS_BUSSIZE=__IS_32BITS
 
     case $OS_NAME
     in
@@ -256,7 +256,7 @@ case `bussize "$GCC"` in
     esac
     ;;
   64)
-    OS_BUSSIZE=is64BITS
+    OS_BUSSIZE=__IS_64BITS
 
     case $OS_NAME
     in
@@ -292,10 +292,10 @@ esac
 
 case `busorder "$GCC"` in
   little)
-    OS_BUSORDER=isLIT_ENDIAN
+    OS_BUSORDER=__IS_LIT_ENDIAN
     ;;
   big)
-    OS_BUSORDER=isBIG_ENDIAN
+    OS_BUSORDER=__IS_BIG_ENDIAN
     ;;
   *)
     echo 'Invalid endianness'

@@ -10,7 +10,7 @@
 #
 #  u-autotool is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published
-#  by the Free Software Foundation; either version 3 of the License, or
+#  by the Free Software Foundation; either version 3 of the License, or/Users/jodier/Desktop/u-autotool2/template.py
 #  (at your option) any later version.
 #
 #  u-autotool is distributed in the hope that it will be useful,
@@ -28,46 +28,46 @@ import os, sys, zlib, base64, ua.utils, ua.rules, subprocess
 #############################################################################
 
 template = \
-	b'eNrNWutz2jgQ/3z6K3TUGQdaQy7J5ENSd2oeyfmGAAPkwlySA8cI8NXYjG3apNf7' +\
-	b'32/18AObhKQxbTJTkLQr7W8fWq1E3/xaubWcij9D6E2efwj1urVhp9s41QfqaGx5' +\
-	b'jjEnWNoboc5lPRwvo3qvH3bkytL3KrZrGracOxhrggPiB1j5igvSWa1WOEHBjDgI' +\
-	b'Y+io8tQ0ZTSx0nyDQYJvABCnb9+u4dOS6wHlCo+WTF3FH2FVxXLd8L5YjoxvToBB' +\
-	b'8GGsCclYmTjkLlC8pRNYcyIDkdg+SfNMnWWSBVBkgSQBPwOIUO1RIDHPU4B0Yxxa' +\
-	b'V5UNb43ZulqrqVdjRt5XZc9wbOuWT8g5DE6bDVBjYpM7rAxkVNV77ZYq31q+62Dl' +\
-	b'fiyjPkUbULh5i4aVzxp9dUSjDyvj5XwxN8yZ5RC8/wFXxuRzxVna9ih3uZ1u+49G' +\
-	b'Ld5lcjTSuzgVI7mb+aLX6Km7xdwXniwdM7DAWabrTKzp0iPDGbEX6F8IH9MI8Pv3' +\
-	b'uNE+hY4ye4cVhdJw5m9s+QvbuIf4t3zMWAxnjMmdFSDEORQFQmBKApU7LZoZScUT' +\
-	b'18OciPCjf1cSZ7uJ1154ZGLdqdwhEaPl+IFh27CdbOJDD3P6xuXjDLoiwv2HmEFK' +\
-	b'FPQWBFQV3cANhZIxFjMwTRf+RqGrQbVGsL+cUME8xLCxYHJFLwe5fCWQu+Mj6nCa' +\
-	b'qcB/+Df0X/4xB652FyzqwCtSCY1dxMLNh/OME2i25am0pJaKQguIIHVE7hYeLgwE' +\
-	b'XwEfY/nqb/WmpF7vlkvXRXkkmE9O+PTkZFlOEolvmA/LjSI2WkHkGwmGV2VEARix' +\
-	b'Jg7h9ewrwRRNS2WWx6aKcMhMFSlodeoOjwNlhr+JPRxOS+369aYj5syF02XvGBPP' +\
-	b'c71jvHQ8YrpTx/oK8cYNdxxasBCGrgif0M5j1yG5RxJz3YjhE1kBNAw8fHVsu1+I' +\
-	b'd3wDrSVsFWiNEHNsqam3LgZCtXZv2NLOG6o8HOq9Yf9iwOOD6V9q9walbyWt02k2' +\
-	b'4LuudS/11tp5wJicd663zi7XMsICSUa93VvLBuNJNq1V77b1+lpWQUuyczbuMt35' +\
-	b'bNjWGPNIxrKwkSx8JDzE/ZOzZziAU9jpaeEQKXBgv8O0GIRPjbU13u7CBy9aoEFL' +\
-	b'C/hiJUUhd4CwJ7YSjZLwEA+3MLC4V0CvYe93rduoR6VC2XflmNbX+notphmc1Bg0' +\
-	b'0tMShNU5MgrDpHna1M56qqz4M8Mj40SMhFH7MKjxPasXt4trfA9HlGVGkmJssFEe' +\
-	b'wWbb34OsTO7Ig+g48YmWg/35ai0nEsKrCrdkSpJXU5K8/UQE0Kp6S4UrOW3qrZpq' +\
-	b'Oaa9HBPahRu16nvmls6l26XvwxEp7scjXlkc7EeJvHrR6+l/NVTLP9iv6v0eN8Zq' +\
-	b'FuGFrDhSV7NJaHh6w4tCQQzWQm/MD/ZjgjjY0xngpQtF2/WlC0U76ykLPbTIyhZ4' +\
-	b'EqJJR69lVmPBGPWPDtd47ejw5V47OnzASkeHeD2w7/PepuUe8uF343uWLx9daSsO' +\
-	b'/blJKcoPrjcm3mqCsK0gsEky3NrdeqML8dbU+8NGq65rrViPW2u6jrWqn2VY16oM' +\
-	b't0jLcBzi+z9Abai5cjdkgD/gcuXc+EToPb9MLzTho0W+st7gSMjC8HyC6JC2DNy5' +\
-	b'EVgm3L3v8ZQ4xDMCuBTd3uOlYgAxcF27TFnz1Zu+sdKgQfQRlVbSiL5r0mIa0XdF' +\
-	b'Wk8jrQvfXSQeAUVdzR/sWG0tHut4gc3e6WiJvo0DWGxMKWpipS7FqTTusfBFcTUh' +\
-	b'Rc3cYWWLIykzhLJVkpQZQtl6ScoMoWztJGWGtvmDgRS3k78XSHE7+ctB4g1s28+n' +\
-	b'qZev9Ftq6oEqdzS0NpR4jYhocSjxIhGxLcMPGmpG1obvrbiIYriWdmMPFSvQrdIT' +\
-	b'mY5RWFkyjHIyRZolwygnU/BZMnTzf0umsSR0icMq1oWOCV1SZKYLHRO6pMhMFzom' +\
-	b'dEmRt6IL3QBCl3gvxLrQMaFLisx0oWNClxSZ6ULHhC4p8lZ0gXNi2O70VZ5maYEq' +\
-	b'aX9qelOrNhuMSDVR9DJWdGFdpgSlUCWUJlCagsLw5w5wMGAAQYbAWmRjwsICIh8T' +\
-	b'ZhXg8seiCWMlsWi1WgaLVqttH8sau2hr7KL9ALvQhfmhvONjEBSd5UW4B7hzK1Am' +\
-	b'njEnysK1nABqWmXiuMrt0rIDy8HKJf0hRrlk78dYWVgLwpyZ64Ja3gi1vBHmXk/v' +\
-	b'lN1jDJ8m+uXjwgMUE1yoAoCx5UwB8cdrpwAUHhZFLMJDqBAGVb8TtWkwYcXEiksn' +\
-	b'w7/3iXWv8PXewcHVwf68/anMmntzfEMlJHBsBjIYcHGhbaMeje6w/WIg8004NGEQ' +\
-	b'bcUgYvNH7Zfj2AxEGERbMYiWMIj2AoNsK+DsTWrRC0aRw929hdsu+08TALtYNgX6' +\
-	b'Z0blnbmif3pRvmD3vLie9hyf3W/SjV2YhHKlV6vPq7+7s5+Zt/wesO2ngJ/6CCAe' +\
-	b'stPPH6/+p7LtuP5/x2ygeA=='
+	b'eNrNWutz2jgQ/3z6K3TUGQd6hlySyYek7tQ8kvMNAQbIhLkkB8YI8NXYjG3apI//' +\
+	b'/VYPbGOcV2O3YSYg7a6k3z60Wst583tlbDmVseHPEXqT5QehXrc27HQbp/pAHU0s' +\
+	b'zzEWBEt7I9S5rK/pZVTv9dcdubLyvYrtmoYtZw7GmuKA+AFWvuCCdFarFU5QMCcO' +\
+	b'whg6qjwzTRlNraTcYBCTGwDE2du3KXJafD7gXOHRiqmr+COsqliuG95ny5HxzQkI' +\
+	b'CDmMNbEyVqYOuQ0Ub+UE1oLIwCS2T5IyM2cVFwEU20DigJ8BRKj2IJBI5ilAuhEO' +\
+	b'ravKhpditq7WaurVSJD3VdkzHNsa8wEZh8FpswFqTG1yi5WBjKp6r91S5bHluw5W' +\
+	b'7iYy6lO0AYWb9dIw81mjr45o9GFlslosF4Y5txyC99/jyoR8qjgr2x5lvm6n2/67' +\
+	b'UYt2mRxSehengpK5mS96jWGv3+2pu0XeaXf6rJP1StOVYwYWeM90nak1W3lkOCf2' +\
+	b'En2FeDKNAL97hxvtU+go8z+wolAevuczsfylbdzBtrB8zAQNZ4LJrRUgxCUUBSJj' +\
+	b'RgKV+zIxPkSAp66HuQjCT/hcSVz4Jlpn6ZGpdatynyXELccPDNuGfWcTH3qYSz1x' +\
+	b'qSjhbizn/kfMIHVZoC0JGEIQA3cNgEywGIdpjvGfCGAzHlNA+KspBcGjUwwzlgyD' +\
+	b'oGWGgc8HGHZ8RMOEJjzwN/4Tfc8+UiEo3CWLVfCZVEITF7Eg9eFY5AyatHlGLqml' +\
+	b'otAFIk4dkdulhwsDIVfAx1i++le9KanXu+XSdVEeCeGTEz48PliW40ziG+b964YR' +\
+	b'Hs4g0pYE5M01wiANRWNnebr4RpCFwxIJ6qGhIjS2hopMtjl0x2eD5/ib2PjrUYlU' +\
+	b'kW45Ys5dOKP2jjHxPNc7xivHI6Y7c6wvEHTcbsdrAxbWUSyiZ23mieuQzAOJeW7E' +\
+	b'8InEARoGHr46tt3PxDu+gdYK9gu0Roj5tdTUWxcDoVq7N2xp5w1VHg713rB/MeDh' +\
+	b'wfQvtXuD0reS1uk0G/Bb17qXeit1HAjGx53rrbPLVEGYIC6ot3upYkCPi2mteret' +\
+	b'11NFBS8uzsW4y3Tnk2FbE8wDGcvCRrLwkfAQ90/GnuEATmGjJxeHSIFj/w9MS0r4' +\
+	b'1lhb4+0ufPHSBxq0QIEfVpgUMgcIaS6XaJSEh3i4rQOLewX0Gvb+0rqNelhwlH1X' +\
+	b'jnh9ra/XIp7BWY1BIzksxtgcI6N1mDRPm9pZT5UVf254ZBKLkXXU3g9qcseqznxx' +\
+	b'Te7gnLLMcKUIG2yUB7DZ9o8gK5Nbci86znyi5WB/vlrLiYTwqsItnpLkzZQk55+I' +\
+	b'AFpVb6nwaE+bequmWo5pryaEduG5XPU9M6dzabzyfTgixVP2iBcWB/thIq9e9Hr6' +\
+	b'Pw3V8g/2q3q/x42xmUV4lSuO1M1ssjY8fU4MQ0EQa2tvLA72I4Y42JMZ4KUThdv1' +\
+	b'pROFO+spE903ycYWeBKiaUevbc3GgjHsHx2meO3o8OVeOzq8x0pHhzgd2I9577Hp' +\
+	b'7vPhD+N7li8fnCkXh/7apBTmB9ebEG8zQdhWENgkHm7tbr3RhXhr6v1ho1XXtVak' +\
+	b'x9iapYlW9bMt0VSV4VHSMhyH+P5PUBtqrswNGeD3uFw5Nz4SeglQpg8065uObNd6' +\
+	b'g8NFlobnE0RJ2ipwF0ZgmfAAfodnxCGeEcBD0fgOrxQDmIHr2mUqmq3e9KaWBg2i' +\
+	b'V7G0kkb0dpQW04jeTtJ6Gmld+O0icZUo6mp+7cdqa3HlxwtsdttHS/RcLsBU6Wt4' +\
+	b'D3b14eZ7Hqe82P1S2MRKXYryddRjewRFJYsUNjOHtV2BSVsktF2KSVsktF2USVsk' +\
+	b'tF2gSVukPN9tSFE7/mpDitrxlxyx+7e8b3oTN23Ja9/EJVjmaGgBKvFCFNEKVOKV' +\
+	b'KGL7kp9m1IysDb+5uIhiuJZ2Iw8VK9Ct0mOf0iisbTZQOZsi3WYDlbMp+G02dLO/' +\
+	b'5aaxJHSJwirShdKELgk204XShC4JNtOF0oQuCXYuutANIHSJ9kKkC6UJXRJspgul' +\
+	b'CV0SbKYLpQldEuxcdIHDiL7ZUHmapVUwls6a7arWZC88GJ8qo+hlrOjCwEwPyqF6' +\
+	b'KE3gNAWHqZA5xsGAYYQ1BNwiowkjC4icJiwrwGWPRRP2imPRarUtLFqtlj+WFLto' +\
+	b'KXbRfoJd6MT8XN7xMSwUHudFeN5wF1agTD1jQZSlazkB1M7K1HGV8cqyA8vByiV9' +\
+	b'G6RcsntqrCytJWHOzHRCLWuEWtYIM6/bd8ruMYZvE/32YekBiikuVAHAxHJmgPjD' +\
+	b'tVMADg+LIhbhIVRYB1W/E7ZpMGHFxIpLB8Pfu9i8V/h67+Dg6mB/0f5YZs29Bb6h' +\
+	b'K8RwPA5kMODLrW0b9mh0r9svBrJ4DIcmDKJtGERs/rD9chyPAxEG0TYMosUMor3A' +\
+	b'IHkFnP2YWvRBpsjh7o7hqZr9iwfALpZNgf6ZUXlrbuifnJRP2D0vpvOe47O7x3Rj' +\
+	b'D2ZCudKr1ef1v5dhr7NzvnjI+87hl942iBvz5D3Lq/d9Pq7/H0ogvsk='
 
 #############################################################################
 
@@ -79,16 +79,33 @@ def configure(ctx):
 	HELP = ''
 
 	for fuse in ctx.fuses:
-		if len(fuse['keys']) == 0:
+		#############################################################
+
+		if len(fuse['default']) == 0:
 			S1 = '      --enable-%s' % fuse['name']
 		else:
-			S1 = '      --enable-%s=VALUE' % fuse['name']
+			S1 = '      --enable-%s(=VALUE)' % fuse['name']
 
-		S2 = '      --disable-%s' % fuse['name']
+		#############################################################
 
-		HELP += S1 + ''.join([' ' for i in range(max(0, 30 - len(S1)))]) + 'enable %s\n' % fuse['help']
-		HELP += '                              [%s]\n' % fuse['default']
-		HELP += S2 + ''.join([' ' for i in range(max(0, 30 - len(S2)))]) + 'disable %s\n' % fuse['help']
+		S2 = 'VALUE='
+
+		for key in fuse['keys']:
+
+			if key['name'] != fuse['default']:
+				S2 += '%s,' % key['name']
+			else:
+				S2 += '[%s],' % key['name']
+
+		#############################################################
+
+		S3 = '      --disable-%s' % fuse['name']
+
+		#############################################################
+
+		HELP += S1 + ''.join([' ' for i in range(max(1, 36 - len(S1)))]) + 'enable %s\n' % fuse['help']
+		HELP += '                                    %s\n' % S2[: -1]
+		HELP += S3 + ''.join([' ' for i in range(max(1, 36 - len(S3)))]) + 'disable %s\n' % fuse['help']
 
 	#####################################################################
 	# CONFIGURE PARSER						    #
@@ -97,19 +114,38 @@ def configure(ctx):
 	PARSER = ''
 
 	for fuse in ctx.fuses:
-		if len(fuse['keys']) == 0:
-			PARSER += '    --enable-%s)\n' % fuse['name']
-			PARSER += '      FUSES[\'%s\']=""\n' % fuse['name']
-			PARSER += '      ;;\n'
-		else:
-			PARSER += '    --enable-%s=*)\n' % fuse['name']
-			PARSER += '      FUSES[\'%s\']="$arg"\n' % fuse['name']
+		#############################################################
+
+		name = fuse['name']
+		NAME = fuse['name']\
+			.upper().replace('-', '_')
+
+		#############################################################
+
+		if len(fuse['default']) > 0:
+
+			for key in fuse['keys']:
+
+				if key['name'] == fuse['default']:
+					PARSER += '    --enable-%s)\n' % name
+					PARSER += '      FUSE_STRS=(${FUSE_STRS[@]} "%s")\n' % NAME
+					PARSER += '      FUSE_OPTS=(${FUSE_OPTS[@]} "%s")\n' % key['value']
+					PARSER += '      ;;\n'
+					break
+
+		#############################################################
+
+		for key in fuse['keys']:
+
+			if key['name'] != 'disable':
+				PARSER += '    --enable-%s=%s)\n' % (name, key['name'])
+			else:
+				PARSER += '    --enable-%s=%s | --disable-ctnr-sharp)\n' % (name, key['name'])
+
+			PARSER += '      FUSE_STRS=(${FUSE_STRS[@]} "%s")\n' % NAME
+			PARSER += '      FUSE_OPTS=(${FUSE_OPTS[@]} "%s")\n' % key['value']
 			PARSER += '      ;;\n'
 
-		PARSER += '    --disable-%s)\n' % fuse['name']
-		PARSER += '      unset FUSES[\'%s\']\n' % fuse['name']
-		PARSER += '      ;;\n'
-		
 	#####################################################################
 	# CONFIGURE PROLOG						    #
 	#####################################################################
@@ -182,7 +218,7 @@ def configure(ctx):
 	# CONFIGURE TESTS						    #
 	#####################################################################
 
-	TESTS = 'AVAILABLE=\'\'\n\n'
+	TESTS = 'GLOBAL_OPTS=${FUSE_OPTS[@]}\n\n'
 
 	#####################################################################
 
@@ -258,19 +294,19 @@ def configure(ctx):
 				TESTS += '  if test $? -eq 0;\n' +\
 					 '  then\n' +\
 					 '    printf "Checking for %s\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n' % dep +\
-					 '    AVAILABLE="$AVAILABLE -DHAVE_%s"\n' % dep.upper() +\
+					 '    GLOBAL_OPTS="$GLOBAL_OPTS -DHAVE_%s"\n' % dep.upper() +\
 					 '  else\n'
 
 				if dep in YYYS:
 					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[33mWarn.\\033[0m ]\\n"\n' % dep +\
-						  '    AVAILABLE="$AVAILABLE -UHAVE_%s"\n' % dep.upper() +\
+						  '    GLOBAL_OPTS="$GLOBAL_OPTS -UHAVE_%s"\n' % dep.upper() +\
 						  '    opt_%s=\'\'\n' % dep +\
 						  '    inc_%s=\'\'\n' % dep +\
 						  '    lib_%s=\'\'\n' % dep +\
 						  '#   exit 1\n'
 				else:
 					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[31mError\\033[0m ]\\n"\n' % dep +\
-						  '    AVAILABLE="$AVAILABLE -UHAVE_%s"\n' % dep.upper() +\
+						  '    GLOBAL_OPTS="$GLOBAL_OPTS -UHAVE_%s"\n' % dep.upper() +\
 						  '    opt_%s=\'\'\n' % dep +\
 						  '    inc_%s=\'\'\n' % dep +\
 						  '    lib_%s=\'\'\n' % dep +\

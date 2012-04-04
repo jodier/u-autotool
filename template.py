@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-template='''#!/bin/sh
+template='''#!/bin/bash
 
 #############################################################################
 
@@ -67,26 +67,27 @@ PROJECT_SUFFIX=''
 
 #############################################################################
 
-FUSES=()
+FUSE_STRS=()
+FUSE_OPTS=()
 
 #############################################################################
 
 function configure_help
 {
   cat << EOF
-  -h, --help                  display this help and exit
+  -h, --help                        display this help and exit
 
-      --target=TARGET         configure for TARGET
-                              [$TARGET]
+      --target=TARGET               configure for TARGET
+                                    [$TARGET]
 
-      --prefix=PREFIX         install files in PREFIX
-                              [$DST_PREFIX]
+      --prefix=PREFIX               install files in PREFIX
+                                    [$DST_PREFIX]
 
-      --project-prefix=PREFIX prepend PREFIX to installed project names
-                              [$PROJECT_PREFIX]
+      --project-prefix=PREFIX       prepend PREFIX to installed project names
+                                    [$PROJECT_PREFIX]
 
-      --project-suffix=SUFFIX append SUFFIX to installed project names
-                              [$PROJECT_SUFFIX]
+      --project-suffix=SUFFIX       append SUFFIX to installed project names
+                                    [$PROJECT_SUFFIX]
 
 %s
 EOF
@@ -123,8 +124,7 @@ do
     --project-suffix=*)
       PROJECT_SUFFIX=$arg
       ;;
-%s
-    -h | --help)
+%s    -h | --help)
       configure_help
       ;;
     *)
@@ -327,6 +327,10 @@ TAR=$TAR
 
 #############################################################################
 
+FUSE=${FUSE_STRS[@]}
+
+#############################################################################
+
 OS_CFLAGS=$OS_CFLAGS -D$OS_BUSSIZE -D$OS_BUSORDER
 OS_LFLAGS=$OS_LFLAGS
 
@@ -378,7 +382,7 @@ DST_SRC=\$(DST_PREFIX)/\$(SRC)
 
 #############################################################################
 
-GCC_OPT=-D$OS_NAME$AVAILABLE
+GCC_OPT=-D$OS_NAME $GLOBAL_OPTS
 GCC_INC=-I. -I\$(PWD_INC)
 GCC_LIB=-L. -L\$(PWD_LIB)
 
@@ -448,6 +452,7 @@ AXX_FLAGS=%s \$(OS_CFLAGS) -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe
 #############################################################################
 
 %s
+
 #############################################################################
 
 EOF

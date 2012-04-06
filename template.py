@@ -96,6 +96,25 @@ EOF
 
 #############################################################################
 
+function resetFuse
+{
+	index=0
+
+	while [ $index -lt ${#FUSES[@]} ]
+	do
+		if [[ ${FUSES[$index]} == ${1}_* ]]
+		then
+			unset FUSES[$index]
+
+			unset GLOBAL_OPTS[$index]
+		fi
+
+		let "index++"
+	done
+}
+
+#############################################################################
+
 for option in $*
 do
 
@@ -127,7 +146,7 @@ do
       configure_help
       ;;
     *)
-      echo "$0: warning: unrecognized option: $option"
+      echo "$0: warning: ignored option: $option"
   esac
 
 done
@@ -391,25 +410,25 @@ FUSES=${FUSES[@]}
 
 #############################################################################
 
-GCC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+GCC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
 GCC_INC=-I. -I\$(PWD_INC)
 GCC_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-GXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+GXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
 GXX_INC=-I. -I\$(PWD_INC)
 GXX_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-ACC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+ACC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
 ACC_INC=-I. -I\$(PWD_INC)
 ACC_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-AXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+AXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
 AXX_INC=-I. -I\$(PWD_INC)
 AXX_LIB=-L. -L\$(PWD_LIB)
 

@@ -42,7 +42,7 @@ def updatePath(ctx, path, prefix):
 
 #############################################################################
 
-def codebuilder_load_xml(ctx, fileName):
+def uautotool_load_xml(ctx, fileName):
 	#####################################################################
 
 	if ctx.verbose:
@@ -82,7 +82,7 @@ def codebuilder_load_xml(ctx, fileName):
 
 		fileName = include.getAttribute('url')
 
-		subdoc = codebuilder_load_xml(
+		subdoc = uautotool_load_xml(
 			ctx
 			,
 			fileName
@@ -107,7 +107,7 @@ class uautotool(ua.utils.context):
 	#####################################################################
 
 	def parse(self, fileName):
-		doc = codebuilder_load_xml(self, fileName)
+		doc = uautotool_load_xml(self, fileName)
 
 		ua.parse.fuseNodes(self,
 			doc.getElementsByTagName('fuse')

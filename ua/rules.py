@@ -29,8 +29,6 @@ import os, re, subprocess
 
 def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
-	print(projetName)
-
 	pipe = subprocess.Popen(
 		'gcc -DAUTOGEN -x c -E -MM -MG %s' % src,
 		shell = True,

@@ -28,47 +28,46 @@ import os, sys, zlib, base64, ua.utils, ua.rules, subprocess
 #############################################################################
 
 template = \
-	b'eNrNWutT4kgQ/3zzV8yxsSLsBTy1/KCbrQ0PvVwhWIAldepBCAPkNiRUHru6j//9' +\
-	b'eh4kIYC6a+Jq1ZJJd89M/6Z7eno6++b3yshyKiPDnyH0Jss/hLqd2uCi0zjV++pw' +\
-	b'bHmOMSdY2huii6v6kl5G9W5v+SJXQt+r2K5p2HLmylgTHBA/wMoXXJDOarXCCQpm' +\
-	b'xEEYw4sqT01TRhMrLdfvJ+T6oOL07dsNclpyPOBc42HI4Cr+EKsqluuG99lyZHx7' +\
-	b'AgJCDmNNzIyViUPuAsULncCaExmYxPZJWmbqhEkR0GJdkaTCP6CIgPagIrHMUxTp' +\
-	b'xHpoHVU2vA3L1tFaTb0aC/J3VfYMx7ZGvEPGbnDabACMiU3usNKXUVXvtluqPLJ8' +\
-	b'18HK/VhGPaptQNXNemoY+azRU4fU+7AyDueLuWHOLIfg/fe4MiafKk5o28PM573o' +\
-	b'tP9u1OJdJkeU7uWpoGS+zJfdRlfdLSJ01mxXteagfdHj7xlPNAkdM7DAeKbrTKxp' +\
-	b'6JHBjNgL9BXcyTQC/O4dbrRP4UWZ/YEVhfLwlr+x5S9s4x52heVjJmg4Y0zurAAh' +\
-	b'LqEo4BhTEqjclKn+kQZ44nqYiyD8hL9riQvfxvMsPDKx7lRuspS45fiBYduw7Wzi' +\
-	b'wxvmUk+cKo63K9O5/xEz2Dgt0BYEFkIQA3epABlj0Q/TEOM/UYFVd9yghB9OqBLc' +\
-	b'OUU3Y8F0ELTMdODjgQ47PqJuQuMd2Bv/ib5n76ngFO6C+SrYTCqhsYuYk/pwKnIG' +\
-	b'jdk8IJfUUlFgAY9Th+Ru4eFCX8gV8DGWr/9Vb0vqzW65dFOUh0L45IR3T3aW5SST' +\
-	b'+Ia5fd7Iw6MRRNSSgLw6R+SkkWjiKN8svuJkUbdUfHqoq3CNta4ikK123fFZ5xn+' +\
-	b'Jjb+slcqVGxeOWLOXDii9o7xZ8NzLGd6jEPHI6Y7dawv4HZ85Y6XS1iIlnbsOiRz' +\
-	b'52HWGjKdRLAAVIGHr49t9zPxjm+hFcIegdYQMVuWmnrrsi/gtLuDlnbeUOXBQO8O' +\
-	b'epd97hIMc6nd7Ze+lbSLi2YDnnWtc6W3NvYDwWS/c711drVREAZICurt7kYxoCfF' +\
-	b'tFa909brG0UFLynOxbiZdOeTYVtjzJ0Xy2KN5AKPLmJPc/tkbBmuwCls7vTk4Btw' +\
-	b'0v+BaRYJvxpra7zdgR+e7UCD5iTwYLlIIXMFIbTl4o2SsBB3t6VjcasArkH3L63T' +\
-	b'qEc5Rtl35ZjX03p6LeYZnNXoN9LdEozVPjJauknztKmddVVZ8WeGR8YJH1l67Xal' +\
-	b'xvcs0cxXr/E9nE2WGc0U6wYb5QHdbPtnNCuTO7JVO8584srB/ny1KycCwqtyt2RI' +\
-	b'kldDkpx/IALVqnpLhds8beqtmmo5ph2OCX2Fq7jqeyZtNno1lQRmTkfUKPR9OB/F' +\
-	b'HXvI84qD/SimVy+7Xf2fhsqMeLBf1XtdvjSrMYXnueIoXo0tSzPQi2LkGIJYW9pm' +\
-	b'frAfM8TRno4Hzx0o2rzPHSjaZ08ZaNsgKxviSRpNLvTa2mjMNaP3o8PNhjs6fL7h' +\
-	b'jg63LNTRId6s288Z8LHhtpnxp/X7IXM+OFIuNv21USqKEq43Jt5qmLCtILBJ0uPa' +\
-	b'nXqjw12uqfcGjVZd11oxlJE13SJd1c/WpDcCh1ulZTgO8f0XAA+pWF7lj8Cz5qzo' +\
-	b'IQDC/fJ7DsYL8HtcrpwbHwmtPpTpTWpZYsl2rjc4mmRheD5BlKSFgTs3AsuEm/89' +\
-	b'nhKHeEYAd7HRPQ4VA5iB69plKpotblohpo6KaAmYpvOIVmVpRo9oVZQm9UjrwLOD' +\
-	b'RAlTJPe83MgSfFFq5Fk+qzLSe0IeWYAIBlLUxEp9GZ9FUwTz+I1tHRRnN1LUzFzD' +\
-	b'9WRNWiOh9axNWiOh9fxNWiOh9VxOWiPl+eVDitvJDx9S3E5+AkmU5/KuA6cKcemi' +\
-	b'cKpGlrk2NFeVeM6KaLIq8aQVsd3Dzzm6jKwNT0TTVomnr7mYi+pzI+3G1ipW4LVK' +\
-	b'kwNKoyqus4HK2VTrdTZQOZsCWWfDK2dTbOtsoGZfL6duJ6DGHhhDpTQBNcVmUClN' +\
-	b'QE2xGVRKE1BTbAaV0gTUFDsXqHQrCajxroqhUpqAmmIzqJQmoKbYDCqlCagpNoNK' +\
-	b'aQJqip0LVP65RfrKntcfbrM/+uH0o99wKKDoXCniHR9SYXduBcrEM+ZEWbiWE0Ba' +\
-	b'p0wcVxmFlh1YDlau6NcK5Yp4ngushbWA+8LXxHchpjCdgJpD0ctY0YWLMEtQDrWE' +\
-	b'0gROU3CYETIH2e/nDBIm2AISOC8DUsvbktpWS2ovZkktb0tqWy2pvZgld3bK7jGG' +\
-	b'XxP99mHhAZYJLlQBxthypvhG+nDjFIADKsAWKmL+pBCiNlUYKyZWXCoO/94lRrrG' +\
-	b'N3sHB9cH+/P2xzJr7s3xLR0zMfPjU/f7fDpukaj97Knnj82sCdBaArSWBej541ML' +\
-	b'0FoCtPYM0Hk5jv0YEHpzKXJ1d0dwdWf/lwTULpZNof2j3nVnriBOD8OH6JwXN/N+' +\
-	b'xC73j6Fhdy8Bp/SKELz+Lz7s43jO1YS8Cwm/tIQgavHp4smrt30+pv8fLjLXDA==' +\
-	b''
+	b'eNrVWutz2jgQ/3z6K3TUGRdaQy7J5ENSd2oeyfmGQAbIhLkkB8YI8NXYjB9t0sf/' +\
+	b'fqsHtjGQpI2d5jJTLO+utPvTrlYrua9+r4wspzIy/BlCr7L8Q6jbqQ3OO40Tva8O' +\
+	b'x5bnGHOCpd0hOr+sL+llVO/2li9yJfS9iu2ahi1nbow1wQHxA6x8wQXptFYrHKNg' +\
+	b'RhyEMbyo8tQ0ZTSx0nL9fkKuDyZO37zZIKclxwPOFR6GDK7iD7GqYrlueJ8tR8Y3' +\
+	b'xyAg5DDWhGasTBxyGyhe6ATWnMjAJLZP0jJTJ0yKgBXrhiQN/gFDBLR7DYllHmNI' +\
+	b'J7ZD66iy4W2Yto7WaurVWJC/q7JnOLY14h0yDoOTZgNgTGxyi5W+jKp6t91S5ZHl' +\
+	b'uw5W7sYy6lFrA2pu1qph5NNGTx3S6MPKOJwv5oY5sxyC997jyph8qjihbQ8z13ve' +\
+	b'af/VqMWrTI4o3YsTQcla5yR0zMCCOTVdZ2JNQ48MZsReoK/gZdMI8Lt3uNE+gRdl' +\
+	b'9hYrCuXhLX9jy1/Yxh0Eq+VjJmg4Y0xurQAhLqEo4K8pCVQ+w6n+kQV44nqYiyD8' +\
+	b'iL8riQvfxHoWHplYtyqfyZS45fiBYduwGmziwxvmUo9UFafBFXXuv8QMNqoF2oLA' +\
+	b'RAhi4C4NIGMs+mG68v1HGrAaJRuM8MMJNYLHjOhmLJgNgpaZDXw8sGHHRzRMaBoC' +\
+	b'f+M/0PfMIxVUZB78EGfugoU/hIFUQmMXsbj3Yf/jDJqdeeotqaWimB4IYnVIbhce' +\
+	b'LvSFXAEfYfnqH/WmpF6/Lpeui/JQCB8f8+7JzrKcZBLfMLfrjRZNNILITxKQV3VE' +\
+	b'cR+JJjbtzeIrcRt1S2Wi+7qKaFvrKlLWatcdn3We4W8ilyx7pbLP5pkj5syFzWj3' +\
+	b'CH82PMdypkc4dDxiulPH+gKRzGfuaDmFhWhqx65DMg8e5q0hs0nkH0AVePjqyHY/' +\
+	b'E+/oBlohLDtoDRHzZampty76Ak67O2hpZw1VHgz07qB30echwTCX2t1+6VtJOz9v' +\
+	b'NuBZ1zqXemtjPxBM9jvTW6eXGwVhgKSg3u5uFAN6Ukxr1Tttvb5RVPCS4lyMu0l3' +\
+	b'Phm2NcY8eLEs5kgu8IQl0gT3T8ae4QacwOJOK4fYgD39Lab1IvxqrK3xdgd+eF0D' +\
+	b'DVp9wINVHYX/QyrjuUN4iIfbMrC4VwDXoPun1mnUo2qi7LtyzOtpPb0W8wzOavQb' +\
+	b'6W4JxmofGS3DpHnS1E67qqz4M8Mj40SMLKN2u1HjO1ZS5mvX+A62O8uMNMW2wUK5' +\
+	b'xzbb/hnLyuSWbLWOMx85c7A+X+zMiYTwosItmZLk1ZQk55+IwLSq3lLh3E6bequm' +\
+	b'Wo5ph2NCX+HQrfqeSZuNXk0lgZnTFjUKfR/2R3GaHvK6Yn8vyunVi25X/7uhMifu' +\
+	b'71X1XpdPzWpO4aWz2IpXc8vSDfRIGAWGINaWvpnv78UMsbWn88FTB4oW71MHitbZ' +\
+	b'YwbaNsjKgniURZNzvbY2GgvN6P3wYLPjDg+e7rjDgy0TdXiAN9v2cw58aLhtbvxp' +\
+	b'+37InfeOlItPf22WirKE642Jt5ombCsIbJKMuHan3ujwkGvqvUGjVde1VgxlZE23' +\
+	b'SFf10zXpjcDhoGoZjkN8/xnAQymW141K4Flzdo8iAML58nsOzgvwe1yunBkfCb3Q' +\
+	b'KNOT1PLWJltdr3CkZGF4PkGUpIWBOzcCyzRs+w5PiUM8I4Cz2OgOh4oBzMB17TIV' +\
+	b'zRY3vQumgYroZS8t5xG9f6UVPaL3n7SoR1oHnh0kLitFcc8vFlmBLy4VeZXP7hPp' +\
+	b'OSGPKkAkAylqYqW+zM+iKZJ5/MaWDoqrGylqZm7herEmrZHQetUmrZHQev0mrZHQ' +\
+	b'ei0nrZHy/MYhxe3kJw4pbic/diRu/PK+8U3d7aWvf1PXbplbQ2tVidesiBarEi9a' +\
+	b'EVs9fJ+j08ja8ES0bJV4+ZqLu6g919Lr2FvFCrxWaXFAadTEdTZQOZtavc4GKmdT' +\
+	b'IOtseOVsim2dDdRi9kEAYSegxhEYQ6U0ATXFZlApTUBNsRlUShNQU2wGldIE1BQ7' +\
+	b'F6h0KQmo8aqKoVKagJpiM6iUJqCm2AwqpQmoKTaDSmkCaoqdC9STi24DkvZX9rz6' +\
+	b'cJP91g+736B93qOAon2liHd8KIXduRUoE8+YE2XhWk4AZZ0ycVxlFFp2YDlYuaQf' +\
+	b'QJRL4nkusBbWAs4LX0+b7arWpGNyg6kC6g5FL2NFFyHCPEE51BNKEzhNwWFOyBxk' +\
+	b'v58zSFCwBSRwngeklrcnta2e1J7Nk1rentS2elJ7Nk/u7JTdIwy/Jvrtw8IDLBNc' +\
+	b'qAKMseVM8bX04dopAAdMgCVUxPxJIURtajBWTKy4VBz+vUuMdIWvd/f3r/b35u2P' +\
+	b'ZdbcneMbOmZC88Oq+32ujnskaj9Z9fwhzZoArSVAa1mAnj+sWoDWEqC1J4DOK3Ds' +\
+	b'h4DQk0uRm/t6BEd39r9GwOxi2RTWPxhdt+YK4vQwfIjOWXEz70f8cvcQGnb2EnBK' +\
+	b'LwjBy//iw76353ybkPdFwi+9QhB38enLkxfv+3xc/x/8bdGY'
 
 #############################################################################
 
@@ -120,6 +119,23 @@ def configure(ctx):
 
 	#####################################################################
 	# CONFIGURE PARSER						    #
+	#####################################################################
+
+	FUSES = ''
+	GLOBAL_OPTS = ''
+
+	for fuse in ctx.fuses:
+
+		if len(fuse['enabled']) > 0 and len(fuse['default']) > 0 and fuse['enabled'] != 'no':
+
+			for key in fuse['keys']:
+
+				if key['name'] == fuse['default']:
+					FUSES += ' \'%s\'' % macro(fuse['name'] + '-' + key['name'])
+					GLOBAL_OPTS += ' \'%s\'' % ident(key['opt'])
+
+	INIT = 'FUSES=(%s)\n\nGLOBAL_OPTS=(%s)' % (FUSES[1: ], GLOBAL_OPTS[1: ])
+
 	#####################################################################
 
 	PARSER = ''
@@ -774,7 +790,7 @@ def configure(ctx):
 			base64.b64decode(
 				  template
 
-	)).decode('utf-8') % (HELP, PARSER, PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -2], RULES[: -2]))
+	)).decode('utf-8') % (HELP, INIT, PARSER, PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -2], RULES[: -2]))
 
 	fp.close()
 

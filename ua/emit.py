@@ -10,7 +10,7 @@
 #
 #  u-autotool is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published
-#  by the Free Software Foundation; either version 3 of the License, or/Users/jodier/Desktop/u-autotool2/template.py
+#  by the Free Software Foundation; either version 3 of the License, or
 #  (at your option) any later version.
 #
 #  u-autotool is distributed in the hope that it will be useful,
@@ -28,47 +28,55 @@ import os, sys, zlib, base64, ua.utils, ua.rules, subprocess
 #############################################################################
 
 template = \
-	b'eNrNWutT4kgQ/3zzV8yxsSLsBT21/KCbrQ0PvVwhUARL6tSDEAbMbUioJOzqPv73' +\
-	b'63mQhARfa7IrVcJMd8/Mrx/T6Zn45vedse3ujM3gBqE3eX4QMnr1YbfXPNEH6mhi' +\
-	b'+645J1jaHaHuRWNFr6KG0V915J1l4O84nmU6cu5g7CkOSRBi5QsuSaf1eukYhTfE' +\
-	b'RRhDR5VnliWjqZ2WGwwScgOAOHv7doOclpwPOJd4tGTqKsEIqyqWG6b/2XZlfH0M' +\
-	b'AkIOY02sjJWpS25DxV+6oT0nMjCJE5C0zMxdJkUARRZIEvAzgAjVHgQSyzwFSC/G' +\
-	b'ofVU2fQ3mK2ntVt6LRbkfVX2Tdexx3xAzmFw0mqCGlOH3GJlIKOabnTaqjy2A8/F' +\
-	b'yt1ERn2KNqRw814aZj5t9tURjT6sTJbzxdy0bmyX4L33eGdCPu24S8cZ5b5ut9f5' +\
-	b'u1mPd5kcUYzzE0HJ3cznRnNo9HuGul3mnU63zzp5rzRdulZog/csz53as6VPhjfE' +\
-	b'WaCvEE+WGeJ373CzcwId5eYPrCiUh+/5TOxg4Zh3sC3sADNB051gcmuHCHEJRYHI' +\
-	b'mJFQ5b5MjY8Q4KnnYy6C8BM+lxIXvo7XWfhkat+q3GcpcdsNQtNxYN85JIAe5lJP' +\
-	b'XCpOuGvLef8RK9y4LNAWBAwhiKG3AkAmWIzDNMcETwSwHo8bQATLKQXBo1MMMxcM' +\
-	b'g6DlhoHPBxi2AkTDhCY88Df+E33PP1IhKLwFi1XwmVRBEw+xIA3gscgZNGnzjFxR' +\
-	b'K2WhC0ScOiK3Cx+XBkKuhI+wfPmvel1Rr7arlauyPBLCx8d8eHKwLCeZJDCt+9eN' +\
-	b'IjyaQaQtCcjra0RBGokmnuWbxdeCLBqWSlAPDRWhkRkqMtn60K2ADb7B38TGX41K' +\
-	b'pYrNliPWjQfPqN0jTHzf84/w0vWJ5c1c+wsEHbfb0cqApVUUi+hZmXniuST3QGKe' +\
-	b'GzF8InGAhqGPL48c7zPxj66htYT9Aq0RYn6ttPT2+UCo1jGGbe2sqcrDoW4M++cD' +\
-	b'Hh5M/0rHGFS+VbRut9WE34bWu9DbG8eBYHLcmd4+vdgoCBMkBfWOsVEM6Ekxrd3o' +\
-	b'dfTGRlHBS4pzMe4y3f1kOvYE80DGsrCRLHwkPMT9k7NnOIAT2OjpxSFS4LH/B6Yl' +\
-	b'JXxrrK3xdg++eOkDDVqgwA8rTEq5A4Q0V0g0SsJDPNxWgcW9AnoNjb+0XrMRFRzV' +\
-	b'wJNjXl/r6/WYZ3JWc9BMD0sw1sfIaBUmrZOWdmqoshLcmD6ZJGJkFbX3g5rcsaqz' +\
-	b'WFyTO3hO2Va0UowNNsoD2BznR5BVyS25Fx1nPtFysD9freVEQnhV4ZZMSfJ6SpKL' +\
-	b'T0QAraa3VTja06berqu2aznLCaFdOJergW/RZrNfV0loFfSIGi+DAJ6W4sA94jXG' +\
-	b'/l6U02vnhqH/01SZE/f3anrf4KZZzym85hUP2PXcsnIDPTVGgSGI9ZVv5vt7MUM8' +\
-	b'5tP54KUTRZv3pRNF++wpE903ydqGeBKiaVevZ2ZjoRn1Dw82O+7w4OWOOzy4x1CH' +\
-	b'B3gzth9z4GPT3efGH8b3LHc+OFMhPv21WSrKEp4/If56mnDsMHRIMuI6vUazx0Ou' +\
-	b'pfeHzXZD19qxKmN7do90TT/NSG9UHE6Ytum6JAh+gvJQiuVuzhC/x9WdM/MjoXcD' +\
-	b'VXrOWV2A5LvWGxwtsjD9gCBK0pahNzdD24Jz+R2eEZf4ZghnpfEdXiomMEPPc6pU' +\
-	b'NF+96QUuDR1Eb2hpgY3opSmtsRG9tKRlNtJ68NtD4oZRlNv8NpCV3OImkNfd7BKQ' +\
-	b'Vu6F3IsZqvQ1uh+7/HD9vYinv0gCUtTESkOKM3fcY/sExaWMFDVzh5WtzKQMCWVL' +\
-	b'NClDQtliTcqQULZwkzKkIt95SHE7+cpDitvJlx+Je7mib4BTN3Dp6+DU5VjuaGhh' +\
-	b'KvECFdHKVOIVKmIbkz/UqBlZG34RrVElXqsW4i6K50rajr1V3oFujVYClEYhZtlA' +\
-	b'5WyKOssGKmdTRbJs6HI21S3LBmr+F+U07ISqcQTGqlKaUDXFZqpSmlA1xWaqUppQ' +\
-	b'NcVmqlKaUDXFLkRVupWEqvGuilWlNKFqis1UpTShaorNVKU0oWqKzVSlNKFqil2I' +\
-	b'qvDYo69WVJ7PadWNpdNWp6a12BsXxqe6KnoVK7qwP1OTcqiaSgs4LcFhGuaOcTBg' +\
-	b'GGENAbfMaMIHAiKnCcMLcPlj0YS9kli0ej2DRavXi8eywS7aBrtoP8EudGJeAGwF' +\
-	b'GBaK6oYynG+8uR0qU9+cE2Xh2W4ItboydT1lvLSd0HaxckFfRykX7KIcKwt7QZgz' +\
-	b'c51QyxuhljfC3E8IW1XvCMO3hX77sPABxRSXagBgYrszQPzhyi0Bh4dFGYvwECqs' +\
-	b'gqrfjdo0mLBiYcWjg+HvXWLeS3y1u79/ub8373yssubuHF/TFRI4HgcyGPDlVraN' +\
-	b'ejS6V+0XA5k/hkMTBtHWDCI2f9R+OY7HgQiDaGsG0RIG0V5gkKICznlMLXpkKnO4' +\
-	b'22M4xbP/MQHY5aol0D8zKm+tNf3Tk/IJe2flzbzn+OzuMd3YEVAoV3m1+rz+F0Ps' +\
-	b'fXrBVxxF32780nsNcWWfvtF59b4vxvX/A9nm4aQ='
+	b'eNrNWutT4kgQ/3zzV8yxsSLsBTy1/KCbrQ0PvVwhWIAldepBCAPkNiRUHru6j//9' +\
+	b'eh4kIYC6a+Jq1ZJJd89M/6Z7eno6++b3yshyKiPDnyH0Jss/hLqd2uCi0zjV++pw' +\
+	b'bHmOMSdY2huii6v6kl5G9W5v+SJXQt+r2K5p2HLmylgTHBA/wMoXXJDOarXCCQpm' +\
+	b'xEEYw4sqT01TRhMrLdfvJ+T6oOL07dsNclpyPOBc42HI4Cr+EKsqluuG99lyZHx7' +\
+	b'AgJCDmNNzIyViUPuAsULncCaExmYxPZJWmbqhEkR0GJdkaTCP6CIgPagIrHMUxTp' +\
+	b'xHpoHVU2vA3L1tFaTb0aC/J3VfYMx7ZGvEPGbnDabACMiU3usNKXUVXvtluqPLJ8' +\
+	b'18HK/VhGPaptQNXNemoY+azRU4fU+7AyDueLuWHOLIfg/fe4MiafKk5o28PM573o' +\
+	b'tP9u1OJdJkeU7uWpoGS+zJfdRlfdLSJ01mxXteagfdHj7xlPNAkdM7DAeKbrTKxp' +\
+	b'6JHBjNgL9BXcyTQC/O4dbrRP4UWZ/YEVhfLwlr+x5S9s4x52heVjJmg4Y0zurAAh' +\
+	b'LqEo4BhTEqjclKn+kQZ44nqYiyD8hL9riQvfxvMsPDKx7lRuspS45fiBYduw7Wzi' +\
+	b'wxvmUk+cKo63K9O5/xEz2Dgt0BYEFkIQA3epABlj0Q/TEOM/UYFVd9yghB9OqBLc' +\
+	b'OUU3Y8F0ELTMdODjgQ47PqJuQuMd2Bv/ib5n76ngFO6C+SrYTCqhsYuYk/pwKnIG' +\
+	b'jdk8IJfUUlFgAY9Th+Ru4eFCX8gV8DGWr/9Vb0vqzW65dFOUh0L45IR3T3aW5SST' +\
+	b'+Ia5fd7Iw6MRRNSSgLw6R+SkkWjiKN8svuJkUbdUfHqoq3CNta4ikK123fFZ5xn+' +\
+	b'Jjb+slcqVGxeOWLOXDii9o7xZ8NzLGd6jEPHI6Y7dawv4HZ85Y6XS1iIlnbsOiRz' +\
+	b'52HWGjKdRLAAVIGHr49t9zPxjm+hFcIegdYQMVuWmnrrsi/gtLuDlnbeUOXBQO8O' +\
+	b'epd97hIMc6nd7Ze+lbSLi2YDnnWtc6W3NvYDwWS/c711drVREAZICurt7kYxoCfF' +\
+	b'tFa909brG0UFLynOxbiZdOeTYVtjzJ0Xy2KN5AKPLmJPc/tkbBmuwCls7vTk4Btw' +\
+	b'0v+BaRYJvxpra7zdgR+e7UCD5iTwYLlIIXMFIbTl4o2SsBB3t6VjcasArkH3L63T' +\
+	b'qEc5Rtl35ZjX03p6LeYZnNXoN9LdEozVPjJauknztKmddVVZ8WeGR8YJH1l67Xal' +\
+	b'xvcs0cxXr/E9nE2WGc0U6wYb5QHdbPtnNCuTO7JVO8584srB/ny1KycCwqtyt2RI' +\
+	b'kldDkpx/IALVqnpLhds8beqtmmo5ph2OCX2Fq7jqeyZtNno1lQRmTkfUKPR9OB/F' +\
+	b'HXvI84qD/SimVy+7Xf2fhsqMeLBf1XtdvjSrMYXnueIoXo0tSzPQi2LkGIJYW9pm' +\
+	b'frAfM8TRno4Hzx0o2rzPHSjaZ08ZaNsgKxviSRpNLvTa2mjMNaP3o8PNhjs6fL7h' +\
+	b'jg63LNTRId6s288Z8LHhtpnxp/X7IXM+OFIuNv21USqKEq43Jt5qmLCtILBJ0uPa' +\
+	b'nXqjw12uqfcGjVZd11oxlJE13SJd1c/WpDcCh1ulZTgO8f0XAA+pWF7lj8Cz5qzo' +\
+	b'IQDC/fJ7DsYL8HtcrpwbHwmtPpTpTWpZYsl2rjc4mmRheD5BlKSFgTs3AsuEm/89' +\
+	b'nhKHeEYAd7HRPQ4VA5iB69plKpotblohpo6KaAmYpvOIVmVpRo9oVZQm9UjrwLOD' +\
+	b'RAlTJPe83MgSfFFq5Fk+qzLSe0IeWYAIBlLUxEp9GZ9FUwTz+I1tHRRnN1LUzFzD' +\
+	b'9WRNWiOh9axNWiOh9fxNWiOh9VxOWiPl+eVDitvJDx9S3E5+AkmU5/KuA6cKcemi' +\
+	b'cKpGlrk2NFeVeM6KaLIq8aQVsd3Dzzm6jKwNT0TTVomnr7mYi+pzI+3G1ipW4LVK' +\
+	b'kwNKoyqus4HK2VTrdTZQOZsCWWfDK2dTbOtsoGZfL6duJ6DGHhhDpTQBNcVmUClN' +\
+	b'QE2xGVRKE1BTbAaV0gTUFDsXqHQrCajxroqhUpqAmmIzqJQmoKbYDCqlCagpNoNK' +\
+	b'aQJqip0LVP65RfrKntcfbrM/+uH0o99wKKDoXCniHR9SYXduBcrEM+ZEWbiWE0Ba' +\
+	b'p0wcVxmFlh1YDlau6NcK5Yp4ngushbWA+8LXxHchpjCdgJpD0ctY0YWLMEtQDrWE' +\
+	b'0gROU3CYETIH2e/nDBIm2AISOC8DUsvbktpWS2ovZkktb0tqWy2pvZgld3bK7jGG' +\
+	b'XxP99mHhAZYJLlQBxthypvhG+nDjFIADKsAWKmL+pBCiNlUYKyZWXCoO/94lRrrG' +\
+	b'N3sHB9cH+/P2xzJr7s3xLR0zMfPjU/f7fDpukaj97Knnj82sCdBaArSWBej541ML' +\
+	b'0FoCtPYM0Hk5jv0YEHpzKXJ1d0dwdWf/lwTULpZNof2j3nVnriBOD8OH6JwXN/N+' +\
+	b'xC73j6Fhdy8Bp/SKELz+Lz7s43jO1YS8Cwm/tIQgavHp4smrt30+pv8fLjLXDA==' +\
+	b''
+
+#############################################################################
+
+def ident(s):
+	return s
+
+def macro(s):
+	return s.upper().replace('-', '_')
 
 #############################################################################
 
@@ -78,6 +86,8 @@ def configure(ctx):
 	#####################################################################
 
 	HELP = ''
+
+	#####################################################################
 
 	for fuse in ctx.fuses:
 		#############################################################
@@ -89,7 +99,7 @@ def configure(ctx):
 
 		#############################################################
 
-		S2 = 'VALUE='
+		S2 = 'VALUE=\033[34m'
 
 		for key in fuse['keys']:
 
@@ -105,7 +115,7 @@ def configure(ctx):
 		#############################################################
 
 		HELP += S1 + ''.join([' ' for i in range(max(1, 36 - len(S1)))]) + 'enable %s\n' % fuse['help']
-		HELP += '                                    %s\n' % S2[: -1]
+		HELP += '                                    %s\033[0m\n' % S2[: -1]
 		HELP += S3 + ''.join([' ' for i in range(max(1, 36 - len(S3)))]) + 'disable %s\n' % fuse['help']
 
 	#####################################################################
@@ -114,13 +124,9 @@ def configure(ctx):
 
 	PARSER = ''
 
+	#####################################################################
+
 	for fuse in ctx.fuses:
-		#############################################################
-
-		name = fuse['name']
-		NAME = fuse['name']\
-			.upper().replace('-', '_')
-
 		#############################################################
 
 		if len(fuse['default']) > 0:
@@ -128,10 +134,11 @@ def configure(ctx):
 			for key in fuse['keys']:
 
 				if key['name'] == fuse['default']:
-					PARSER += '    --enable-%s)\n' % name
-					PARSER += '      FUSE_STRS=(${FUSE_STRS[@]} "%s")\n' % NAME
-					PARSER += '      FUSE_OPTS=(${FUSE_OPTS[@]} "%s")\n' % key['value']
+					PARSER += '    --enable-%s)\n' % fuse['name']
+					PARSER += '      FUSES=(${FUSES[@]} "%s")\n' % macro(fuse['name'] + '-' + key['name'])
+					PARSER += '      GLOBAL_OPTS=(${GLOBAL_OPTS[@]} "%s")\n' % ident(key['opt'])
 					PARSER += '      ;;\n'
+
 					break
 
 		#############################################################
@@ -139,12 +146,12 @@ def configure(ctx):
 		for key in fuse['keys']:
 
 			if key['name'] != 'disable':
-				PARSER += '    --enable-%s=%s)\n' % (name, key['name'])
+				PARSER += '    --enable-%s=%s)\n'                        % (fuse['name'], key['name'])
 			else:
-				PARSER += '    --enable-%s=%s | --disable-ctnr-sharp)\n' % (name, key['name'])
+				PARSER += '    --enable-%s=%s | --disable-ctnr-sharp)\n' % (fuse['name'], key['name'])
 
-			PARSER += '      FUSE_STRS=(${FUSE_STRS[@]} "%s")\n' % NAME
-			PARSER += '      FUSE_OPTS=(${FUSE_OPTS[@]} "%s")\n' % key['value']
+			PARSER += '      FUSES=(${FUSES[@]} "%s")\n' % macro(fuse['name'] + '-' + key['name'])
+			PARSER += '      GLOBAL_OPTS=(${GLOBAL_OPTS[@]} "%s")\n' % ident(key['opt'])
 			PARSER += '      ;;\n'
 
 	#####################################################################
@@ -219,7 +226,7 @@ def configure(ctx):
 	# CONFIGURE TESTS						    #
 	#####################################################################
 
-	TESTS = 'GLOBAL_OPTS=${FUSE_OPTS[@]}\n\n'
+	TESTS = ''
 
 	#####################################################################
 
@@ -295,19 +302,22 @@ def configure(ctx):
 				TESTS += '  if test $? -eq 0;\n' +\
 					 '  then\n' +\
 					 '    printf "Checking for %s\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n' % dep +\
-					 '    GLOBAL_OPTS="$GLOBAL_OPTS -DHAVE_%s"\n' % dep.upper() +\
+					 '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} "-DHAVE_%s")\n' % dep.upper() +\
+					 '    FUSES=(${FUSES[@]} "HAVE_%s")\n' % dep.upper() +\
 					 '  else\n'
 
 				if dep in YYYS:
 					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[33mWarn.\\033[0m ]\\n"\n' % dep +\
-						  '    GLOBAL_OPTS="$GLOBAL_OPTS -UHAVE_%s"\n' % dep.upper() +\
+						  '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} "-DNO_%s")\n' % dep.upper() +\
+						  '    FUSES=(${FUSES[@]} "NO_%s")\n' % dep.upper() +\
 						  '    opt_%s=\'\'\n' % dep +\
 						  '    inc_%s=\'\'\n' % dep +\
 						  '    lib_%s=\'\'\n' % dep +\
 						  '#   exit 1\n'
 				else:
 					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[31mError\\033[0m ]\\n"\n' % dep +\
-						  '    GLOBAL_OPTS="$GLOBAL_OPTS -UHAVE_%s"\n' % dep.upper() +\
+						  '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} "-DNO_%s")\n' % dep.upper() +\
+						  '    FUSES=(${FUSES[@]} "NO_%s")\n' % dep.upper() +\
 						  '    opt_%s=\'\'\n' % dep +\
 						  '    inc_%s=\'\'\n' % dep +\
 						  '    lib_%s=\'\'\n' % dep +\
@@ -352,13 +362,13 @@ def configure(ctx):
 
 		##
 
-		NAME = project['NAME']
+		NAME = macro(project['name'])
 
 		##
 
-		EPILOG += 'GCC_OPT_%s=\$(GCC_OPT)%s\n' % (NAME, opts)
-		EPILOG += 'GCC_INC_%s=\$(GCC_INC)%s\n' % (NAME, incs)
-		EPILOG += 'GCC_LIB_%s=\$(GCC_LIB)%s\n' % (NAME, libs)
+		EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts)
+		EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs)
+		EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs)
 		EPILOG += '\n'
 
 		EPILOG += 'GXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
@@ -388,112 +398,113 @@ def configure(ctx):
 
 	for project in ctx.projects:
 
-		if len(project['targets']) == 0:
+		if len(project['targets']) == 0 and len(project['fuses']) == 0:
 			RULES += ' all_%s' % project['name']
 
 	RULES += '\n'
-	RULES += '\n'
+
+	##
 
 	RULES += 'install_rules ='
 
 	for project in ctx.projects:
 
-		if len(project['targets']) == 0:
+		if len(project['targets']) == 0 and len(project['fuses']) == 0:
 			RULES += ' install_%s' % project['name']
 
 	RULES += '\n'
-	RULES += '\n'
+
+	##
 
 	RULES += 'clean_rules ='
 
 	for project in ctx.projects:
 
-		if len(project['targets']) == 0:
+		if len(project['targets']) == 0 and len(project['fuses']) == 0:
 			RULES += ' clean_%s' % project['name']
 
-	RULES += '\n'
 	RULES += '\n'
 
 	#####################################################################
 
 	for project in ctx.projects:
 
-		if len(project['targets']) != 0:
-			RULES += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
+		T = ''
+		F = ''
+
+		for target in project['targets']:
+			T += '\\$(findstring %s, \\$(OS_CFLAGS))' % ident(target)
+		for fuse in project['fuses']:
+			F += '\\$(findstring %s, \\$(FUSES))' % macro(fuse)
+
+		if   len(T) != 0 and len(F) == 0:
+			RULES += 'ifneq (%s,)\n' % T +\
 				 '  all_rules += all_%s\n' % project['name'] +\
 				 '  install_rules += install_%s\n' % project['name'] +\
 				 '  clean_rules += clean_%s\n' % project['name'] +\
 				 'endif\n'
 
-	RULES += '\n'
+		elif len(T) == 0 and len(F) != 0:
+			RULES += 'ifneq (%s,)\n' % F +\
+				 '  all_rules += all_%s\n' % project['name'] +\
+				 '  install_rules += install_%s\n' % project['name'] +\
+				 '  clean_rules += clean_%s\n' % project['name'] +\
+				 'endif\n'
+
+		elif len(T) != 0 and len(F) != 0:
+			RULES += 'ifneq (%s,)\n' % T +\
+				 '  ifneq (%s,)\n' % F +\
+				 '    all_rules += all_%s\n' % project['name'] +\
+				 '    install_rules += install_%s\n' % project['name'] +\
+				 '    clean_rules += clean_%s\n' % project['name'] +\
+				 '  endif\n' +\
+				 'endif\n'
+
+		RULES += '\n'
 
 	#####################################################################
 
-	RULES += 'all: \\$(all_rules)\n'
+	def conditionnalLink(ctx, rule):
 
-	for link in ctx.links:
+		RULES = '%s: \\$(%s_rules)\n' % (rule, rule)
 
-		if len(link['targets']) == 0:
-			RULES += '\t@make -C "%s" all\n' % link['dir']
-		else:
+		for link in ctx.links:
+
+			T = ''
+			F = ''
+
 			for target in link['targets']:
-				RULES += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
-					 '\t@make -C "%s" all\n' % link['dir'] +\
-					 'endif\n'
+				T += '\\$(findstring %s, \\$(OS_CFLAGS))' % ident(target)
+			for fuse in link['fuses']:
+				F += '\\$(findstring %s, \\$(FUSES))' % macro(fuse)
 
-	RULES += '\n'
+			if   len(T) != 0 and len(F) == 0:
+				RULES += 'ifneq (%s,)\n' % T +\
+					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
+					'endif\n'
 
-	#####################################################################
+			elif len(T) == 0 and len(F) != 0:
+				RULES += 'ifneq (%s,)\n' % F +\
+					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
+					'endif\n'
 
-	RULES += 'install: \\$(install_rules)\n'
+			elif len(T) != 0 and len(F) != 0:
+				RULES += 'ifneq (%s,)\n' % T +\
+					'  ifneq (%s,)\n' % F +\
+					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
+					'  endif\n' +\
+					'endif\n'
 
-	for link in ctx.links:
+			else:
+				RULES += '	@make -C "%s" %s\n' % (link['dir'], rule)
 
-		if len(link['targets']) == 0:
-			RULES += '\t@make -C "%s" install\n' % link['dir']
-		else:
-			for target in link['targets']:
-				RULES += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
-					 '\t@make -C "%s" install\n' % link['dir'] +\
-					 'endif\n'
-
-	RULES += '\n'
-
-	#####################################################################
-
-	RULES += 'clean: \\$(clean_rules)\n'
-
-	for link in ctx.links:
-
-		if len(link['targets']) == 0:
-			RULES += '\t@make -C "%s" clean\n' % link['dir']
-		else:
-			for target in link['targets']:
-				RULES += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
-					 '\t@make -C "%s" clean\n' % link['dir'] +\
-					 'endif\n'
-
-	RULES += '\n'
+		return RULES + '\n'
 
 	#####################################################################
 
-	RULES += 'distclean: \\$(clean_rules)\n'
-
-	for link in ctx.links:
-
-		if len(link['targets']) == 0:
-			RULES += '\t@make -C "%s" distclean\n' % link['dir']
-		else:
-			for target in link['targets']:
-				RULES += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
-					 '\t@make -C "%s" distclean\n' % link['dir'] +\
-					 'endif\n'
-
-	RULES += '\n'
-
-	#####################################################################
-
-	RULES += '\t@\$(RM) ./Makefile.conf ./Makefile\n\n'
+	RULES += conditionnalLink(ctx, 'all')
+	RULES += conditionnalLink(ctx, 'install')
+	RULES += conditionnalLink(ctx, 'clean')
 
 	#####################################################################
 
@@ -508,25 +519,53 @@ def configure(ctx):
 
 		##
 
-		NAME = project['NAME']
+		NAME = macro(project['name'])
 
 		##
 
 		for src in project['srcs']:
 
-			src, obj, rule, targets = ua.rules.buildRules(ctx, NAME, src['path'], src['opt'], src['inc'], src['targets'])
+			T = ''
+			F = ''
 
-			if len(targets) == 0:
+			src, obj, rule, targets, fuses = ua.rules.buildRules(ctx, NAME, src['path'], src['opt'], src['inc'], src['targets'], src['fuses'])
+
+			for target in targets:
+				T += '\\$(findstring %s, \\$(OS_CFLAGS))' % ident(target)
+			for fuse in fuses:
+				F += '\\$(findstring %s, \\$(FUSES))' % macro(fuse)
+
+			if   len(T) != 0 and len(F) == 0:
+				srcs2 += 'ifneq (%s,)\n' % T +\
+					 '  SRCS_%s += %s\n' % (NAME, src) +\
+					 'endif\n'
+				objs2 += 'ifneq (%s,)\n' % T +\
+					 '  OBJS_%s += %s\n' % (NAME, obj) +\
+					 'endif\n'
+
+			elif len(T) == 0 and len(F) != 0:
+				srcs2 += 'ifneq (%s,)\n' % F +\
+					 '  SRCS_%s += %s\n' % (NAME, src) +\
+					 'endif\n'
+				objs2 += 'ifneq (%s,)\n' % F +\
+					 '  OBJS_%s += %s\n' % (NAME, obj) +\
+					 'endif\n'
+
+			elif len(T) != 0 and len(F) != 0:
+				srcs2 += 'ifneq (%s,)\n' % T +\
+					 '  ifneq (%s,)\n' % F +\
+					 '    SRCS_%s += %s\n' % (NAME, src) +\
+					 '  endif\n' +\
+					 'endif\n'
+				objs2 += 'ifneq (%s,)\n' % T +\
+					 '  ifneq (%s,)\n' % F +\
+					 '    OBJS_%s += %s\n' % (NAME, obj) +\
+					 '  endif\n' +\
+					 'endif\n'
+
+			else:
 				srcs1 += ' \\\\\n %s' % src
 				objs1 += ' \\\\\n %s' % obj
-			else:
-				for target in targets:
-					srcs2 += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
-						 '  SRCS_%s += %s\n' % (NAME, src) +\
-						 'endif\n'
-					objs2 += 'ifneq (\\$(findstring %s, \\$(GCC_OPT)),)\n' % target +\
-						 '  OBJS_%s += %s\n' % (NAME, obj) +\
-						 'endif\n'
 
 			rules += rule
 
@@ -549,8 +588,8 @@ def configure(ctx):
 	for project in ctx.projects:
 		RULES += '#############################################################################\n\n'
 
-		name = project['name']
-		NAME = project['NAME']
+		name = ident(project['name'])
+		NAME = macro(project['name'])
 
 		#####################################################
 
@@ -735,7 +774,7 @@ def configure(ctx):
 			base64.b64decode(
 				  template
 
-	)).decode('utf-8') % (HELP, PARSER, PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -1], RULES[: -2]))
+	)).decode('utf-8') % (HELP, PARSER, PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -2], RULES[: -2]))
 
 	fp.close()
 

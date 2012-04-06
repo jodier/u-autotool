@@ -50,20 +50,20 @@ def fuseNodes(ctx, fuses):
 				#############################################
 
 				name = node1.getStripedLAttribute('name')
-				value = node1.getStripedIAttribute('value')
+				opt = node1.getStripedIAttribute('opt')
 
 				#############################################
 
 				dic = {
 					'name': name,
-					'value': value,
+					'opt': opt,
 				}
 
 				KEYS.append(dic)
 
 		#############################################################
 
-		KEYS.append({'name': 'disable', 'value': ''})
+		KEYS.append({'name': 'disable', 'opt': ''})
 
 		#############################################################
 
@@ -224,8 +224,6 @@ def projectNodes(ctx, projects):
 		#############################################################
 
 		name = project.getStripedIAttribute('name')
-		NAME = project.getStripedUAttribute('name')
-
 		type = project.getStripedUAttribute('type')
 		link = project.getStripedUAttribute('link')
 
@@ -373,7 +371,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeType == 0x004:
-				TXTS.append(          node1.nodeValue.rstrip().replace('$', '\\$'))
+				TXTS.append(        node1.nodeValue.strip('\n').replace('$', '\\$'))
 
 		#############################################################
 
@@ -388,8 +386,6 @@ def projectNodes(ctx, projects):
 
 		dic = {
 			'name': name,
-			'NAME': NAME,
-
 			'type': type,
 			'link': link,
 
@@ -436,6 +432,7 @@ def linkNodes(ctx, links):
 		rid = os.path.relpath2(dir)
 
 		targets = link.getItemsByUAttrName('targets')
+		fuses = link.getItemsByLAttrName('fuses')
 
 		#############################################################
 
@@ -445,6 +442,7 @@ def linkNodes(ctx, links):
 			'rid': rid,
 
 			'targets': targets,
+			'fuses': fuses,
 		}
 
 		ctx.links.append(dic)

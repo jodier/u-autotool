@@ -67,8 +67,9 @@ PROJECT_SUFFIX=''
 
 #############################################################################
 
-FUSE_STRS=()
-FUSE_OPTS=()
+FUSES=()
+
+GLOBAL_OPTS=()
 
 #############################################################################
 
@@ -128,9 +129,7 @@ do
       configure_help
       ;;
     *)
-      echo "$0: error: unrecognized option: $option"
-
-      exit 1
+      echo "$0: warning: unrecognized option: $option"
   esac
 
 done
@@ -308,6 +307,13 @@ esac
 %s
 #############################################################################
 
+function trim
+{
+    echo $*
+}
+
+#############################################################################
+
 cat > ./Makefile.conf << EOF
 #############################################################################
 # Makefile.parse
@@ -328,11 +334,7 @@ TAR=$TAR
 
 #############################################################################
 
-FUSES=${FUSE_STRS[@]}
-
-#############################################################################
-
-OS_CFLAGS=$OS_CFLAGS -D$OS_BUSSIZE -D$OS_BUSORDER
+OS_CFLAGS=$OS_CFLAGS -D$OS_NAME -D$OS_BUSSIZE -D$OS_BUSORDER
 OS_LFLAGS=$OS_LFLAGS
 
 #############################################################################
@@ -387,55 +389,52 @@ DST_ETC=\$(DST_PREFIX)/\$(ETC)
 
 #############################################################################
 
-GCC_OPT=-D$OS_NAME $GLOBAL_OPTS
+FUSES=${FUSES[@]}
+
+#############################################################################
+
+GCC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
 GCC_INC=-I. -I\$(PWD_INC)
 GCC_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-GXX_OPT=\$(GCC_OPT)
-GXX_INC=\$(GCC_INC)
-GXX_LIB=\$(GCC_LIB)
+GXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+GXX_INC=-I. -I\$(PWD_INC)
+GXX_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-ACC_OPT=\$(GCC_OPT)
-ACC_INC=\$(GCC_INC)
-ACC_LIB=\$(GCC_LIB)
+ACC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+ACC_INC=-I. -I\$(PWD_INC)
+ACC_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-AXX_OPT=\$(GCC_OPT)
-AXX_INC=\$(GCC_INC)
-AXX_LIB=\$(GCC_LIB)
-
-#############################################################################
-
-GCC_FLAGS=%s \$(OS_CFLAGS) -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe
-GXX_FLAGS=%s \$(OS_CFLAGS) -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe
-ACC_FLAGS=%s \$(OS_CFLAGS) -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe
-AXX_FLAGS=%s \$(OS_CFLAGS) -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe
+AXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]}
+AXX_INC=-I. -I\$(PWD_INC)
+AXX_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
 %%.o: %%.c
 	@printf "Building \$@\\n"
-	@\$(GCC) \$(GCC_FLAGS) \$(GCC_OTP) \$(GCC_INC) -c -o \$@ \$<
+	@\$(GCC) \$(GCC_OPT) \$(GCC_INC) -c -o \$@ \$<
 	@printf "[ \\033[32mOk.\\033[0m ]\\n"
 
 %%.o: %%.cc
 	@printf "Building \$@\\n"
-	@\$(GXX) \$(GXX_FLAGS) \$(GXX_OPT) \$(GXX_INC) -c -o \$@ \$<
+	@\$(GXX) \$(GXX_OPT) \$(GXX_INC) -c -o \$@ \$<
 	@printf "[ \\033[32mOk.\\033[0m ]\\n"
 
 %%.o: %%.m
 	@printf "Building \$@\\n"
-	@\$(ACC) \$(ACC_FLAGS) \$(ACC_OPT) \$(ACC_INC) -c -o \$@ \$<
+	@\$(ACC) \$(ACC_OPT) \$(ACC_INC) -c -o \$@ \$<
 	@printf "[ \\033[32mOk.\\033[0m ]\\n"
 
 %%.o: %%.mm
 	@printf "Building \$@\\n"
-	@\$(AXX) \$(AXX_FLAGS) \$(AXX_OPT) \$(AXX_INC) -c -o \$@ \$<
+	@\$(AXX) \$(AXX_OPT) \$(AXX_INC) -c -o \$@ \$<
 	@printf "[ \\033[32mOk.\\033[0m ]\\n"
 
 #############################################################################
@@ -443,14 +442,14 @@ AXX_FLAGS=%s \$(OS_CFLAGS) -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe
 %%.o: %%.l
 	@printf "Building \$@\\n"
 	@\$(FLEX) -o \$(basename \$<).c \$<
-	@\$(GCC) \$(GCC_FLAGS) \$(GCC_OTP) \$(GCC_INC) -xc -c -o \$@ \$(basename \$<).c
+	@\$(GCC) \$(GCC_OPT) \$(GCC_INC) -xc -c -o \$@ \$(basename \$<).c
 	@\$(RM) \$(basename \$<).c
 	@printf "[ \\033[32mOk.\\033[0m ]\\n"
 
 %%.o: %%.y
 	@printf "Building \$@\\n"
 	@\$(BISON) -o \$*.c \$<
-	@\$(GCC) \$(GCC_FLAGS) \$(GCC_OTP) \$(GCC_INC) -xc -c -o \$@ \$(basename \$<).c
+	@\$(GCC) \$(GCC_OPT) \$(GCC_INC) -xc -c -o \$@ \$(basename \$<).c
 	@\$(RM) \$(basename \$<).c
 	@printf "[ \\033[32mOk.\\033[0m ]\\n"
 

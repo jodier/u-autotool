@@ -27,7 +27,9 @@ import os, re, subprocess
 
 #############################################################################
 
-def buildRules(ctx, targerName, src, opt, inc, targets):
+def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
+
+	print(projetName)
 
 	pipe = subprocess.Popen(
 		'gcc -DAUTOGEN -x c -E -MM -MG %s' % src,
@@ -74,9 +76,9 @@ def buildRules(ctx, targerName, src, opt, inc, targets):
 
 		if i == 0x0000:
 			if len(dir) == 0:
-				L[i] = '\\$(PWD_PREFIX)/' + ''  +  '' + L[i]
+				L[i] = '\\$(PWD_PREFIX)/' + ''  +  '' + projetName + '_' + L[i]
 			else:
-				L[i] = '\\$(PWD_PREFIX)/' + dir + '/' + L[i]
+				L[i] = '\\$(PWD_PREFIX)/' + dir + '/' + projetName + '_' + L[i]
 
 			rules += L[i] + ': \\\\\n'
 		else:
@@ -95,23 +97,21 @@ def buildRules(ctx, targerName, src, opt, inc, targets):
 		rules += '\t@printf "Building \$@\t"\n'
 
 		if   ext[1] in ['.c']:
-			rules += '\t@\$(GCC) \$(GCC_FLAGS) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 		elif ext[1] in ['.cc', '.cpp', '.cxx']:
-			rules += '\t@\$(GXX) \$(GXX_FLAGS) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t@\$(GXX) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 		elif ext[1] in ['.m']:
-			rules += '\t@\$(ACC) \$(ACC_FLAGS) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t@\$(ACC) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 		elif ext[1] in ['.mm']:
-			rules += '\t@\$(AXX) \$(AXX_FLAGS) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
-		elif ext[1] in ['.cs']:
-			rules += '\t@\$(MCS) \$(MCS_FLAGS) \$(MCS_OPT_%s)%s \$(MCS_INC_%s)%s /out:\$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t@\$(AXX) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 
 		elif ext[1] in ['.l']:
 			rules += '\t@\$(FLEX) -o \$(basename \$<).c \$<\n'
-			rules += '\t@\$(GCC) \$(GCC_FLAGS) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (targerName, opt, targerName, inc)
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (projetName, opt, projetName, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 		elif ext[1] in ['.y']:
 			rules += '\t@\$(BISON) -o\$(basename \$<).c \$<\n'
-			rules += '\t@\$(GCC) \$(GCC_FLAGS) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (targerName, opt, targerName, inc)
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (projetName, opt, projetName, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
 		elif ext[1] in ['.s', '.S']:
@@ -122,23 +122,21 @@ def buildRules(ctx, targerName, src, opt, inc, targets):
 #		rules += '\t@printf "Building \$@\t"\n'
 
 		if   ext[1] in ['.c']:
-			rules += '\t\$(GCC) \$(GCC_FLAGS) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 		elif ext[1] in ['.cc', '.cpp', '.cxx']:
-			rules += '\t\$(GXX) \$(GXX_FLAGS) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t\$(GXX) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 		elif ext[1] in ['.m']:
-			rules += '\t\$(ACC) \$(ACC_FLAGS) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t\$(ACC) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 		elif ext[1] in ['.mm']:
-			rules += '\t\$(AXX) \$(AXX_FLAGS) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (targerName, opt, targerName, inc)
-		elif ext[1] in ['.cs']:
-			rules += '\t\$(MCS) \$(MCS_FLAGS) \$(MCS_OPT_%s)%s \$(MCS_INC_%s)%s /out:\$@ \$<\n' % (targerName, opt, targerName, inc)
+			rules += '\t\$(AXX) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (projetName, opt, projetName, inc)
 
 		elif ext[1] in ['.l']:
 			rules += '\t\$(FLEX) -o \$(basename \$<).c \$<\n'
-			rules += '\t\$(GCC) \$(GCC_FLAGS) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (targerName, opt, targerName, inc)
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (projetName, opt, projetName, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 		elif ext[1] in ['.y']:
 			rules += '\t\$(BISON) -o\$(basename \$<).c \$<\n'
-			rules += '\t\$(GCC) \$(GCC_FLAGS) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (targerName, opt, targerName, inc)
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (projetName, opt, projetName, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
 		elif ext[1] in ['.s', '.S']:
@@ -153,7 +151,7 @@ def buildRules(ctx, targerName, src, opt, inc, targets):
 	src = L[1]
 	obj = L[0]
 
-	return src, obj, rules, targets
+	return src, obj, rules, targets, fuses
 
 #############################################################################
 

@@ -37,40 +37,40 @@ template = \
 	b'ieW7DlbupjLqU2sDam7WqmHl82ZfHdPow8o0XK6WhrmwHIKPfsXVKfmj6oS2Pc5c' +\
 	b'70W3899mPT5lckTpXZ4JStY6Z6FjBhbsqek6M2seemS0IPYK3YOXTSPAnz7hZucM' +\
 	b'HpTFz1hRKA/v+Zla/so27iBYLR8zQcOZYnJrBQhxCUUBf81JoPIdTs2PLMAz18Nc' +\
-	b'BOEn/FxLXHgY61l5ZGbdqnwnU+KW4weGbcNpsIkPT5hLPVFVnAY31Lm/EzPYqRZo' +\
-	b'KwIbIYiBuzaATLGYh+nJ959owGaU7DDCD2fUCB4zYpqxYjYIWmY28PXAhgMf0TCh' +\
-	b'aQj8jX9BD5lHKqjILfg94pPgLIQEeo8KljMlt+ohQoWvCwgRSM0SI2HFDrB0/+bs' +\
-	b'stfsXZ8OH/AQFaYuKhRo/gape87h0sCGNC7d//IwKuMhSBZY7iwUCqEDyvCGLIrp' +\
-	b'561OTWuNOhf9mFso0ARbKNjALzLau3dFqtshOWw0PX3uiu0LHA6pjAAjywY+VAWc' +\
-	b'Qd9Z/IVUVsslETRwtNUxuV15uDgQckV8guXr39RhWb15WynflOSxEP74kU9PTpbl' +\
-	b'JJP4hrlfb5RKohVE1paAvKkjygaRaKKU2S2+cZqjaan8/K2p4gxuTRWJfHPqgc8m' +\
-	b'L/BfIsOuZ6Vy8u6dI+bChVf04Qn+aniO5cxPsDV3XA+ONt+0k/XuFaNdZZGTddww' +\
-	b'R42ZOSIhA6DAw9cntvuVeCdDGIWQh2A0RsyN5ZbevhwIJJ3eqK19bqryaKT3Rv3L' +\
-	b'AY8GBrfc6Q3Kf5W1i4tWEz4bWvdKb++cB4LJeZ/19vnVTkFYICmod3o7xYCeFNPa' +\
-	b'jW5Hb+wUFbykOBfjHtKdPwzbmmIet1gWeyQXeQYXeZP7J2PPcAPO4FynlUNsQJHz' +\
-	b'M6YFNPzV2Fjj4y784YUeDGg5Bh+sDCv+G3I7TxvCQzzc1oHFvQK4Rr3/aN1mIyqv' +\
-	b'Kr4rx7y+1tfrMc/grOagmZ6WYGzOkdE6TFpnLe28p8qKvzDgZCZiZB21+42a3rEa' +\
-	b'O1+7pnfw/rfMSFNsGxyUb9hm2z9iWYXckr3WceYTdw7O56vdOZEQXlW4JVOSvJmS' +\
-	b'5PwTEZhW09vqBI4jDPV2XbUc0w6nhD72unXV90w6bPbrKgnMnF5Rk9D3rT+JaC+M' +\
-	b'eUlxfBTl9Nplr6f/v6kyJx4f1fR+j2/NZk7hdwnxFt7MLWs30DtyFBiCWF/7Znl8' +\
-	b'FDPEWz2dD567UHR4n7tQdM6estC+RTYOxJMsml3o9a3VWGhGzx/e73bch/fPd9yH' +\
-	b'93s26sN7vNu2H3PgY8vtc+MP2/dd7vzmSrn49J/NUlGWcL0p8TbThG0FgU2SEdfp' +\
-	b'NppdHnItvT9qthu61o6hTKz5Humafr4lvRM43Nwtw3GI778AeCjF8rplB561ZI0l' +\
-	b'ARCulg85OC/Av+JK9bPxhdAOT4VeotZtrGx1vcGRkpXh+QRRkhYG7tIILNOw7Ts8' +\
-	b'Jw7xjADuYpM7HCoGMAPXtStUNFvctDlOAxXR7jct5xFtSNOKHtGGMC3qkdaFzy4S' +\
-	b'3VtR3PNOKyvwRZeVV/mswUrvCXlUASIZSNEQK411fhZDkczjJ3Z0UFzdSNEwcwu3' +\
-	b'izVpi4S2qzZpi4S26zdpi4S2azlpi5Tnlz5SPE5+5yPF4+S3P4kWaN4t8FSzM90P' +\
-	b'T/UhM7eG1qoSr1kRLVYlXrQidnr4e45uIxvDJ6Jlq8TL11zcRe25kd7G3ipV4bFG' +\
-	b'iwNKoyZus4HK2dTqbTZQOZsC2WbDI2dTbNtsoJayDwIIOwE1jsAYKqUJqCk2g0pp' +\
-	b'AmqKzaBSmoCaYjOolCagpti5QKVHSUCNT1UMldIE1BSbQaU0ATXFZlApTUBNsRlU' +\
-	b'ShNQU+xcoLKGt7pukp8Os3/1w9uP9s0poOi9UsIHPpTC7tIKlJlnLImyci0ngLJO' +\
-	b'mTmuMgktO7AcrFzRb4SUK+J5LrBW1gruC/fJXvzpsNpcXgT/qz4wPdQril7Bii4i' +\
-	b'hTmEcqhDlBZwWoLDfJE51sHgZbCCnj1YgfMyWLUX8qu216/ai/lVeyG/anv9qr2Y' +\
-	b'Xw8OKu4Jhr8mKpyuPIA0w8UaoJlazhzfSKc3ThE4YAKcqxLmnxRJNKYGY8XEikvF' +\
-	b'4fdTYqVrfHN4fHx9fLTsfKmw4eESD+maCc2Pqx4MuDrumGj8bNXLxzRrArSWAK1l' +\
-	b'AXr5uGoBWkuA1p4BOq/AsR8DQm81JW7u2wlc69m/2IDZpYoprH80um7NDcTpZfgS' +\
-	b'3c+l3bzv8cvdY2jYvUzAKb8iBK//2yD2zwk5dxrybjL8o+0F0adPN1Zeve/zcf3f' +\
-	b'Qm8cgg=='
+	b'BOEn/Ah/XUt8MIzVrTwys25VvqGpWZbjB4Ztw6GwiQ9PmEs9SaPw0LUUJ8UNre7v' +\
+	b'xAx2agfaisC2CGLgru0gUyzmYZoH/O+zYzN0dtjihzNqCw8kMdtYMVME7ZmmiBCN' +\
+	b'TeEEMOXARzSEaIqCWMC/oIfMoxhU5HYwPOKT4CyE5HqPCpYzJbfqIUKFrwuIG0jb' +\
+	b'EiNhxQ6wdP/m7LLX7F2fDh/wEBWmLioUaG4HqXvO4dLAhhQv3f/yMCrjIUgWWF4t' +\
+	b'FAqhA8rwhiyK6eetTk1rjToX/ZhbKNDkWyjYwC8y2rt3RarbITlsND2Z7ortC5wY' +\
+	b'qYwAI8sUPlQMnEHfZ/xlVVbLJRE7cOzVMbldebg4EHJFfILl69/UYVm9eVsp35Tk' +\
+	b'sRD++JFPT06W5SST+Ia5X2+UZqIVRIaQgLypI0oRkWiizNktvnG2o2mp3P2tqeIo' +\
+	b'bk0VJ2hz6oHPJi/wXyL7rmel8vXunSPmwoXX9+EJ/mp4juXMT7A1d1wPTjjftJP1' +\
+	b'7hWjXWWRk3XcMEeNmTkiSwOgwMPXJ7b7lXgnQxiFkI5gNEbMjeWW3r4cCCSd3qit' +\
+	b'fW6q8mik90b9ywGPBga33OkNyn+VtYuLVhM+G1r3Sm/vnAeCyXmf9fb51U5BWCAp' +\
+	b'qHd6O8WAnhTT2o1uR2/sFBW8pDgX4x7SnT8M25piHrdYFnskF3kiF3mT+ydjz3AD' +\
+	b'zuBcp5VDbEAB9DOmxTX81dhY4+Mu/OFFIAxoqQYfrEQr/htyO08bwkM83NaBxb0C' +\
+	b'uEa9/2jdZiMqvSq+K8e8vtbX6zHP4KzmoJmelmBszpHROkxaZy3tvKfKir8w4GQm' +\
+	b'YmQdtfuNmt6x+jtfu6Z3UAZYZqQptg0Oyjdss+0fsaxCbsle6zjziTsH5/PV7pxI' +\
+	b'CK8q3JIpSd5MSXL+iQhMq+ltdQLHEYZ6u65ajmmHU0Ife9266nsmHTb7dZUEZk6v' +\
+	b'qEno+9afRLQexrykOD6KcnrtstfT/99UmROPj2p6v8e3ZjOn8AuGeAtv5pa1G+j9' +\
+	b'OQoMQayvfbM8PooZ4q2ezgfPXSg6vM9dKDpnT1lo3yIbB+JJFs0u9PrWaiw0o+cP' +\
+	b'73c77sP75zvuw/s9G/XhPd5t24858LHl9rnxh+37Lnd+c6VcfPrPZqkoS7jelHib' +\
+	b'acK2gsAmyYjrdBvNLg+5lt4fNdsNXWvHUCbWfI90TT/fkt4JHC7wluE4xPdfADyU' +\
+	b'YnndsgPPWrKmkwAIV8uHHJwX4F9xpfrZ+EJo26dCL1HrFle2ut7gSMnK8HyCKEkL' +\
+	b'A3dpBJZp2PYdnhOHeEYAd7HJHQ4VA5iB69oVKpotbto4p4GKaGeclvOINqtpRY9o' +\
+	b's5gW9UjrwmcXic6uKO55F5YV+KIDy6t81nyl94Q8qgCRDKRoiJXGOj+LoUjm8RM7' +\
+	b'OiiubqRomLmF28WatEVC21WbtEVC2/WbtEVC27WctEXK8wshKR4nvw+S4nHym6FE' +\
+	b'QzTv9niq55nulaf6kJlbQ2tVidesiBarEi9aETs9/D1Ht5GN4RPRslXi5Wsu7qL2' +\
+	b'3EhvY2+VqvBYo8UBpVETt9lA5Wxq9TYbqJxNgWyz4ZGzKbZtNlBL2QcBhJ2AGkdg' +\
+	b'DJXSBNQUm0GlNAE1xWZQKU1ATbEZVEoTUFPsXKDSoySgxqcqhkppAmqKzaBSmoCa' +\
+	b'YjOolCagptgMKqUJqCl2LlBZw1tdN8lPh9m/+uHtR/vmFFD0XinhAx9KYXdpBcrM' +\
+	b'M5ZEWbmWE0BZp8wcV5mElh1YDlau6NdEyhXxPBdYK2sF94X7ZC/+dFhtLi+C/1Uf' +\
+	b'mB7qFUWvYEUXkcIcQjnUIUoLOC3BYb7IHOtg8DJYQc8erMB5GazaC/lV2+tX7cX8' +\
+	b'qr2QX7W9ftVezK8HBxX3BMNfExVOVx5AmuFiDdBMLWeOb6TTG6cIHDABzlUJ80+K' +\
+	b'JBpTg7FiYsWl4vD7KbHSNb45PD6+Pj5adr5U2PBwiYd0zYTmx1UPBlwdd0w0frbq' +\
+	b'5WOaNQFaS4DWsgC9fFy1AK0lQGvPAJ1X4NiPAaG3mhI39+0ErvXs32/A7FLFFNY/' +\
+	b'Gl235gbi9DJ8ie7n0m7e9/jl7jE07F4m4JRfEYLX/20Q++eEnDsNeTcZ/tH2gujT' +\
+	b'pxsrr973+bj+b0W2JK4='
 
 #############################################################################
 
@@ -134,10 +134,13 @@ def configure(ctx):
 			for key in fuse['keys']:
 
 				if key['name'] == fuse['default']:
+
 					FUSES += ' \'%s\'' % macro(fuse['name'] + '-' + key['name'])
 					GLOBAL_OPTS += ' \'%s\'' % ident(key['opt'])
 
-	INIT = 'FUSES=(%s)\n\nGLOBAL_OPTS=(%s)' % (FUSES[1: ], GLOBAL_OPTS[1: ])
+					break
+
+	INIT = 'FUSES=(%s)\n\nGLOBAL_OPTS=(%s)' % (FUSES.lstrip(), GLOBAL_OPTS.lstrip())
 
 	#####################################################################
 
@@ -192,6 +195,7 @@ def configure(ctx):
 			if ctx.verbose: print('\033[1;30mLeaving \'%s\'\033[0m' % link['dir'])
 
 			if len(link['targets']) == 0:
+
 				PROLOG += 'install -d %s' % link['dir']							+ '\n' +\
 					  ''										+ '\n' +\
 					  'cd %s' % link['dir']								+ '\n' +\
@@ -217,6 +221,7 @@ def configure(ctx):
 					  ''										+ '\n' +\
 					  ''
 			else:
+
 				for target in link['targets']:
 					PROLOG += 'if test $OS_NAME = \'__IS_%s\';' % target				+ '\n' +\
 						  'then'								+ '\n' +\
@@ -800,7 +805,7 @@ def configure(ctx):
 			base64.b64decode(
 				  template
 
-	)).decode('utf-8') % (HELP, INIT, PARSER, PROLOG[: -2], TESTS[: -1], ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG[: -2], RULES[: -2]))
+	)).decode('utf-8') % (HELP, INIT, PARSER, PROLOG.rstrip(), TESTS.rstrip(), ctx.debug, ctx.debug, ctx.debug, ctx.debug, EPILOG.rstrip(), RULES.rstrip()))
 
 	fp.close()
 

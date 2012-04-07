@@ -73,16 +73,16 @@ function configure_help
   -h, --help                        display this help and exit
 
       --target=TARGET               configure for TARGET
-                                    [$TARGET]
+                                    TARGET=[$TARGET]
 
       --prefix=PREFIX               install files in PREFIX
-                                    [$DST_PREFIX]
+                                    PREFIX=[$DST_PREFIX]
 
       --project-prefix=PREFIX       prepend PREFIX to installed project names
-                                    [$PROJECT_PREFIX]
+                                    PREFIX=[$PROJECT_PREFIX]
 
       --project-suffix=SUFFIX       append SUFFIX to installed project names
-                                    [$PROJECT_SUFFIX]
+                                    SUFFIX=[$PROJECT_SUFFIX]
 
 %s
 EOF

@@ -158,7 +158,7 @@ in
   *LINUX*)
     OS_NAME='__IS_TUX'
     ;;
-  *OSX*|*APPLE*|*DARWIN*)
+  *OSX*)
     OS_NAME='__IS_OSX'
     ;;
   *MINGW*)
@@ -174,6 +174,25 @@ in
     echo "Invalid target '$TARGET'"
 
     exit 1
+esac
+
+#############################################################################
+
+echo `echo $TARGET | tr [:lower:] [:upper:]`
+
+case `echo $TARGET | tr [:lower:] [:upper:]`
+in
+  *I386*|*I486*|*I586*|*I686*)
+    OS_ARCH='__ARCH_X86'
+    ;;
+  *X86_64*|*AMD64*)
+    OS_ARCH='__ARCH_X86_64'
+    ;;
+  *ARM*)
+    OS_ARCH='__ARCH_ARM'
+    ;;
+  *)
+    OS_ARCH='__ARCH_UNKNOWN'
 esac
 
 #############################################################################
@@ -351,7 +370,7 @@ TAR=$TAR
 
 #############################################################################
 
-OS_CFLAGS=$OS_CFLAGS -D$OS_NAME -D$OS_BUSSIZE -D$OS_BUSORDER
+OS_CFLAGS=$OS_CFLAGS -D$OS_NAME -D$OS_ARCH -D$OS_BUSSIZE -D$OS_BUSORDER
 OS_LFLAGS=$OS_LFLAGS
 
 #############################################################################

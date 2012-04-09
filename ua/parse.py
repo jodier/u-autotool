@@ -71,7 +71,10 @@ def fuseNodes(ctx, fuses):
 
 		#############################################################
 
-		KEYS.append({'name': 'disabled', 'opt': 'EmPtY'})
+		KEYS.append({
+			'name': 'disabled',
+			'opt': 'EmPtY',
+		})
 
 		#############################################################
 

@@ -419,6 +419,8 @@ def configure(ctx):
 			EPILOG += '\n'
 
 		for target in project['targets']:
+			print('-> %s' % target)
+
 			EPILOG += 'GCC_OPT_%s_%s=$(trim "\\$(GCC_OPT)%s")\n' % (target, NAME, opts)
 			EPILOG += 'GCC_INC_%s_%s=$(trim "\\$(GCC_INC)%s")\n' % (target, NAME, incs)
 			EPILOG += 'GCC_LIB_%s_%s=$(trim "\\$(GCC_LIB)%s")\n' % (target, NAME, libs)

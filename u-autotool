@@ -109,10 +109,6 @@ class uautotool(ua.utils.context):
 	def parse(self, fileName):
 		doc = uautotool_load_xml(self, fileName)
 
-		ua.parse.variableNodes(self,
-			doc.getElementsByTagName('variable')
-		)
-
 		ua.parse.fuseNodes(self,
 			doc.getElementsByTagName('fuse')
 		)

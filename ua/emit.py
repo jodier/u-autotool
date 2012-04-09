@@ -369,41 +369,160 @@ def configure(ctx):
 	#####################################################################
 
 	for project in ctx.projects:
-		opts = ''
-		incs = ''
-		libs = ''
+		opts1 = ''
+		incs1 = ''
+		libs1 = ''
+		opts2 = ''
+		incs2 = ''
+		libs2 = ''
 
-#		if len(project['targets']) == 0:
+		NAME = macro(project['name'])
+
+		#############################################################
+
 		for _opt in project['opts']:
-			opts += ' %s' % _opt['value']
+			i = 0
+			j = 0
+
+			T = '\\$(if \\$(or '
+			F = '\\$(if \\$(and '
+
+			for target in _opt['targets']:
+				T += '\\$(findstring %s,\\$(OS_CFLAGS)),' % ident(target)
+				i += 1
+
+			for fuse in _opt['fuses']:
+				F += '\\$(findstring %s,\\$(FUSES)),' % macro(fuse)
+				j += 1
+
+			T = T[: -1] + '),true,)'
+			F = F[: -1] + '),true,)'
+
+			if   i != 0 and j == 0:
+				opts2 += 'ifneq (%s,)\n' % T +\
+					 '	GCC_OPT_%s += %s\n' % (NAME, _opt['value']) +\
+					 'endif\n' +\
+					 '\n'
+
+			elif i == 0 and j != 0:
+				opts2 += 'ifneq (%s,)\n' % F +\
+					 '	GCC_OPT_%s += %s\n' % (NAME, _opt['value']) +\
+					 'endif\n' +\
+					 '\n'
+
+			elif i != 0 and j != 0:
+				opts2 += 'ifneq (%s,)\n' % T +\
+					 '  ifneq (%s,)\n' % F +\
+					 '	GCC_OPT_%s += %s\n' % (NAME, _opt['value']) +\
+					 '  endif\n' +\
+					 'endif\n' +\
+					 '\n'
+
+			else:
+				opts1 += ' %s' % _opt['value']
+
+		#############################################################
 
 		for _inc in project['incs']:
-			incs += ' %s' % _inc['value']
+			i = 0
+			j = 0
+
+			T = '\\$(if \\$(or '
+			F = '\\$(if \\$(and '
+
+			for target in _inc['targets']:
+				T += '\\$(findstring %s,\\$(OS_CFLAGS)),' % ident(target)
+				i += 1
+
+			for fuse in _inc['fuses']:
+				F += '\\$(findstring %s,\\$(FUSES)),' % macro(fuse)
+				j += 1
+
+			T = T[: -1] + '),true,)'
+			F = F[: -1] + '),true,)'
+
+			if   i != 0 and j == 0:
+				incs2 += 'ifneq (%s,)\n' % T +\
+					 '	GCC_INC_%s += %s\n' % (NAME, _inc['value']) +\
+					 'endif\n' +\
+					 '\n'
+
+			elif i == 0 and j != 0:
+				incs2 += 'ifneq (%s,)\n' % F +\
+					 '	GCC_INC_%s += %s\n' % (NAME, _inc['value']) +\
+					 'endif\n' +\
+					 '\n'
+
+			elif i != 0 and j != 0:
+				incs2 += 'ifneq (%s,)\n' % T +\
+					 '  ifneq (%s,)\n' % F +\
+					 '	GCC_INC_%s += %s\n' % (NAME, _inc['value']) +\
+					 '  endif\n' +\
+					 'endif\n' +\
+					 '\n'
+
+			else:
+				incs1 += ' %s' % _inc['value']
+
+		#############################################################
 
 		for _lib in project['libs']:
-			libs += ' %s' % _lib['value']
+			i = 0
+			j = 0
 
-#		else:
-#			pass
+			T = '\\$(if \\$(or '
+			F = '\\$(if \\$(and '
+
+			for target in _lib['targets']:
+				T += '\\$(findstring %s,\\$(OS_CFLAGS)),' % ident(target)
+				i += 1
+
+			for fuse in _lib['fuses']:
+				F += '\\$(findstring %s,\\$(FUSES)),' % macro(fuse)
+				j += 1
+
+			T = T[: -1] + '),true,)'
+			F = F[: -1] + '),true,)'
+
+			if   i != 0 and j == 0:
+				libs2 += 'ifneq (%s,)\n' % T +\
+					 '	GCC_LIB_%s += %s\n' % (NAME, _lib['value']) +\
+					 'endif\n' +\
+					 '\n'
+
+			elif i == 0 and j != 0:
+				libs2 += 'ifneq (%s,)\n' % F +\
+					 '	GCC_LIB_%s += %s\n' % (NAME, _lib['value']) +\
+					 'endif\n' +\
+					 '\n'
+
+			elif i != 0 and j != 0:
+				libs2 += 'ifneq (%s,)\n' % T +\
+					 '  ifneq (%s,)\n' % F +\
+					 '	GCC_LIB_%s += %s\n' % (NAME, _lib['value']) +\
+					 '  endif\n' +\
+					 'endif\n' +\
+					 '\n'
+
+			else:
+				libs1 += ' %s' % _lib['value']
+
+		#############################################################
 
 		for _use in project['uses']:
 
 			if ctx.deps.has_key(_use):
-				opts += ' $opt_%s' % _use
-				incs += ' $inc_%s' % _use
-				libs += ' $lib_%s' % _use
+				opts1 += ' $opt_%s' % _use
+				incs1 += ' $inc_%s' % _use
+				libs1 += ' $lib_%s' % _use
 			else:
 				ua.utils.ooops(ctx, 'dependency `%s` not defined !' % _use)
 
-		##
+		#############################################################
 
-		NAME = macro(project['name'])
-
-		##
-
-		EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts)
-		EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs)
-		EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs)
+		EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts1)
+		EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs1)
+		EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs1)
 		EPILOG += '\n'
 
 		EPILOG += 'GXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
@@ -420,6 +539,13 @@ def configure(ctx):
 		EPILOG += 'AXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
 		EPILOG += 'AXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
 		EPILOG += '\n'
+
+		if len(opts2):
+			EPILOG += opts2
+		if len(incs2):
+			EPILOG += incs2
+		if len(libs2):
+			EPILOG += libs2
 
 	#####################################################################
 	# MAKEFILE RULES						    #
@@ -536,23 +662,23 @@ def configure(ctx):
 
 			if   i != 0 and j == 0:
 				RULES += 'ifneq (%s,)\n' % T +\
-					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					'endif\n' +\
-					'\n'
+					 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
+					 'endif\n' +\
+					 '\n'
 
 			elif i == 0 and j != 0:
 				RULES += 'ifneq (%s,)\n' % F +\
-					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					'endif\n' +\
-					'\n'
+					 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
+					 'endif\n' +\
+					 '\n'
 
 			elif i != 0 and j != 0:
 				RULES += 'ifneq (%s,)\n' % T +\
-					'  ifneq (%s,)\n' % F +\
-					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					'  endif\n' +\
-					'endif\n' +\
-					'\n'
+					 '  ifneq (%s,)\n' % F +\
+					 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
+					 '  endif\n' +\
+					 'endif\n' +\
+					 '\n'
 
 			else:
 				RULES += '	@make -C "%s" %s\n' % (link['dir'], rule)

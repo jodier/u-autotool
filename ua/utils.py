@@ -136,6 +136,7 @@ class context:
 		# TREE							    #
 		#############################################################
 
+		self.variables = []
 		self.fuses = []
 		self.deps = {}
 		self.needed_deps = set([])

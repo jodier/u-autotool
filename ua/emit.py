@@ -397,25 +397,47 @@ def configure(ctx):
 
 		##
 
-		EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts)
-		EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs)
-		EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs)
-		EPILOG += '\n'
+		if len(project['targets']) == 0:
+			EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts)
+			EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs)
+			EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs)
+			EPILOG += '\n'
 
-		EPILOG += 'GXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
-		EPILOG += 'GXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
-		EPILOG += 'GXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
-		EPILOG += '\n'
+			EPILOG += 'GXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
+			EPILOG += 'GXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
+			EPILOG += 'GXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
+			EPILOG += '\n'
 
-		EPILOG += 'ACC_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
-		EPILOG += 'ACC_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
-		EPILOG += 'ACC_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
-		EPILOG += '\n'
+			EPILOG += 'ACC_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
+			EPILOG += 'ACC_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
+			EPILOG += 'ACC_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
+			EPILOG += '\n'
 
-		EPILOG += 'AXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
-		EPILOG += 'AXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
-		EPILOG += 'AXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
-		EPILOG += '\n'
+			EPILOG += 'AXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
+			EPILOG += 'AXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
+			EPILOG += 'AXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
+			EPILOG += '\n'
+
+		for target in project['targets']:
+			EPILOG += 'GCC_OPT_%s_%s=$(trim "\\$(GCC_OPT)%s")\n' % (target, NAME, opts)
+			EPILOG += 'GCC_INC_%s_%s=$(trim "\\$(GCC_INC)%s")\n' % (target, NAME, incs)
+			EPILOG += 'GCC_LIB_%s_%s=$(trim "\\$(GCC_LIB)%s")\n' % (target, NAME, libs)
+			EPILOG += '\n'
+
+			EPILOG += 'GXX_OPT_%s_%s=\$(GCC_OPT_%s)\n' % (target, NAME, NAME)
+			EPILOG += 'GXX_INC_%s_%s=\$(GCC_INC_%s)\n' % (target, NAME, NAME)
+			EPILOG += 'GXX_LIB_%s_%s=\$(GCC_LIB_%s)\n' % (target, NAME, NAME)
+			EPILOG += '\n'
+
+			EPILOG += 'ACC_OPT_%s_%s=\$(GCC_OPT_%s)\n' % (target, NAME, NAME)
+			EPILOG += 'ACC_INC_%s_%s=\$(GCC_INC_%s)\n' % (target, NAME, NAME)
+			EPILOG += 'ACC_LIB_%s_%s=\$(GCC_LIB_%s)\n' % (target, NAME, NAME)
+			EPILOG += '\n'
+
+			EPILOG += 'AXX_OPT_%s_%s=\$(GCC_OPT_%s)\n' % (target, NAME, NAME)
+			EPILOG += 'AXX_INC_%s_%s=\$(GCC_INC_%s)\n' % (target, NAME, NAME)
+			EPILOG += 'AXX_LIB_%s_%s=\$(GCC_LIB_%s)\n' % (target, NAME, NAME)
+			EPILOG += '\n'
 
 	#####################################################################
 	# MAKEFILE RULES						    #

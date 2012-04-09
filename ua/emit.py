@@ -172,7 +172,7 @@ def configure(ctx):
 
 		for key in fuse['keys']:
 
-			if key['name'] != 'disable':
+			if key['name'] != 'disabled':
 				PARSER += '    --enable-%s=%s)\n'                        % (fuse['name'], key['name'])
 			else:
 				PARSER += '    --enable-%s=%s | --disable-ctnr-sharp)\n' % (fuse['name'], key['name'])

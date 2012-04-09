@@ -208,12 +208,13 @@ def depNodes(ctx, deps):
 		#############################################################
 
 		dic = {
+			'name': name,
 			'vers': vers,
 			'lang': lang,
 			'targets': TARGETS,
 		}
 
-		ctx.deps[name] = dic
+		ctx.deps.append(dic)
 
 	#####################################################################
 

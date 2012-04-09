@@ -280,7 +280,7 @@ def configure(ctx):
 
 		for dep in ctx.deps:
 
-			if dep in XXXS:
+			if dep['name'] in XXXS:
 
 				L.append(dep)
 
@@ -289,8 +289,6 @@ def configure(ctx):
 		#################################
 
 		if len(L) > 0:
-			lang = ctx.deps[dep]['lang']
-
 			TESTS += '#############################################################################\n\n'
 
 			TESTS += 'if test $OS_NAME = \'__IS_%s\';\n' % target +\
@@ -300,25 +298,28 @@ def configure(ctx):
 
 			for dep in L:
 
-				if ctx.deps[dep]['targets'].has_key(target):
+				name = dep['name']
+				lang = dep['lang']
 
-					info = ctx.deps[dep]['targets'][target]
+				if dep['targets'].has_key(target):
 
-					TESTS += '  opt_%s="%s"\n' % (dep, info['opt'])
-					TESTS += '  opt_%s_resolved="%s"\n' % (dep, info['opt_resolved'])
-					TESTS += '  inc_%s="%s"\n' % (dep, info['inc'])
-					TESTS += '  inc_%s_resolved="%s"\n' % (dep, info['inc_resolved'])
-					TESTS += '  lib_%s="%s"\n' % (dep, info['lib'])
-					TESTS += '  lib_%s_resolved="%s"\n' % (dep, info['lib_resolved'])
+					info = dep['targets'][target]
+
+					TESTS += '  opt_%s="%s"\n' % (name, info['opt'])
+					TESTS += '  opt_%s_resolved="%s"\n' % (name, info['opt_resolved'])
+					TESTS += '  inc_%s="%s"\n' % (name, info['inc'])
+					TESTS += '  inc_%s_resolved="%s"\n' % (name, info['inc_resolved'])
+					TESTS += '  lib_%s="%s"\n' % (name, info['lib'])
+					TESTS += '  lib_%s_resolved="%s"\n' % (name, info['lib_resolved'])
 
 					txt = info['txt']
 				else:
-					TESTS += '  opt_%s=""\n' % dep
-					TESTS += '  opt_%s_resolved=""\n' % dep
-					TESTS += '  inc_%s=""\n' % dep
-					TESTS += '  inc_%s_resolved=""\n' % dep
-					TESTS += '  lib_%s=""\n' % dep
-					TESTS += '  lib_%s_resolved=""\n' % dep
+					TESTS += '  opt_%s=""\n' % name
+					TESTS += '  opt_%s_resolved=""\n' % name
+					TESTS += '  inc_%s=""\n' % name
+					TESTS += '  inc_%s_resolved=""\n' % name
+					TESTS += '  lib_%s=""\n' % name
+					TESTS += '  lib_%s_resolved=""\n' % name
 
 					txt = ua.utils.HELLOWORLDS[lang]
 
@@ -326,7 +327,7 @@ def configure(ctx):
 
 				TESTS += '  #########\n\n'
 
-				TESTS += '  cat << EOF | %s -x%s $opt_%s_resolved $inc_%s_resolved -o /tmp/___%s - $lib_%s_resolved\n' % (ua.utils.COMPS[lang], lang, dep, dep, dep, dep) +\
+				TESTS += '  cat << EOF | %s -x%s $opt_%s_resolved $inc_%s_resolved -o /tmp/___%s - $lib_%s_resolved\n' % (ua.utils.COMPS[lang], lang, name, name, name, name) +\
 					 '%s\n\n' % txt +\
 					 'EOF\n\n'
 
@@ -334,26 +335,26 @@ def configure(ctx):
 
 				TESTS += '  if test $? -eq 0;\n' +\
 					 '  then\n' +\
-					 '    printf "Checking for %s\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n' % dep +\
-					 '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} \'-DHAVE_%s\')\n' % dep.upper() +\
-					 '    FUSES=(${FUSES[@]} \'HAVE_%s\')\n' % dep.upper() +\
+					 '    printf "Checking for %s\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n' % name +\
+					 '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} \'-DHAVE_%s\')\n' % name.upper() +\
+					 '    FUSES=(${FUSES[@]} \'HAVE_%s\')\n' % name.upper() +\
 					 '  else\n'
 
-				if dep in YYYS:
-					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[33mWarn.\\033[0m ]\\n"\n' % dep +\
-						  '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} \'-DNO_%s\')\n' % dep.upper() +\
-						  '    FUSES=(${FUSES[@]} \'NO_%s\')\n' % dep.upper() +\
-						  '    opt_%s=\'\'\n' % dep +\
-						  '    inc_%s=\'\'\n' % dep +\
-						  '    lib_%s=\'\'\n' % dep +\
+				if name in YYYS:
+					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[33mWarn.\\033[0m ]\\n"\n' % name +\
+						  '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} \'-DNO_%s\')\n' % name.upper() +\
+						  '    FUSES=(${FUSES[@]} \'NO_%s\')\n' % name.upper() +\
+						  '    opt_%s=\'\'\n' % name +\
+						  '    inc_%s=\'\'\n' % name +\
+						  '    lib_%s=\'\'\n' % name +\
 						  '#   exit 1\n'
 				else:
-					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[31mError\\033[0m ]\\n"\n' % dep +\
-						  '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} \'-DNO_%s\')\n' % dep.upper() +\
-						  '    FUSES=(${FUSES[@]} \'NO_%s\')\n' % dep.upper() +\
-						  '    opt_%s=\'\'\n' % dep +\
-						  '    inc_%s=\'\'\n' % dep +\
-						  '    lib_%s=\'\'\n' % dep +\
+					 TESTS += '    printf "Checking for %s\\033[69G[ \\033[31mError\\033[0m ]\\n"\n' % name +\
+						  '    GLOBAL_OPTS=(${GLOBAL_OPTS[@]} \'-DNO_%s\')\n' % name.upper() +\
+						  '    FUSES=(${FUSES[@]} \'NO_%s\')\n' % name.upper() +\
+						  '    opt_%s=\'\'\n' % name +\
+						  '    inc_%s=\'\'\n' % name +\
+						  '    lib_%s=\'\'\n' % name +\
 						  '    exit 1\n'
 
 				TESTS += '  fi\n\n'
@@ -468,18 +469,18 @@ def configure(ctx):
 
 		#############################################################
 
-		for _lib in project['libs']:
+		for lib in project['libs']:
 			i = 0
 			j = 0
 
 			T = '\\$(if \\$(or '
 			F = '\\$(if \\$(and '
 
-			for target in _lib['targets']:
+			for target in lib['targets']:
 				T += '\\$(findstring %s,\\$(OS_CFLAGS)),' % ident(target)
 				i += 1
 
-			for fuse in _lib['fuses']:
+			for fuse in lib['fuses']:
 				F += '\\$(findstring %s,\\$(FUSES)),' % macro(fuse)
 				j += 1
 
@@ -488,37 +489,39 @@ def configure(ctx):
 
 			if   i != 0 and j == 0:
 				libs2 += 'ifneq (%s,)\n' % T +\
-					 '	GCC_LIB_%s += %s\n' % (NAME, _lib['value']) +\
+					 '	GCC_LIB_%s += %s\n' % (NAME, lib['value']) +\
 					 'endif\n' +\
 					 '\n'
 
 			elif i == 0 and j != 0:
 				libs2 += 'ifneq (%s,)\n' % F +\
-					 '	GCC_LIB_%s += %s\n' % (NAME, _lib['value']) +\
+					 '	GCC_LIB_%s += %s\n' % (NAME, lib['value']) +\
 					 'endif\n' +\
 					 '\n'
 
 			elif i != 0 and j != 0:
 				libs2 += 'ifneq (%s,)\n' % T +\
 					 '  ifneq (%s,)\n' % F +\
-					 '	GCC_LIB_%s += %s\n' % (NAME, _lib['value']) +\
+					 '	GCC_LIB_%s += %s\n' % (NAME, lib['value']) +\
 					 '  endif\n' +\
 					 'endif\n' +\
 					 '\n'
 
 			else:
-				libs1 += ' %s' % _lib['value']
+				libs1 += ' %s' % lib['value']
 
 		#############################################################
 
-		for _use in project['uses']:
+		for use in project['uses']:
 
-			if ctx.deps.has_key(_use):
-				opts1 += ' $opt_%s' % _use
-				incs1 += ' $inc_%s' % _use
-				libs1 += ' $lib_%s' % _use
-			else:
-				ua.utils.ooops(ctx, 'dependency `%s` not defined !' % _use)
+			for dep in ctx.deps:
+
+				if use == dep['name']:
+					opts1 += ' $opt_%s' % use
+					incs1 += ' $inc_%s' % use
+					libs1 += ' $lib_%s' % use
+
+					break
 
 		#############################################################
 
@@ -703,8 +706,6 @@ def configure(ctx):
 		srcs2 = ''
 		objs2 = ''
 		rules = ''
-
-		##
 
 		NAME = macro(project['name'])
 

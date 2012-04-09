@@ -137,7 +137,7 @@ class context:
 		#############################################################
 
 		self.fuses = []
-		self.deps = {}
+		self.deps = []
 		self.needed_deps = set([])
 		self.option_deps = set([])
 		self.projects = []

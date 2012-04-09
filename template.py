@@ -184,15 +184,19 @@ case `echo $TARGET | tr [:lower:] [:upper:]`
 in
   *I386*|*I486*|*I586*|*I686*)
     OS_ARCH='__ARCH_X86'
+    FUSES=(${FUSES[@]} 'ARCH_X86')
     ;;
   *X86_64*|*AMD64*)
     OS_ARCH='__ARCH_X86_64'
+    FUSES=(${FUSES[@]} 'ARCH_X86_64')
     ;;
   *ARM*)
     OS_ARCH='__ARCH_ARM'
+    FUSES=(${FUSES[@]} 'ARCH_ARM')
     ;;
   *)
     OS_ARCH='__ARCH_UNKNOWN'
+    FUSES=(${FUSES[@]} 'ARCH_UNKNOWN')
 esac
 
 #############################################################################
@@ -425,7 +429,7 @@ DST_ETC=\$(DST_PREFIX)/\$(ETC)
 
 #############################################################################
 
-FUSES=${$OS_NAME $OS_ARCH FUSES[@]}
+FUSES=${FUSES[@]}
 
 #############################################################################
 

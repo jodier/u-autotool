@@ -397,49 +397,25 @@ def configure(ctx):
 
 		##
 
-		if len(project['targets']) == 0:
-			EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts)
-			EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs)
-			EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs)
-			EPILOG += '\n'
+		EPILOG += 'GCC_OPT_%s=$(trim "\\$(GCC_OPT)%s")\n' % (NAME, opts)
+		EPILOG += 'GCC_INC_%s=$(trim "\\$(GCC_INC)%s")\n' % (NAME, incs)
+		EPILOG += 'GCC_LIB_%s=$(trim "\\$(GCC_LIB)%s")\n' % (NAME, libs)
+		EPILOG += '\n'
 
-			EPILOG += 'GXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
-			EPILOG += 'GXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
-			EPILOG += 'GXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
-			EPILOG += '\n'
+		EPILOG += 'GXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
+		EPILOG += 'GXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
+		EPILOG += 'GXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
+		EPILOG += '\n'
 
-			EPILOG += 'ACC_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
-			EPILOG += 'ACC_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
-			EPILOG += 'ACC_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
-			EPILOG += '\n'
+		EPILOG += 'ACC_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
+		EPILOG += 'ACC_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
+		EPILOG += 'ACC_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
+		EPILOG += '\n'
 
-			EPILOG += 'AXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
-			EPILOG += 'AXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
-			EPILOG += 'AXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
-			EPILOG += '\n'
-
-		for target in project['targets']:
-			print('-> %s' % target)
-
-			EPILOG += 'GCC_OPT_%s_%s=$(trim "\\$(GCC_OPT)%s")\n' % (target, NAME, opts)
-			EPILOG += 'GCC_INC_%s_%s=$(trim "\\$(GCC_INC)%s")\n' % (target, NAME, incs)
-			EPILOG += 'GCC_LIB_%s_%s=$(trim "\\$(GCC_LIB)%s")\n' % (target, NAME, libs)
-			EPILOG += '\n'
-
-			EPILOG += 'GXX_OPT_%s_%s=\$(GCC_OPT_%s)\n' % (target, NAME, NAME)
-			EPILOG += 'GXX_INC_%s_%s=\$(GCC_INC_%s)\n' % (target, NAME, NAME)
-			EPILOG += 'GXX_LIB_%s_%s=\$(GCC_LIB_%s)\n' % (target, NAME, NAME)
-			EPILOG += '\n'
-
-			EPILOG += 'ACC_OPT_%s_%s=\$(GCC_OPT_%s)\n' % (target, NAME, NAME)
-			EPILOG += 'ACC_INC_%s_%s=\$(GCC_INC_%s)\n' % (target, NAME, NAME)
-			EPILOG += 'ACC_LIB_%s_%s=\$(GCC_LIB_%s)\n' % (target, NAME, NAME)
-			EPILOG += '\n'
-
-			EPILOG += 'AXX_OPT_%s_%s=\$(GCC_OPT_%s)\n' % (target, NAME, NAME)
-			EPILOG += 'AXX_INC_%s_%s=\$(GCC_INC_%s)\n' % (target, NAME, NAME)
-			EPILOG += 'AXX_LIB_%s_%s=\$(GCC_LIB_%s)\n' % (target, NAME, NAME)
-			EPILOG += '\n'
+		EPILOG += 'AXX_OPT_%s=\$(GCC_OPT_%s)\n' % (NAME, NAME)
+		EPILOG += 'AXX_INC_%s=\$(GCC_INC_%s)\n' % (NAME, NAME)
+		EPILOG += 'AXX_LIB_%s=\$(GCC_LIB_%s)\n' % (NAME, NAME)
+		EPILOG += '\n'
 
 	#####################################################################
 	# MAKEFILE RULES						    #
@@ -481,41 +457,53 @@ def configure(ctx):
 	RULES += '\n'
 
 	#####################################################################
+	RULES += '\n'
+	#####################################################################
 
 	for project in ctx.projects:
 
-		T = ''
-		F = ''
+		i = 0
+		j = 0
+
+		T = '\\$(if \\$(or '
+		F = '\\$(if \\$(and '
 
 		for target in project['targets']:
-			T += '\\$(findstring %s, \\$(OS_CFLAGS))' % ident(target)
-		for fuse in project['fuses']:
-			F += '\\$(findstring %s, \\$(FUSES))' % macro(fuse)
+			T += '\\$(findstring %s,\\$(OS_CFLAGS)),' % ident(target)
+			i += 1
 
-		if   len(T) != 0 and len(F) == 0:
+		for fuse in project['fuses']:
+			F += '\\$(findstring %s,\\$(FUSES)),' % macro(fuse)
+			j += 1
+
+		T = T[: -1] + '),true,)'
+		F = F[: -1] + '),true,)'
+
+		if   i != 0 and j == 0:
 			RULES += 'ifneq (%s,)\n' % T +\
 				 '  all_rules += all_%s\n' % project['name'] +\
 				 '  install_rules += install_%s\n' % project['name'] +\
 				 '  clean_rules += clean_%s\n' % project['name'] +\
-				 'endif\n'
+				 'endif\n' +\
+				 ''
 
-		elif len(T) == 0 and len(F) != 0:
+		elif i == 0 and j != 0:
 			RULES += 'ifneq (%s,)\n' % F +\
 				 '  all_rules += all_%s\n' % project['name'] +\
 				 '  install_rules += install_%s\n' % project['name'] +\
 				 '  clean_rules += clean_%s\n' % project['name'] +\
-				 'endif\n'
+				 'endif\n' +\
+				 ''
 
-		elif len(T) != 0 and len(F) != 0:
+		elif i != 0 and j != 0:
 			RULES += 'ifneq (%s,)\n' % T +\
 				 '  ifneq (%s,)\n' % F +\
 				 '    all_rules += all_%s\n' % project['name'] +\
 				 '    install_rules += install_%s\n' % project['name'] +\
 				 '    clean_rules += clean_%s\n' % project['name'] +\
 				 '  endif\n' +\
-				 'endif\n'
-
-		RULES += '\n'
+				 'endif\n' +\
+				 ''
 
 	#####################################################################
 
@@ -525,25 +513,31 @@ def configure(ctx):
 
 		for link in ctx.links:
 
-			T = ''
-			F = ''
+			T = '\\$(if \\$(or '
+			F = '\\$(if \\$(and '
 
 			for target in link['targets']:
-				T += '\\$(findstring %s, \\$(OS_CFLAGS))' % ident(target)
-			for fuse in link['fuses']:
-				F += '\\$(findstring %s, \\$(FUSES))' % macro(fuse)
+				T += '\\$(findstring %s, \\$(OS_CFLAGS)),' % ident(target)
+				i += 1
 
-			if   len(T) != 0 and len(F) == 0:
+			for fuse in link['fuses']:
+				F += '\\$(findstring %s, \\$(FUSES)),' % macro(fuse)
+				j += 1
+
+			T = T[: -1] + '),true,)'
+			F = F[: -1] + '),true,)'
+
+			if   i != 0 and j == 0:
 				RULES += 'ifneq (%s,)\n' % T +\
 					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
 					'endif\n'
 
-			elif len(T) == 0 and len(F) != 0:
+			elif i == 0 and j != 0:
 				RULES += 'ifneq (%s,)\n' % F +\
 					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
 					'endif\n'
 
-			elif len(T) != 0 and len(F) != 0:
+			elif i != 0 and j != 0:
 				RULES += 'ifneq (%s,)\n' % T +\
 					'  ifneq (%s,)\n' % F +\
 					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
@@ -580,17 +574,28 @@ def configure(ctx):
 
 		for src in project['srcs']:
 
-			T = ''
-			F = ''
-
 			src, obj, rule, targets, fuses = ua.rules.buildRules(ctx, NAME, src['path'], src['opt'], src['inc'], src['targets'], src['fuses'])
 
-			for target in targets:
-				T += '\\$(findstring %s, \\$(OS_CFLAGS))' % ident(target)
-			for fuse in fuses:
-				F += '\\$(findstring %s, \\$(FUSES))' % macro(fuse)
+			##
 
-			if   len(T) != 0 and len(F) == 0:
+			i = 0
+			j = 0
+
+			T = '\\$(if \\$(or '
+			F = '\\$(if \\$(and '
+
+			for target in targets:
+				T += '\\$(findstring %s, \\$(OS_CFLAGS)),' % ident(target)
+				i += 1
+
+			for fuse in fuses:
+				F += '\\$(findstring %s, \\$(FUSES)),' % macro(fuse)
+				j += 1
+
+			T = T[: -1] + '),true,)'
+			F = F[: -1] + '),true,)'
+
+			if   i != 0 and j == 0:
 				srcs2 += 'ifneq (%s,)\n' % T +\
 					 '  SRCS_%s += %s\n' % (NAME, src) +\
 					 'endif\n'
@@ -598,7 +603,7 @@ def configure(ctx):
 					 '  OBJS_%s += %s\n' % (NAME, obj) +\
 					 'endif\n'
 
-			elif len(T) == 0 and len(F) != 0:
+			elif i == 0 and j != 0:
 				srcs2 += 'ifneq (%s,)\n' % F +\
 					 '  SRCS_%s += %s\n' % (NAME, src) +\
 					 'endif\n'
@@ -606,7 +611,7 @@ def configure(ctx):
 					 '  OBJS_%s += %s\n' % (NAME, obj) +\
 					 'endif\n'
 
-			elif len(T) != 0 and len(F) != 0:
+			elif i != 0 and j != 0:
 				srcs2 += 'ifneq (%s,)\n' % T +\
 					 '  ifneq (%s,)\n' % F +\
 					 '    SRCS_%s += %s\n' % (NAME, src) +\

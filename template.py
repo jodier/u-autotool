@@ -178,8 +178,6 @@ esac
 
 #############################################################################
 
-echo `echo $TARGET | tr [:lower:] [:upper:]`
-
 case `echo $TARGET | tr [:lower:] [:upper:]`
 in
   *I386*|*I486*|*I586*|*I686*)

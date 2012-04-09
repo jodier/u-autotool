@@ -373,14 +373,18 @@ def configure(ctx):
 		incs = ''
 		libs = ''
 
+#		if len(project['targets']) == 0:
 		for _opt in project['opts']:
-			opts += ' %s' % _opt
+			opts += ' %s' % _opt['value']
 
 		for _inc in project['incs']:
-			incs += ' %s' % _inc
+			incs += ' %s' % _inc['value']
 
 		for _lib in project['libs']:
-			libs += ' %s' % _lib
+			libs += ' %s' % _lib['value']
+
+#		else:
+#			pass
 
 		for _use in project['uses']:
 
@@ -485,7 +489,7 @@ def configure(ctx):
 				 '  install_rules += install_%s\n' % project['name'] +\
 				 '  clean_rules += clean_%s\n' % project['name'] +\
 				 'endif\n' +\
-				 ''
+				 '\n'
 
 		elif i == 0 and j != 0:
 			RULES += 'ifneq (%s,)\n' % F +\
@@ -493,7 +497,7 @@ def configure(ctx):
 				 '  install_rules += install_%s\n' % project['name'] +\
 				 '  clean_rules += clean_%s\n' % project['name'] +\
 				 'endif\n' +\
-				 ''
+				 '\n'
 
 		elif i != 0 and j != 0:
 			RULES += 'ifneq (%s,)\n' % T +\
@@ -503,7 +507,7 @@ def configure(ctx):
 				 '    clean_rules += clean_%s\n' % project['name'] +\
 				 '  endif\n' +\
 				 'endif\n' +\
-				 ''
+				 '\n'
 
 	#####################################################################
 
@@ -512,6 +516,9 @@ def configure(ctx):
 		RULES = '%s: \\$(%s_rules)\n' % (rule, rule)
 
 		for link in ctx.links:
+
+			i = 0
+			j = 0
 
 			T = '\\$(if \\$(or '
 			F = '\\$(if \\$(and '
@@ -530,19 +537,22 @@ def configure(ctx):
 			if   i != 0 and j == 0:
 				RULES += 'ifneq (%s,)\n' % T +\
 					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					'endif\n'
+					'endif\n' +\
+					'\n'
 
 			elif i == 0 and j != 0:
 				RULES += 'ifneq (%s,)\n' % F +\
 					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					'endif\n'
+					'endif\n' +\
+					'\n'
 
 			elif i != 0 and j != 0:
 				RULES += 'ifneq (%s,)\n' % T +\
 					'  ifneq (%s,)\n' % F +\
 					'	@make -C "%s" %s\n' % (link['dir'], rule) +\
 					'  endif\n' +\
-					'endif\n'
+					'endif\n' +\
+					'\n'
 
 			else:
 				RULES += '	@make -C "%s" %s\n' % (link['dir'], rule)
@@ -598,30 +608,36 @@ def configure(ctx):
 			if   i != 0 and j == 0:
 				srcs2 += 'ifneq (%s,)\n' % T +\
 					 '  SRCS_%s += %s\n' % (NAME, src) +\
-					 'endif\n'
+					 'endif\n' +\
+					 '\n'
 				objs2 += 'ifneq (%s,)\n' % T +\
 					 '  OBJS_%s += %s\n' % (NAME, obj) +\
-					 'endif\n'
+					 'endif\n' +\
+					 '\n'
 
 			elif i == 0 and j != 0:
 				srcs2 += 'ifneq (%s,)\n' % F +\
 					 '  SRCS_%s += %s\n' % (NAME, src) +\
-					 'endif\n'
+					 'endif\n' +\
+					 '\n'
 				objs2 += 'ifneq (%s,)\n' % F +\
 					 '  OBJS_%s += %s\n' % (NAME, obj) +\
-					 'endif\n'
+					 'endif\n' +\
+					 '\n'
 
 			elif i != 0 and j != 0:
 				srcs2 += 'ifneq (%s,)\n' % T +\
 					 '  ifneq (%s,)\n' % F +\
 					 '    SRCS_%s += %s\n' % (NAME, src) +\
 					 '  endif\n' +\
-					 'endif\n'
+					 'endif\n' +\
+					 '\n'
 				objs2 += 'ifneq (%s,)\n' % T +\
 					 '  ifneq (%s,)\n' % F +\
 					 '    OBJS_%s += %s\n' % (NAME, obj) +\
 					 '  endif\n' +\
-					 'endif\n'
+					 'endif\n' +\
+					 '\n'
 
 			else:
 				srcs1 += ' \\\\\n %s' % src
@@ -641,7 +657,7 @@ def configure(ctx):
 
 		##
 
-		RULES += 'SRCS_%s =%s\n%s\nOBJS_%s =%s\n%s\n%s' % (NAME, srcs1, srcs2, NAME, objs1, objs2, rules)
+		RULES += 'SRCS_%s =%s\n%s\nOBJS_%s =%s\n%s\n%s' % (NAME, srcs1, srcs2[: -1], NAME, objs1, objs2[: -1], rules)
 
 	#####################################################################
 

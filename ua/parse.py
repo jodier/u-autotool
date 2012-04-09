@@ -384,39 +384,88 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'opt':
-				OPTS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
+				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
+
+				dic = {
+					'value': value,
+					'targets': targets,
+					'fuses': fuses,
+				}
+
+				OPTS.append(dic)
 
 			#####################################################
 			# INC						    #
 			#####################################################
 
 			if node1.nodeName == 'inc':
-				INCS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
+				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
+
+				dic = {
+					'value': value,
+					'targets': targets,
+					'fuses': fuses,
+				}
+
+				INCS.append(dic)
 
 			#####################################################
 			# OBJ						    #
 			#####################################################
 
 			if node1.nodeName == 'obj':
-				OBJS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
+				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
+
+				dic = {
+					'value': value,
+					'targets': targets,
+					'fuses': fuses,
+				}
+
+				OBJS.append(dic)
 
 			#####################################################
 			# LIB						    #
 			#####################################################
 
 			if node1.nodeName == 'lib':
-				LIBS.append(node1.getStripedIAttribute('value').replace('$', '\\$'))
+				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
+
+				dic = {
+					'value': value,
+					'targets': targets,
+					'fuses': fuses,
+				}
+
+				LIBS.append(dic)
 
 			#####################################################
 			# TXT						    #
 			#####################################################
 
 			if node1.nodeType == 0x004:
-				TXTS.append(        node1.nodeValue.strip('\n').replace('$', '\\$'))
+
+				TXTS.append(node1.nodeValue.strip('\n').replace('$', '\\$'))
 
 		#############################################################
 
-		OPTS.append('-D__IS_%s -D__IS_%s -D__name__=\\"%s\\"' % (type, link, name))
+		OPTS.append({
+			'value': '-D__IS_%s -D__IS_%s -D__name__=\\"%s\\"' % (type, link, name),
+			'targets': [],
+			'fuses': [],
+		})
 
 		#############################################################
 

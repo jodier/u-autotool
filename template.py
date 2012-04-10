@@ -60,6 +60,9 @@ TAR='tar'
 
 TARGET=`$GCC -dumpmachine 2> /dev/null`
 
+BUSSIZE=`bussize "$GCC"`
+BUSORDER=`busorder "$GCC"`
+
 #############################################################################
 
 PROJECT_PREFIX=''
@@ -181,14 +184,17 @@ esac
 case `echo $TARGET | tr [:lower:] [:upper:]`
 in
   *I386*|*I486*|*I586*|*I686*)
+    BUSSIZE=32
     OS_ARCH='__ARCH_X86'
     FUSES=(${FUSES[@]} 'ARCH_X86')
     ;;
   *X86_64*|*AMD64*)
+    BUSSIZE=64
     OS_ARCH='__ARCH_X86_64'
     FUSES=(${FUSES[@]} 'ARCH_X86_64')
     ;;
   *ARM*)
+    BUSSIZE=32
     OS_ARCH='__ARCH_ARM'
     FUSES=(${FUSES[@]} 'ARCH_ARM')
     ;;
@@ -262,32 +268,35 @@ OS_INC=include
 OS_SRC=src
 OS_ETC=etc
 
+if [ -d /usr/lib$BUSSIZE ]
+then
+  OS_LIB=lib$BUSSIZE
+else
+  OS_LIB=lib
+fi
+
 #############################################################################
 
-case `bussize "$GCC"` in
+case $BUSSIZE
+in
   32)
     OS_BUSSIZE=__IS_32BITS
 
     case $OS_NAME
     in
       __IS_TUX)
-        OS_LIB='lib'
         OS_CFLAGS='-m32'
         ;;
       __IS_OSX)
-        OS_LIB='lib'
         OS_CFLAGS='-m32'
         ;;
       __IS_WIN)
-        OS_LIB='lib'
         OS_CFLAGS='-m32'
         ;;
       __IS_IOS)
-        OS_LIB='lib'
         OS_CFLAGS=''
         ;;
       __IS_ANDROID)
-        OS_LIB='lib'
         OS_CFLAGS='-fPIC'
         ;;
     esac
@@ -298,23 +307,18 @@ case `bussize "$GCC"` in
     case $OS_NAME
     in
       __IS_TUX)
-        OS_LIB='lib64'
         OS_CFLAGS='-m64 -fPIC'
         ;;
       __IS_OSX)
-        OS_LIB='lib'
         OS_CFLAGS='-m64 -fPIC'
         ;;
       __IS_WIN)
-        OS_LIB='lib64'
         OS_CFLAGS='-m64 -fPIC'
         ;;
       __IS_IOS)
-        OS_LIB='lib'
         OS_CFLAGS='-fPIC'
         ;;
       __IS_ANDROID)
-        OS_LIB='lib'
         OS_CFLAGS='-fPIC'
         ;;
     esac
@@ -327,7 +331,8 @@ esac
 
 #############################################################################
 
-case `busorder "$GCC"` in
+case $BUSORDER
+in
   little)
     OS_BUSORDER=__IS_LIT_ENDIAN
     ;;
@@ -343,6 +348,7 @@ esac
 #############################################################################
 
 %s
+
 #############################################################################
 
 function trim

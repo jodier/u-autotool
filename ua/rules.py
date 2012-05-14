@@ -30,7 +30,7 @@ import os, re, sys, subprocess
 def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
 	pipe = subprocess.Popen(
-		'gcc -DAUTOGEN -x c -E -MM -MG %s' % src,
+		'gcc -DAUTOGEN -x c -E -MM -MG %s %s %s' % (opt, inc, src),
 		shell = True,
 		stdout = subprocess.PIPE,
 		stderr = subprocess.PIPE,
@@ -80,7 +80,7 @@ def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
 			rules += L[i] + ': \\\\\n'
 		else:
-			L[i] = '\\$(SRC_PREFIX)/' + L[i]
+			L[i] = '\\$(SRC_PREFIX)/' + os.path.relpath(L[i])
 
 			if i < len(L) - 1:
 				rules += '\t' + L[i] + ' \\\\\n'

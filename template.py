@@ -313,7 +313,7 @@ in
         OS_CFLAGS='-m64 -fPIC'
         ;;
       __IS_WIN)
-        OS_CFLAGS='-m64 -fPIC'
+        OS_CFLAGS='-m64'
         ;;
       __IS_IOS)
         OS_CFLAGS='-fPIC'

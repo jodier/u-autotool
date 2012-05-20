@@ -461,44 +461,6 @@ AXX_LIB=-L. -L\$(PWD_LIB)
 
 #############################################################################
 
-%%.o: %%.c
-	@printf "Building \$@\\n"
-	@\$(GCC) \$(GCC_OPT) \$(GCC_INC) -c -o \$@ \$<
-	@printf "[ \\033[32mOk.\\033[0m ]\\n"
-
-%%.o: %%.cc
-	@printf "Building \$@\\n"
-	@\$(GXX) \$(GXX_OPT) \$(GXX_INC) -c -o \$@ \$<
-	@printf "[ \\033[32mOk.\\033[0m ]\\n"
-
-%%.o: %%.m
-	@printf "Building \$@\\n"
-	@\$(ACC) \$(ACC_OPT) \$(ACC_INC) -c -o \$@ \$<
-	@printf "[ \\033[32mOk.\\033[0m ]\\n"
-
-%%.o: %%.mm
-	@printf "Building \$@\\n"
-	@\$(AXX) \$(AXX_OPT) \$(AXX_INC) -c -o \$@ \$<
-	@printf "[ \\033[32mOk.\\033[0m ]\\n"
-
-#############################################################################
-
-%%.o: %%.l
-	@printf "Building \$@\\n"
-	@\$(FLEX) -o \$(basename \$<).c \$<
-	@\$(GCC) \$(GCC_OPT) \$(GCC_INC) -xc -c -o \$@ \$(basename \$<).c
-	@\$(RM) \$(basename \$<).c
-	@printf "[ \\033[32mOk.\\033[0m ]\\n"
-
-%%.o: %%.y
-	@printf "Building \$@\\n"
-	@\$(BISON) -o \$*.c \$<
-	@\$(GCC) \$(GCC_OPT) \$(GCC_INC) -xc -c -o \$@ \$(basename \$<).c
-	@\$(RM) \$(basename \$<).c
-	@printf "[ \\033[32mOk.\\033[0m ]\\n"
-
-#############################################################################
-
 %s
 
 #############################################################################

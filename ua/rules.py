@@ -112,8 +112,8 @@ def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (projetName, opt, projetName, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
-		elif ext[1] in ['.s', '.S']:
-			rules += '\t@\$(GCC) -c -o \$@ \$<\n'
+		elif ext[1] in ['.s', '.S', '.asm']:
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s -c -o \$@ \$<\n'
 
 		rules += '\t@printf "\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n'
 	else:
@@ -137,8 +137,8 @@ def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (projetName, opt, projetName, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
-		elif ext[1] in ['.s', '.S']:
-			rules += '\t\$(GCC) -c -o \$@ \$<\n'
+		elif ext[1] in ['.s', '.S', '.asm']:
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s -c -o \$@ \$<\n'
 
 #		rules += '\t@printf "\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n'
 

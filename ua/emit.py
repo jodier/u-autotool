@@ -95,7 +95,7 @@ def configure(ctx):
 		#############################################################
 
 		if len(fuse['default']) == 0:
-			S1 = '      --enable-%s' % fuse['name']
+			S1 = '      --enable-%s=VALUE' % fuse['name']
 		else:
 			S1 = '      --enable-%s(=VALUE)' % fuse['name']
 

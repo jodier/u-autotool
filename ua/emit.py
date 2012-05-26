@@ -171,9 +171,9 @@ def configure(ctx):
 		for key in fuse['keys']:
 
 			if key['name'] != 'disabled':
-				PARSER += '    --enable-%s=%s)\n'                % (fuse['name'], key['name'])
+				PARSER += '    --enable-%s=%s)\n' % (fuse['name'], key['name'])
 			else:
-				PARSER += '    --enable-%s=%s | --disable-%s)\n' % (fuse['name'], key['name'], fuse['name'])
+				PARSER += '    --enable-%s=disabled | --disable-%s)\n' % (fuse['name'], fuse['name'])
 
 			PARSER += '      resetFuse \'%s\'\n' % macro(fuse['name'])
 			PARSER += '      FUSES=(${FUSES[@]} \'%s\')\n' % macro(fuse['name'] + '-' + key['name'])

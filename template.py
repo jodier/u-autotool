@@ -248,7 +248,7 @@ in
     EXE_SHARED_SUFFIX=''
     EXE_STATIC_SUFFIX=''
 
-    OS_LFLAGS='-fPIC -shared'
+    OS_LFLAGS='-shared'
     ;;
   __IS_OSX)
     LIB_SHARED_SUFFIX='.dylib'
@@ -256,7 +256,7 @@ in
     EXE_SHARED_SUFFIX=''
     EXE_STATIC_SUFFIX=''
 
-    OS_LFLAGS='-fPIC -dynamiclib'
+    OS_LFLAGS='-dynamiclib'
     ;;
   __IS_WIN)
     LIB_SHARED_SUFFIX='.dll'
@@ -264,7 +264,7 @@ in
     EXE_SHARED_SUFFIX='.exe'
     EXE_STATIC_SUFFIX='.exe'
 
-    OS_LFLAGS='-fPIC -shared'
+    OS_LFLAGS='-shared'
     ;;
   __IS_IOS)
     LIB_SHARED_SUFFIX='.dylib'
@@ -272,7 +272,7 @@ in
     EXE_SHARED_SUFFIX=''
     EXE_STATIC_SUFFIX=''
 
-    OS_LFLAGS='-fPIC -dynamiclib'
+    OS_LFLAGS='-dynamiclib'
     ;;
   __IS_ANDROID)
     LIB_SHARED_SUFFIX='.so'
@@ -280,7 +280,7 @@ in
     EXE_SHARED_SUFFIX=''
     EXE_STATIC_SUFFIX=''
 
-    OS_LFLAGS='-fPIC -shared'
+    OS_LFLAGS='-shared'
     ;;
   *)
     echo 'Invalid target'
@@ -312,19 +312,19 @@ in
     case $OS_NAME
     in
       __IS_TUX|__IS_HYPNOS)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_OSX)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_WIN)
         OS_CFLAGS=''
         ;;
       __IS_IOS)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_ANDROID)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
     esac
     ;;
@@ -334,19 +334,19 @@ in
     case $OS_NAME
     in
       __IS_TUX|__IS_HYPNOS)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_OSX)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_WIN)
         OS_CFLAGS=''
         ;;
       __IS_IOS)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_ANDROID)
-        OS_CFLAGS=''
+        OS_CFLAGS='-fPIC'
         ;;
     esac
     ;;

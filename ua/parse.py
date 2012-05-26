@@ -163,8 +163,8 @@ def depNodes(ctx, deps):
 
 						if node2.nodeName == 'opt':
 							value = node2.getStripedIAttribute('value')
-							opt += ' ' + value.replace('$', '\\$')
-							opt_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+							opt          += ' ' + ua.utils.protect(ctx, value)
+							opt_resolved += ' ' + ua.utils.unprotect(ctx, value)
 
 						#############################
 						# INC			    #
@@ -172,8 +172,8 @@ def depNodes(ctx, deps):
 
 						if node2.nodeName == 'inc':
 							value = node2.getStripedIAttribute('value')
-							inc += ' ' + value.replace('$', '\\$')
-							inc_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+							inc          += ' ' + ua.utils.protect(ctx, value)
+							inc_resolved += ' ' + ua.utils.unprotect(ctx, value)
 
 						#############################
 						# LIB			    #
@@ -181,14 +181,14 @@ def depNodes(ctx, deps):
 
 						if node2.nodeName == 'lib':
 							value = node2.getStripedIAttribute('value')
-							lib += ' ' + value.replace('$', '\\$')
-							lib_resolved += ' ' + ua.utils.resolveVar(ctx, value)
+							lib          += ' ' + ua.utils.protect(ctx, value)
+							lib_resolved += ' ' + ua.utils.unprotect(ctx, value)
 
 						#############################
 						# TXT			    #
 						#############################
 
-						if node2.nodeType ==  0x4 :
+						if node2.nodeType == 0x004:
 							txt = node2.nodeValue.rstrip()
 
 					#####################################
@@ -311,8 +311,8 @@ def projectNodes(ctx, projects):
 
 				paths = ua.utils.buildPaths(ctx, expr)
 
-				opt = node1.getStripedIAttribute('opt').replace('$', '\\$')
-				inc = node1.getStripedIAttribute('inc').replace('$', '\\$')
+				opt = ua.utils.protect(ctx, node1.getStripedIAttribute('opt'))
+				inc = ua.utils.protect(ctx, node1.getStripedIAttribute('inc'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -355,7 +355,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'opt':
-				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -373,7 +373,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'inc':
-				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -391,7 +391,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'obj':
-				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -409,7 +409,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'lib':
-				value = node1.getStripedIAttribute('value').replace('$', '\\$')
+				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -428,7 +428,7 @@ def projectNodes(ctx, projects):
 
 			if node1.nodeType == 0x004:
 
-				TXTS.append(node1.nodeValue.strip('\n').replace('$', '\\$'))
+				TXTS.append(ua.utils.protect(ctx, node1.nodeValue.strip('\n')))
 
 		#############################################################
 

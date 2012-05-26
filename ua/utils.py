@@ -215,6 +215,25 @@ OS_ENVIRON = {
 
 #############################################################################
 
+def resolveENV(ctx, s):
+	result = ''
+
+	for part in re.split('(\!\{[^\}]+\})', s):
+
+		if len(part) > 3 and part[0] == '$' and part[+1] == '{' and part[-1] == '}':
+			part = part[+2: -1]
+
+			if not os.environ.has_key(part):
+				ooops(ctx, 'Environnement variable `%s` not defined !' % part)
+			else:
+				result += os.environ[part]
+		else:
+			result += part
+
+	return result
+
+#############################################################################
+
 def resolveEnv(ctx, s):
 	result = ''
 
@@ -251,6 +270,18 @@ def resolveVar(ctx, s):
 			result += part
 
 	return result
+
+#############################################################################
+
+def protect(ctx, s)
+
+	return resolveENV(ctx, result).replace('$', '\\$')
+
+#############################################################################
+
+def unprotect(ctx, s)
+
+	return resolveVar(ctx, result).replace('!{', '${')
 
 #############################################################################
 

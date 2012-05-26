@@ -820,7 +820,13 @@ def configure(ctx):
 
 			#############################################
 
-			RULES += 'clean_%s:\n' % (name)
+			if ctx.verbose:
+				RULES += 'clean_%s:\n\t@rm -vfr' % name
+			else:
+				RULES += 'clean_%s:\n\t@rm -fr' % name
+
+			RULES += ' \$(OBJS_%s)' % (NAME, name)
+
 			RULES += '\n'
 
 			if len(project['txts']) > 2:

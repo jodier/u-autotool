@@ -27,7 +27,7 @@ import os, sys, zlib, base64, ua.utils, ua.rules, subprocess
 
 #############################################################################
 
- = \
+template = \
 	b'eNrtGWlz2kb0M/srto4yiklkcriejBNlKg47SjEwgMekjgsCFthUSIyOxI7j/963' +\
 	b'hw4EJHaLnHSmfECrd2jfvW93H/xSGlKnNLT8GUIPtvlDqNOu9Fvt2pHZ0wdj6jnW' +\
 	b'nGDl6QC1zqoRfA9VO93oRS2Fvley3ZFlq1sXhk5wQPwAaw7eUSqVnVcomBEHYXxc' +\

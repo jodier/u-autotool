@@ -312,19 +312,19 @@ in
     case $OS_NAME
     in
       __IS_TUX|__IS_HYPNOS)
-        OS_CFLAGS='-m32'
+        OS_CFLAGS=''
         ;;
       __IS_OSX)
-        OS_CFLAGS='-m32'
+        OS_CFLAGS=''
         ;;
       __IS_WIN)
-        OS_CFLAGS='-m32'
+        OS_CFLAGS=''
         ;;
       __IS_IOS)
         OS_CFLAGS=''
         ;;
       __IS_ANDROID)
-        OS_CFLAGS='-fPIC'
+        OS_CFLAGS=''
         ;;
     esac
     ;;
@@ -334,13 +334,13 @@ in
     case $OS_NAME
     in
       __IS_TUX|__IS_HYPNOS)
-        OS_CFLAGS='-m64 -fPIC'
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_OSX)
-        OS_CFLAGS='-m64 -fPIC'
+        OS_CFLAGS='-fPIC'
         ;;
       __IS_WIN)
-        OS_CFLAGS='-m64'
+        OS_CFLAGS=''
         ;;
       __IS_IOS)
         OS_CFLAGS='-fPIC'

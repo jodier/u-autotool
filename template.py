@@ -292,7 +292,6 @@ esac
 
 OS_BIN=bin
 OS_INC=include
-OS_SRC=src
 OS_ETC=etc
 
 if [ -d /usr/lib$BUSSIZE ]
@@ -433,7 +432,6 @@ PROJECT_SUFFIX=$PROJECT_SUFFIX
 BIN=$OS_BIN
 INC=$OS_INC
 LIB=$OS_LIB
-SRC=$OS_SRC
 ETC=$OS_ETC
 
 #############################################################################
@@ -441,7 +439,6 @@ ETC=$OS_ETC
 SRC_BIN=\$(SRC_PREFIX)/\$(BIN)
 SRC_INC=\$(SRC_PREFIX)/\$(INC)
 SRC_LIB=\$(SRC_PREFIX)/\$(LIB)
-SRC_SRC=\$(SRC_PREFIX)/\$(SRC)
 SRC_ETC=\$(SRC_PREFIX)/\$(ETC)
 
 #############################################################################
@@ -449,7 +446,6 @@ SRC_ETC=\$(SRC_PREFIX)/\$(ETC)
 PWD_BIN=\$(PWD_PREFIX)/\$(BIN)
 PWD_INC=\$(PWD_PREFIX)/\$(INC)
 PWD_LIB=\$(PWD_PREFIX)/\$(LIB)
-PWD_SRC=\$(PWD_PREFIX)/\$(SRC)
 PWD_ETC=\$(PWD_PREFIX)/\$(ETC)
 
 #############################################################################
@@ -457,7 +453,6 @@ PWD_ETC=\$(PWD_PREFIX)/\$(ETC)
 DST_BIN=\$(DST_PREFIX)/\$(BIN)
 DST_INC=\$(DST_PREFIX)/\$(INC)
 DST_LIB=\$(DST_PREFIX)/\$(LIB)
-DST_SRC=\$(DST_PREFIX)/\$(SRC)
 DST_ETC=\$(DST_PREFIX)/\$(ETC)
 
 #############################################################################

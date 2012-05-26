@@ -275,13 +275,13 @@ def resolveVar(ctx, s):
 
 def protect(ctx, s):
 
-	return resolveENV(ctx, result).replace('$', '\\$')
+	return resolveENV(ctx, s).replace('$', '\\$')
 
 #############################################################################
 
 def unprotect(ctx, s):
 
-	return resolveVar(ctx, result).replace('!{', '${')
+	return resolveVar(ctx, s).replace('!{', '${')
 
 #############################################################################
 

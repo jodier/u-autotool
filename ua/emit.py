@@ -825,7 +825,7 @@ def configure(ctx):
 			else:
 				RULES += 'clean_%s:\n\t@rm -fr' % name
 
-			RULES += ' \$(OBJS_%s)' % (NAME, name)
+			RULES += ' \$(OBJS_%s)' % NAME
 
 			RULES += '\n'
 

@@ -304,6 +304,60 @@ fi
 
 #############################################################################
 
+case $BUSSIZE
+in
+  32)
+    OS_BUSSIZE=__IS_32BITS
+
+    case $OS_NAME
+    in
+      __IS_TUX|__IS_HYPNOS)
+        OS_CFLAGS=''
+        ;;
+      __IS_OSX)
+        OS_CFLAGS=''
+        ;;
+      __IS_WIN)
+        OS_CFLAGS=''
+        ;;
+      __IS_IOS)
+        OS_CFLAGS=''
+        ;;
+      __IS_ANDROID)
+        OS_CFLAGS=''
+        ;;
+    esac
+    ;;
+  64)
+    OS_BUSSIZE=__IS_64BITS
+
+    case $OS_NAME
+    in
+      __IS_TUX|__IS_HYPNOS)
+        OS_CFLAGS=''
+        ;;
+      __IS_OSX)
+        OS_CFLAGS=''
+        ;;
+      __IS_WIN)
+        OS_CFLAGS=''
+        ;;
+      __IS_IOS)
+        OS_CFLAGS=''
+        ;;
+      __IS_ANDROID)
+        OS_CFLAGS=''
+        ;;
+    esac
+    ;;
+  *)
+    echo 'Invalid target'
+
+    exit 1
+esac
+
+#############################################################################
+
 case $BUSORDER
 in
   little)

@@ -230,8 +230,7 @@ def entry_point(argv):
 		ctx.cmdline += ' --debug'
 	else:
 		ctx.debug = '-O%s' % options.optimize
-
-	print(ctx.debug)
+		ctx.cmdline += ' -O%s' % options.optimize
 
 	##
 

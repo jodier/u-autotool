@@ -105,7 +105,7 @@ def configure(ctx):
 
 		for key in fuse['keys']:
 
-			if key['name'] != fuse['default']:
+			if len(fuse['default']) == 0 or fuse['default'] != key['name']:
 				S2 += '%s,' % key['name']
 			else:
 				S2 += '[%s],' % key['name']
@@ -129,7 +129,11 @@ def configure(ctx):
 
 	for fuse in ctx.fuses:
 
-		if len(fuse['enabled']) > 0 and len(fuse['default']) > 0 and fuse['enabled'] != 'no':
+		if len(fuse['default']) > 0 \
+		   and \
+		   len(fuse['enabled']) > 0 \
+		   and \
+		   str(fuse['enabled']) != 'no':
 
 			for key in fuse['keys']:
 

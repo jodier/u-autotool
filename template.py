@@ -173,7 +173,7 @@ do
       configure_help
       ;;
     *)
-      echo "$0: warning: ignored option: $option"
+      echo "$0: info: ignored option: $option"
   esac
 
 done

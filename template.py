@@ -310,7 +310,7 @@ in
 
     case $OS_NAME
     in
-      __IS_TUX|__IS_HYPNOS)
+      __IS_TUX)
         OS_CFLAGS='-fPIC'
         ;;
       __IS_OSX)
@@ -324,6 +324,9 @@ in
         ;;
       __IS_ANDROID)
         OS_CFLAGS='-fPIC'
+        ;;
+      __IS_HYPNOS)
+        OS_CFLAGS=''
         ;;
     esac
     ;;
@@ -332,7 +335,7 @@ in
 
     case $OS_NAME
     in
-      __IS_TUX|__IS_HYPNOS)
+      __IS_TUX)
         OS_CFLAGS='-fPIC'
         ;;
       __IS_OSX)
@@ -346,6 +349,9 @@ in
         ;;
       __IS_ANDROID)
         OS_CFLAGS='-fPIC'
+        ;;
+      __IS_HYPNOS)
+        OS_CFLAGS=''
         ;;
     esac
     ;;

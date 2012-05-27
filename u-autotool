@@ -231,6 +231,8 @@ def entry_point(argv):
 	else:
 		ctx.debug = '-O%s' % options.optimize
 
+	print(ctx.debug)
+
 	##
 
 	if not options.verbose is None:

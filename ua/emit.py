@@ -329,7 +329,7 @@ def configure(ctx):
 
 				TESTS += '  #########\n\n'
 
-				TESTS += '  cat << EOF | %s -x%s $opt_%s_resolved $inc_%s_resolved -c -o /tmp/___%s - $lib_%s_resolved\n' % (ua.utils.COMPS[lang], lang, name, name, name, name) +\
+				TESTS += '  cat << EOF | %s -x%s $opt_%s_resolved $inc_%s_resolved -o /tmp/___%s - $lib_%s_resolved\n' % (ua.utils.COMPS[lang], lang, name, name, name, name) +\
 					 '%s\n\n' % txt +\
 					 'EOF\n\n'
 

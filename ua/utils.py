@@ -274,7 +274,7 @@ def buildPaths(ctx, s):
 #############################################################################
 
 def relpath1(path):
-	return os.path.relpath(path, '.')
+	return os.path.relpath(path, '.').replace('\\', '/')
 
 os.path.relpath1 = \
 		relpath1
@@ -282,7 +282,7 @@ os.path.relpath1 = \
 #############################################################################
 
 def relpath2(path):
-	return os.path.relpath('.', path)
+	return os.path.relpath('.', path).replace('\\', '/')
 
 os.path.relpath2 = \
 		relpath2

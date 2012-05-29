@@ -488,9 +488,9 @@ def linkNodes(ctx, links):
 
 		#############################################################
 
-		dir = os.path.dirname(url)
-		base = os.path.basename(url)
-		rid = os.path.relpath2(dir)
+		dir = os.path.dirname(url).replace('\\', '/')
+		base = os.path.basename(url).replace('\\', '/')
+		rid = os.path.relpath2(dir).replace('\\', '/')
 
 		targets = link.getItemsByUAttrName('targets')
 		fuses = link.getItemsByLAttrName('fuses')

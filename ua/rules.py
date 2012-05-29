@@ -23,7 +23,7 @@
 #
 #############################################################################
 
-import os, re, sys, subprocess
+import os, re, sys, ua.utils, subprocess
 
 #############################################################################
 
@@ -82,7 +82,7 @@ def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
 			rules += L[i] + ': \\\\\n'
 		else:
-			L[i] = '\\$(SRC_PREFIX)/' + os.path.relpath(L[i])
+			L[i] = '\\$(SRC_PREFIX)/' + ua.utils.relpath1(L[i])
 
 			if i < len(L) - 1:
 				rules += '\t' + L[i] + ' \\\\\n'

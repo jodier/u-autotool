@@ -64,7 +64,9 @@ def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
 	#####################################################################
 
-	L = re.split('[\s:\\\\]+', stdout.strip().replace('\\', '/'))
+	L = re.split('[\s:\\\\]+', stdout.replace(' \\\n', '').replace('\\', '/').strip())
+
+	print(L)
 
 	#####################################################################
 

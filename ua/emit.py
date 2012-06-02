@@ -192,11 +192,11 @@ def configure(ctx):
 
 	for link in ctx.links:
 
-		if ctx.verbose: print('\033[1;30mEntering \'%s\'\033[0m' % link['dir'])
+		if ctx.verbose: print('\033[0;34mEntering \'%s\'\033[0m' % link['dir'])
 
 		if subprocess.Popen('cd %s && python %s %s' % (link['dir'], '%s%s' % (sys.argv[0], ctx.cmdline), link['base']), shell = True, universal_newlines = True).wait() == 0:
 
-			if ctx.verbose: print('\033[1;30mLeaving \'%s\'\033[0m' % link['dir'])
+			if ctx.verbose: print('\033[0;34mLeaving \'%s\'\033[0m' % link['dir'])
 
 			if len(link['targets']) == 0:
 

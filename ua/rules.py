@@ -29,8 +29,15 @@ import os, re, sys, ua.utils, subprocess
 
 def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
+	if   os.environ.has_key('CC') != False:
+		gcc = os.environ['CC']
+	elif os.environ.has_key('GCC') != False:
+		gcc = os.environ['GCC']
+	else:
+		gcc = 'gcc'
+
 	pipe = subprocess.Popen(
-		'gcc -DAUTOGEN -x c -E -MM -MG %s %s %s' % (opt, inc, src),
+		'%s -DAUTOGEN -x c -E -MM -MG %s %s %s' % (gcc, opt, inc, src),
 		shell = True,
 		stdout = subprocess.PIPE,
 		stderr = subprocess.PIPE,

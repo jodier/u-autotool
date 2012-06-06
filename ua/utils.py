@@ -90,7 +90,6 @@ COMPS = {
 	'c++': '$GXX',
 	'objective-c': '$ACC',
 	'objective-c++': '$AXX',
-	'c#': '$MCS',
 }
 
 #############################################################################
@@ -100,7 +99,6 @@ HELLOWORLDS = {
 	'c++': 'int main(void) { return 0; }',
 	'objective-c': 'int main(void) { return 0; }',
 	'objective-c++': 'int main(void) { return 0; }',
-	'c#': 'public static class HelloWorld { public static int Main() { return 0; } }',
 }
 
 #############################################################################

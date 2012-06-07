@@ -68,9 +68,9 @@ template = \
 	b'iAYoR1NNF9EA5Wiq/CIaoPn1RxZySdgSp1VsC4UJW1JoZguFCVtSaGYLhQlbUuhM' +\
 	b'bKETQNgSz4XYFgoTtqTQzBYKE7ak0MwWChO2pNCZ2MLPoxLHUSiDZYzedFCDosqf' +\
 	b'xy88rIydqekrY9eYEmXmmLZPXHpZ7yiDwLR808bKGb3YU86I6zqAmpkz6N5ukrcn' +\
-	b'v10Uq9Om/6l4y+RQtyv6NlZ0kQrM4xRDPa7UAFMTGObstdva7T6NrSBnha2AeRpb' +\
+	b'v10Uq9Om/6l4y+RQtyv6NlZ0kdbM4xRDPa7UAFMTGObstdva7T6NrSBnha2AeRpb' +\
 	b'tSeKq7YyrtqTxVV7orhqK+OqPVlcM9gusGvjjDcFWe8HnnUrII7A0nugnz722YT+' +\
-	b'b+p32gU='
+	b'b4C/2e0='
 
 #############################################################################
 

@@ -468,26 +468,26 @@ FUSES=${FUSES[@]}
 #############################################################################
 
 GCC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
-GCC_INC=-I. -I\$(PWD_INC)
-GCC_LIB=-L. -L\$(PWD_LIB)
+GCC_INC=-I. -I\$(SRC_INC)
+GCC_LIB=-L. -L\$(SRC_LIB)
 
 #############################################################################
 
 GXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
-GXX_INC=-I. -I\$(PWD_INC)
-GXX_LIB=-L. -L\$(PWD_LIB)
+GXX_INC=-I. -I\$(SRC_INC)
+GXX_LIB=-L. -L\$(SRC_LIB)
 
 #############################################################################
 
 ACC_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
-ACC_INC=-I. -I\$(PWD_INC)
-ACC_LIB=-L. -L\$(PWD_LIB)
+ACC_INC=-I. -I\$(SRC_INC)
+ACC_LIB=-L. -L\$(SRC_LIB)
 
 #############################################################################
 
 AXX_OPT=\$(OS_CFLAGS) %s -fomit-frame-pointer -fno-builtin -Wall -Werror -pipe ${GLOBAL_OPTS[@]/EmPtY/}
-AXX_INC=-I. -I\$(PWD_INC)
-AXX_LIB=-L. -L\$(PWD_LIB)
+AXX_INC=-I. -I\$(SRC_INC)
+AXX_LIB=-L. -L\$(SRC_LIB)
 
 #############################################################################
 

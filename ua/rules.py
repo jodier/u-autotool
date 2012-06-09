@@ -70,7 +70,7 @@ def makedeps(ctx, L, fileName):
 
 #############################################################################
 
-def buildRules(ctx, name, src, opt, inc, targets, fuses):
+def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 	dirname = os.path.dirname(src)
 	basename = os.path.basename(src)
@@ -79,7 +79,7 @@ def buildRules(ctx, name, src, opt, inc, targets, fuses):
 
 	#####################################################################
 
-	obj = '\\$(PWD_PREFIX)/%s/%s_%s%s' % (dirname.replace('\\', '/'), name, shortname, '.o')
+	obj = '\\$(PWD_PREFIX)/%s/%s_%s%s' % (dirname.replace('\\', '/'), NAME, shortname, '.o')
 
 	src = '\\$(SRC_PREFIX)/%s/%s%s' % (dirname.replace('\\', '/'), shortname, extension)
 
@@ -99,21 +99,21 @@ def buildRules(ctx, name, src, opt, inc, targets, fuses):
 		rules += '\t@printf "Building \$@\t"\n'
 
 		if   extension in ['.c']:
-			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 		elif extension in ['.cc', '.cpp', '.cxx']:
-			rules += '\t@\$(GXX) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t@\$(GXX) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 		elif extension in ['.m']:
-			rules += '\t@\$(ACC) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t@\$(ACC) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 		elif extension in ['.mm']:
-			rules += '\t@\$(AXX) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t@\$(AXX) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 
 		elif extension in ['.l']:
 			rules += '\t@\$(FLEX) -o \$(basename \$<).c \$<\n'
-			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (name, opt, name, inc)
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (NAME, opt, NAME, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 		elif extension in ['.y']:
 			rules += '\t@\$(BISON) -o\$(basename \$<).c \$<\n'
-			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (name, opt, name, inc)
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (NAME, opt, NAME, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
 		elif extension in ['.s', '.S', '.asm']:
@@ -124,21 +124,21 @@ def buildRules(ctx, name, src, opt, inc, targets, fuses):
 #		rules += '\t@printf "Building \$@\t"\n'
 
 		if   extension in ['.c']:
-			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 		elif extension in ['.cc', '.cpp', '.cxx']:
-			rules += '\t\$(GXX) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t\$(GXX) \$(GXX_OPT_%s)%s \$(GXX_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 		elif extension in ['.m']:
-			rules += '\t\$(ACC) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t\$(ACC) \$(ACC_OPT_%s)%s \$(ACC_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 		elif extension in ['.mm']:
-			rules += '\t\$(AXX) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (name, opt, name, inc)
+			rules += '\t\$(AXX) \$(AXX_OPT_%s)%s \$(AXX_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
 
 		elif extension in ['.l']:
 			rules += '\t\$(FLEX) -o \$(basename \$<).c \$<\n'
-			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (name, opt, name, inc)
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (NAME, opt, NAME, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 		elif extension in ['.y']:
 			rules += '\t\$(BISON) -o\$(basename \$<).c \$<\n'
-			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (name, opt, name, inc)
+			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -xc -c -o \$@ \$(basename \$<).c\n' % (NAME, opt, NAME, inc)
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
 		elif extension in ['.s', '.S', '.asm']:

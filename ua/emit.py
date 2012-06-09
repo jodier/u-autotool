@@ -649,7 +649,7 @@ def configure(ctx):
 		RULES = ''
 
 		if len(ctx.links) > 0:
-			RULES += '%s_links:\n'
+			RULES += '%s_links:\n' % rule
 
 			for link in ctx.links:
 

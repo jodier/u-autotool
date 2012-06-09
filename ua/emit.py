@@ -870,7 +870,6 @@ def configure(ctx):
 			RULES += '\n'
 
 			for txt in project['post_build']:
-				print('|%s|' % txt)
 				RULES += '%s\n' % txt
 
 			RULES += '\n'

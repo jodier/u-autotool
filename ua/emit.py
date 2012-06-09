@@ -696,6 +696,7 @@ def configure(ctx):
 			RULES += '\n'
 
 			RULES += '%s: %s_links \\$(%s_rules)\n' % (rule, rule, rule)
+
 		else:
 			RULES += '%s: \\$(%s_rules)\n' % (rule, rule)
 

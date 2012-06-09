@@ -23,76 +23,68 @@
 #
 #############################################################################
 
-import os, re, sys, ua.utils, subprocess
+import os, re, ua
+
+#############################################################################
+
+INC_RE = re.compile('#include[ \t]*"([^"]+)"')
+
+#############################################################################
+
+def makedeps(ctx, L, fileName):
+	#####################################################################
+
+	dirName = os.path.dirname(fileName)
+
+	#####################################################################
+
+	try:
+		file = open(fileName, "r")
+
+		lines = file.readlines()
+
+	except IOError:
+		ua.utils.ooops(ctx, 'Could not find file `%s`' % fileName)
+		return
+
+	#####################################################################
+
+	for line in lines:
+		m = INC_RE.match(line)
+
+		if not m is None:
+			f = os.path.normpath(dirName + '/' + m.group(1))
+
+			L.append('\\$(SRC_PREFIX)/%s' % f.replace('\\', '/'))
+
+			makedeps(ctx, L, f)
+
+	#####################################################################
+
+	file.close()
 
 #############################################################################
 
 def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 
-	if   os.environ.has_key('CC') != False:
-		gcc = os.environ['CC']
-	elif os.environ.has_key('GCC') != False:
-		gcc = os.environ['GCC']
-	else:
-		gcc = 'gcc'
+	dirname = os.path.dirname(src).replace('\\', '/')
+	basename = os.path.basename(src).replace('\\', '/')
 
-	pipe = subprocess.Popen(
-		'%s -DAUTOGEN -x c -E -MM -MG %s %s %s' % (gcc, opt, inc, src),
-		shell = True,
-		stdout = subprocess.PIPE,
-		stderr = subprocess.PIPE,
-		universal_newlines = True
-	)
-
-	stdout, stderr = pipe.communicate()
-
-	if pipe.returncode != 0:
-
-		if not stdout is None:
-			print(stdout)
-
-		if not stderr is None:
-			print(stderr)
-
-		sys.exit(pipe.returncode)
-
-	##
-
-	if len(opt) > 0:
-		opt = ' ' + opt
-
-	if len(inc) > 0:
-		inc = ' ' + inc
-
-	##
-
-	dir = os.path.dirname(src)
-	ext = os.path.splitext(src)
+	ext = os.path.splitext(basename)
 
 	#####################################################################
 
-	L = re.split('[\s:\\\\]+', stdout.replace(' \\\n', '').replace('\\', '/').strip())
+	obj = '\\$(PWD_PREFIX)/%s/%s_%s%s' % (dirname, projetName, ext[0], '.o')
+
+	src = '\\$(SRC_PREFIX)/%s/%s%s' % (dirname, ext[0], ext[1])
 
 	#####################################################################
 
-	rules = ''
+	L = [src]
 
-	for i in range(len(L)):
+	makedeps(ctx, L, dirname + '/' + basename)
 
-		if i == 0x0000:
-			if len(dir) == 0:
-				L[i] = '\\$(PWD_PREFIX)/' + ''  +  '' + projetName + '_' + L[i]
-			else:
-				L[i] = '\\$(PWD_PREFIX)/' + dir + '/' + projetName + '_' + L[i]
-
-			rules += L[i] + ': \\\\\n'
-		else:
-			L[i] = '\\$(SRC_PREFIX)/' + ua.utils.relpath1(L[i])
-
-			if i < len(L) - 1:
-				rules += '\t' + L[i] + ' \\\\\n'
-			else:
-				rules += '\t' + L[i] + '' + '\n'
+	rules = '%s: \\\\\n %s\n' % (obj, ' \\\\\n '.join(L))
 
 	#####################################################################
 
@@ -152,9 +144,6 @@ def buildRules(ctx, projetName, src, opt, inc, targets, fuses):
 	rules += '\n'
 
 	#####################################################################
-
-	src = L[1]
-	obj = L[0]
 
 	return src, obj, rules, targets, fuses
 

@@ -807,8 +807,8 @@ def configure(ctx):
 			RULES += 'all_%s: \$(OBJS_%s)\n' % (name, NAME)
 			RULES += '\n'
 
-			if len(project['txts']) > 0:
-				RULES += '%s\n' % project['txts'][0]
+			for txt in project['post_build']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -817,8 +817,8 @@ def configure(ctx):
 			RULES += 'install_%s:\n' % (name)
 			RULES += '\n'
 
-			if len(project['txts']) > 1:
-				RULES += '%s\n' % project['txts'][1]
+			for txt in project['post_install']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -833,8 +833,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 2:
-				RULES += '%s\n' % project['txts'][2]
+			for txt in project['post_clean']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -859,8 +859,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 0:
-				RULES += '%s\n' % project['txts'][0]
+			for txt in project['post_build']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -881,8 +881,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 1:
-				RULES += '%s\n' % project['txts'][1]
+			for txt in project['post_install']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -903,8 +903,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 2:
-				RULES += '%s\n' % project['txts'][2]
+			for txt in project['post_clean']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -927,8 +927,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 0:
-				RULES += '%s\n' % project['txts'][0]
+			for txt in project['post_build']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -949,8 +949,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 1:
-				RULES += '%s\n' % project['txts'][1]
+			for txt in project['post_install']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 
@@ -971,8 +971,8 @@ def configure(ctx):
 
 			RULES += '\n'
 
-			if len(project['txts']) > 2:
-				RULES += '%s\n' % project['txts'][2]
+			for txt in project['post_clean']:
+				RULES += '%s\n' % txt
 
 			RULES += '\n'
 

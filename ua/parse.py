@@ -120,7 +120,7 @@ def depNodes(ctx, deps):
 		lang = dep.getStripedLAttribute('lang')
 
 		if not ua.utils.COMPS.has_key(lang):
-			ua.utils.ooops('`%s`: unkwnown language: `%s`' % (name, lang))
+			ua.utils.ooops(ctx, 'In dep `%s`: unkwnown language: `%s`' % (name, lang))
 
 			lang = 'c'
 
@@ -264,7 +264,15 @@ def projectNodes(ctx, projects):
 		INCS = []
 		OBJS = []
 		LIBS = []
-		TXTS = []
+
+		PRE_BUILD = []
+		POST_BUILD = []
+		PRE_INSTALL = []
+		POST_INSTALL = []
+		PRE_CLEAN = []
+		POST_CLEAN = []
+
+		EXTRAS = []
 
 		#############################################################
 
@@ -423,12 +431,81 @@ def projectNodes(ctx, projects):
 				LIBS.append(dic)
 
 			#####################################################
-			# TXT						    #
+			# PRE_BUILD					    #
 			#####################################################
 
-			if node1.nodeType == 0x004:
+			if node1.nodeName == 'pre_build':
 
-				TXTS.append(ua.utils.protect(ctx, node1.nodeValue.strip('\n')))
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						PRE_BUILD.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
+
+			#####################################################
+			# POST_BUILD					    #
+			#####################################################
+
+			if node1.nodeName == 'post_build':
+
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						POST_BUILD.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
+
+			#####################################################
+			# PRE_INSTALL					    #
+			#####################################################
+
+			if node1.nodeName == 'pre_install':
+
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						PRE_INSTALL.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
+
+			#####################################################
+			# POST_INSTALL					    #
+			#####################################################
+
+			if node1.nodeName == 'post_install':
+
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						POST_INSTALL.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
+
+			#####################################################
+			# PRE_CLEAN					    #
+			#####################################################
+
+			if node1.nodeName == 'pre_clean':
+
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						PRE_CLEAN.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
+
+			#####################################################
+			# POST_CLEAN					    #
+			#####################################################
+
+			if node1.nodeName == 'post_clean':
+
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						POST_CLEAN.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
+
+			#####################################################
+			# EXTRAS					    #
+			#####################################################
+
+			if node1.nodeName == 'extras':
+
+				for node2 in node1.childNodes:
+
+					if node2.nodeType == 0x004:
+						EXTRAS.append(ua.utils.protect(ctx, node2.nodeValue.strip('\n')))
 
 		#############################################################
 
@@ -459,7 +536,15 @@ def projectNodes(ctx, projects):
 			'incs': INCS,
 			'objs': OBJS,
 			'libs': LIBS,
-			'txts': TXTS,
+
+			'pre_build': PRE_BUILD,
+			'post_build': POST_BUILD,
+			'pre_install': PRE_INSTALL,
+			'post_install': POST_INSTALL,
+			'pre_clean': PRE_CLEAN,
+			'post_clean': POST_CLEAN,
+
+			'extras': EXTRAS,
 		}
 
 		ctx.projects.append(dic)

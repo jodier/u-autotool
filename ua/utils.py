@@ -254,6 +254,7 @@ def resolveVar(ctx, s):
 
 def protect(ctx, s):
 	s = s.replace('\\', '\\\\')
+	s = s.replace('$(', '\\$(')
 	s = s.replace('${', '\\${')
 	s = s.replace('!{', '${')
 

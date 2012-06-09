@@ -34,10 +34,6 @@ INC_RE = re.compile('#include[ \t]*"([^"]+)"')
 def makedeps(ctx, L, fileName):
 	#####################################################################
 
-	dirName = os.path.dirname(fileName)
-
-	#####################################################################
-
 	try:
 		fp = open(fileName, "r")
 
@@ -45,17 +41,25 @@ def makedeps(ctx, L, fileName):
 
 	except IOError:
 		ua.utils.ooops(ctx, 'Could not open file `%s`' % fileName)
+
 		return False
 
 	#####################################################################
 
+	dirName = os.path.dirname(fileName)
+
+	#####################################################################
+
 	for line in lines:
+
 		m = INC_RE.match(line)
 
 		if not m is None:
+
 			f = os.path.normpath(dirName + '/' + m.group(1))
 
 			if makedeps(ctx, L, f) != False:
+
 				L.append('\\$(SRC_PREFIX)/%s' % f.replace('\\', '/'))		
 
 	#####################################################################

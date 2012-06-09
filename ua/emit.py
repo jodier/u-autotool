@@ -646,49 +646,58 @@ def configure(ctx):
 
 	def conditionnalLink(ctx, rule):
 
-		RULES = '%s: \\$(%s_rules)\n' % (rule, rule)
+		RULES = ''
 
-		for link in ctx.links:
+		if len(ctx.links) > 0:
+			RULES += '%s_links:\n'
 
-			i = 0
-			j = 0
+			for link in ctx.links:
 
-			T = '\\$(if \\$(or '
-			F = '\\$(if \\$(and '
+				i = 0
+				j = 0
 
-			for target in link['targets']:
-				T += '\\$(findstring %s, \\$(OS_CFLAGS)),' % ident(target)
-				i += 1
+				T = '\\$(if \\$(or '
+				F = '\\$(if \\$(and '
 
-			for fuse in link['fuses']:
-				F += '\\$(findstring %s, \\$(FUSES)),' % macro(fuse)
-				j += 1
+				for target in link['targets']:
+					T += '\\$(findstring %s, \\$(OS_CFLAGS)),' % ident(target)
+					i += 1
 
-			T = T[: -1] + '),true,)'
-			F = F[: -1] + '),true,)'
+				for fuse in link['fuses']:
+					F += '\\$(findstring %s, \\$(FUSES)),' % macro(fuse)
+					j += 1
 
-			if   i != 0 and j == 0:
-				RULES += 'ifneq (%s,)\n' % T +\
-					 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					 'endif\n' +\
-					 '\n'
+				T = T[: -1] + '),true,)'
+				F = F[: -1] + '),true,)'
 
-			elif i == 0 and j != 0:
-				RULES += 'ifneq (%s,)\n' % F +\
-					 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					 'endif\n' +\
-					 '\n'
+				if   i != 0 and j == 0:
+					RULES += 'ifneq (%s,)\n' % T +\
+						 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
+						 'endif\n' +\
+						 '\n'
 
-			elif i != 0 and j != 0:
-				RULES += 'ifneq (%s,)\n' % T +\
-					 '  ifneq (%s,)\n' % F +\
-					 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
-					 '  endif\n' +\
-					 'endif\n' +\
-					 '\n'
+				elif i == 0 and j != 0:
+					RULES += 'ifneq (%s,)\n' % F +\
+						 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
+						 'endif\n' +\
+						 '\n'
 
-			else:
-				RULES += '	@make -C "%s" %s\n' % (link['dir'], rule)
+				elif i != 0 and j != 0:
+					RULES += 'ifneq (%s,)\n' % T +\
+						 '  ifneq (%s,)\n' % F +\
+						 '	@make -C "%s" %s\n' % (link['dir'], rule) +\
+						 '  endif\n' +\
+						 'endif\n' +\
+						 '\n'
+
+				else:
+					RULES += '	@make -C "%s" %s\n' % (link['dir'], rule)
+
+			RULES += '\n'
+
+			RULES += '%s: %s_links \\$(%s_rules)\n' % (rule, rule, rule)
+		else:
+			RULES += '%s: \\$(%s_rules)\n' % (rule, rule)
 
 		return RULES + '\n'
 

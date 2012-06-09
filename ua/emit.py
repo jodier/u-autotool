@@ -327,11 +327,11 @@ def configure(ctx):
 
 				TESTS += '  #########\n\n'
 
-				TESTS += '  cat > /tmp/__tmp_$$ << EOF\n' +\
+				TESTS += '  cat > /tmp/__tmp_$$%s << EOF\n' % ua.utils.EXTS[lang] +\
 					 '%s\n\n' % txt +\
 					 'EOF\n\n'
 
-				TESTS += '  %s $opt_%s_resolved $inc_%s_resolved -o /tmp/__tmp_$$ $lib_%s_resolved\n\n' % (ua.utils.COMPS[lang], name, name, name)
+				TESTS += '  %s $opt_%s_resolved $inc_%s_resolved -o /tmp/__tmp_$$%s $lib_%s_resolved\n\n' % (ua.utils.COMPS[lang], ua.utils.EXTS[lang], name, name, name)
 
 				TESTS += '  #########\n\n'
 

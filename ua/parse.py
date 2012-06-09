@@ -430,7 +430,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_BUILD.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						PRE_BUILD.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 			#####################################################
 			# POST_BUILD					    #
@@ -441,7 +441,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_BUILD.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						POST_BUILD.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 			#####################################################
 			# PRE_INSTALL					    #
@@ -452,7 +452,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_INSTALL.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						PRE_INSTALL.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 			#####################################################
 			# POST_INSTALL					    #
@@ -463,7 +463,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_INSTALL.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						POST_INSTALL.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 			#####################################################
 			# PRE_CLEAN					    #
@@ -474,7 +474,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_CLEAN.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						PRE_CLEAN.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 			#####################################################
 			# POST_CLEAN					    #
@@ -485,7 +485,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_CLEAN.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						POST_CLEAN.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 			#####################################################
 			# EXTRAS					    #
@@ -496,7 +496,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						EXTRAS.append(ua.utils.protect(ctx, '\t' + node2.nodeValue.strip()))
+						EXTRAS.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 		#############################################################
 

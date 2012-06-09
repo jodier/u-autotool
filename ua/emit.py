@@ -196,8 +196,6 @@ def configure(ctx):
 
 		if ua.utils.popen('cd %s && %s %s' % (link['dir'], ctx.cmdline, link['base'])) == 0:
 
-			print('\033[34mLeaving \'%s\'\033[0m' % link['dir'])
-
 			if len(link['targets']) == 0:
 
 				PROLOG += 'install -d %s' % link['dir']							+ '\n' +\

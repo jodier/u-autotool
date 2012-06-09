@@ -256,6 +256,7 @@ def protect(ctx, s):
 	s = s.replace('\\', '\\\\')
 	s = s.replace('$(', '\\$(')
 	s = s.replace('${', '\\${')
+	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
 
 	return s
@@ -263,8 +264,11 @@ def protect(ctx, s):
 #############################################################################
 
 def unprotect(ctx, s):
+	s = resolveVar(ctx, s)
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
 
-	return resolveVar(ctx, s).replace('!{', '${')
+	return s
 
 #############################################################################
 

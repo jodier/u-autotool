@@ -121,7 +121,7 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 		rules += '\t@printf "\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n'
 	else:
-		rules += '\t@printf "\\033[36mCOMPILING: \\033[0m"\n'
+		rules += '\t@printf "\\033[36mCOMPILING>\\033[0m "\n'
 
 		if   extension in ['.c']:
 			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)

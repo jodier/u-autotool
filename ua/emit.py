@@ -327,7 +327,7 @@ def configure(ctx):
 
 				TESTS += '  #########\n\n'
 
-				TESTS += '  cat > __tmp_$$ << EOF
+				TESTS += '  cat > __tmp_$$ << EOF\n' +\
 					 '%s\n\n' % txt +\
 					 'EOF\n\n'
 

@@ -292,17 +292,8 @@ def projectNodes(ctx, projects):
 
 					if node2.nodeType == 0x004:
 
-						pipe = subprocess.Popen(
-							node2.nodeValue,
-							shell = True,
-							stdout = sys.stdout,
-							stderr = sys.stderr,
-							universal_newlines = True
-						)
+						if ua.utils.popen(node2.nodeValue) != 0:
 
-						pipe.wait()
-
-						if pipe.returncode != 0:
 							sys.exit(pipe.returncode)
 
 			#####################################################

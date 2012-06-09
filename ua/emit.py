@@ -194,7 +194,7 @@ def configure(ctx):
 
 		if ctx.verbose: print('\033[0;34mEntering \'%s\'\033[0m' % link['dir'])
 
-		if subprocess.Popen('cd %s && python %s %s' % (link['dir'], '%s%s' % (sys.argv[0], ctx.cmdline), link['base']), shell = True, universal_newlines = True).wait() == 0:
+		if ua.utils.popen('cd %s && %s %s' % (link['dir'], ctx.cmdline, link['base'])) == 0:
 
 			if ctx.verbose: print('\033[0;34mLeaving \'%s\'\033[0m' % link['dir'])
 

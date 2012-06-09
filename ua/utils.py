@@ -23,7 +23,7 @@
 #
 #############################################################################
 
-import os, re, sys, glob, xml.dom.minidom
+import os, re, sys, glob, subprocess, xml.dom.minidom
 
 #############################################################################
 # XML									    #
@@ -106,7 +106,7 @@ HELLOWORLDS = {
 class context:
 	#####################################################################
 
-	def __init__(self, debug = '', verbose = False, cmdline = ''):
+	def __init__(self, debug = '', verbose = False):
 
 		#############################################################
 		# GLOBAL						    #
@@ -149,7 +149,7 @@ class context:
 
 		self.verbose = verbose
 
-		self.cmdline = cmdline
+		self.cmdline = 'python %s' % sys.argv[0]
 
 		self.debug_nr = 0
 		self.ooops_nr = 0
@@ -284,6 +284,21 @@ def relpath2(path):
 
 os.path.relpath2 = \
 		relpath2
+
+#############################################################################
+# SUBPROCESS								    #
+#############################################################################
+
+def popen(command):
+	p = subprocess.Popen(
+		command,
+		shell = True,
+		stdout = sys.stdout,
+		stderr = sys.stderr,
+		universal_newlines = True
+	)
+
+	return p.wait()
 
 #############################################################################
 # MESSAGES								    #

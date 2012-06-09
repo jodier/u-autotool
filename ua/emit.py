@@ -192,11 +192,11 @@ def configure(ctx):
 
 	for link in ctx.links:
 
-		if ctx.verbose: print('\033[34mEntering \'%s\'\033[0m' % link['dir'])
+		print('\033[34mEntering \'%s\'\033[0m' % link['dir'])
 
 		if ua.utils.popen('cd %s && %s %s' % (link['dir'], ctx.cmdline, link['base'])) == 0:
 
-			if ctx.verbose: print('\033[34mLeaving \'%s\'\033[0m' % link['dir'])
+			print('\033[34mLeaving \'%s\'\033[0m' % link['dir'])
 
 			if len(link['targets']) == 0:
 

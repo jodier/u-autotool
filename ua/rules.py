@@ -39,13 +39,13 @@ def makedeps(ctx, L, fileName):
 	#####################################################################
 
 	try:
-		file = open(fileName, "r")
+		fp = open(fileName, "r")
 
-		lines = file.readlines()
+		lines = fp.readlines()
 
 	except IOError:
-		ua.utils.ooops(ctx, 'Could not find file `%s`' % fileName)
-		return
+		ua.utils.ooops(ctx, 'Could not open file `%s`' % fileName)
+		return False
 
 	#####################################################################
 
@@ -55,13 +55,14 @@ def makedeps(ctx, L, fileName):
 		if not m is None:
 			f = os.path.normpath(dirName + '/' + m.group(1))
 
-			L.append('\\$(SRC_PREFIX)/%s' % f.replace('\\', '/'))
-
-			makedeps(ctx, L, f)
+			if makedeps(ctx, L, f) != False:
+				L.append('\\$(SRC_PREFIX)/%s' % f.replace('\\', '/'))		
 
 	#####################################################################
 
-	file.close()
+	fp.close()
+
+	return True
 
 #############################################################################
 

@@ -4,7 +4,7 @@ template='''#!/bin/bash
 
 #############################################################################
 
-SRC_PREFIX=$(readlink -f $(dirname $0))
+SRC_PREFIX=`dirname $0`
 PWD_PREFIX='.'
 DST_PREFIX='/usr/local'
 

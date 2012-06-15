@@ -501,7 +501,7 @@ def projectNodes(ctx, projects):
 		#############################################################
 
 		OPTS.append({
-			'value': '-D__IS_%s -D__IS_%s -D__name__=\\"%s\\"' % (type, link, name),
+			'value': '-D__IS_%s -D__IS_%s -D__name__=\\\\\\"%s\\\\\\"' % (type, link, name),
 			'targets': [],
 			'fuses': [],
 		})

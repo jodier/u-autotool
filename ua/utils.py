@@ -115,7 +115,7 @@ HELLOWORLDS = {
 class context:
 	#####################################################################
 
-	def __init__(self, debug = '', verbose = False):
+	def __init__(self):
 
 		#############################################################
 		# GLOBAL						    #
@@ -154,9 +154,9 @@ class context:
 		# OTHER							    #
 		#############################################################
 
-		self.debug = debug
+		self.debug = '-O0'
 
-		self.verbose = verbose
+		self.verbose = False
 
 		self.cmdline = 'python %s' % sys.argv[0]
 

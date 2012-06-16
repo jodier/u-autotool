@@ -170,7 +170,7 @@ def entry_point(argv):
 	parser.add_option('', '--verbose',
 			action='store_true', dest='verbose', help='set Makefile verbose')
 	parser.add_option('-O', '--optimize',
-			dest='optimize', default='2', help='set code optimization level [default: %default]')
+					     dest='optimize', help='set code optimization level')
 
 	(options, args) = parser.parse_args()
 
@@ -222,15 +222,28 @@ def entry_point(argv):
 
 	#####################################################################
 
-	if   not options.gprof is None:
-		ctx.debug = '-O0 -g -p'
-		ctx.cmdline += ' --gprof'
-	elif not options.debug is None:
-		ctx.debug = '-O0 -g'
-		ctx.cmdline += ' --debug'
+	O = options.optimize
+
+	if O is None:
+		if   not options.gprof is None:
+			ctx.debug = '-O0 -g -p'
+			ctx.cmdline += ' --gprof'
+		elif not options.debug is None:
+			ctx.debug = '-O0 -g'
+			ctx.cmdline += ' --debug'
+		else:
+			ctx.debug = '-O2'
+			ctx.cmdline += ' -O2'
 	else:
-		ctx.debug = '-O%s' % options.optimize
-		ctx.cmdline += ' -O%s' % options.optimize
+		if   not options.gprof is None:
+			ctx.debug = '-O%s -g -p' % O
+			ctx.cmdline += ' --gprof'
+		elif not options.debug is None:
+			ctx.debug = '-O%s -g' % O
+			ctx.cmdline += ' --debug'
+		else:
+			ctx.debug = '-O%s' % O
+			ctx.cmdline += ' -O%s' % O
 
 	##
 

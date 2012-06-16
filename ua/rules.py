@@ -56,7 +56,7 @@ def makedeps(ctx, L, fileName):
 
 		if not m is None:
 
-			f = os.path.normpath(dirName + '/' + m.group(1))
+			f = os.path.normpath(dirName + os.path.sep + m.group(1))
 
 			if makedeps(ctx, L, f) != False:
 
@@ -77,17 +77,19 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 	(shortname, extension) = os.path.splitext(basename)
 
+	EXTENSION = '.o'
+
 	#####################################################################
 
-	obj = '\\$(PWD_PREFIX)/%s/%s_%s%s' % (dirname.replace('\\', '/'), NAME, shortname, '.o')
+	obj = ('\\$(PWD_PREFIX)/%s/%s_%s%s') % (dirname.replace('\\', '/'), NAME, shortname, EXTENSION)
 
-	src = '\\$(SRC_PREFIX)/%s/%s%s' % (dirname.replace('\\', '/'), shortname, extension)
+	src = ('\\$(SRC_PREFIX)/%s/'+'%s%s') % (dirname.replace('\\', '/'),       shortname, extension)
 
 	#####################################################################
 
 	L = [src]
 
-	makedeps(ctx, L, dirname + '/' + basename)
+	makedeps(ctx, L, dirname + os.path.sep + basename)
 
 	rules = '%s: \\\\\n %s\n' % (obj, ' \\\\\n '.join(L))
 
@@ -120,8 +122,9 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s -c -o \$@ \$<\n'
 
 		rules += '\t@printf "\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n'
+
 	else:
-		rules += '\t@printf "\\033[36mCOMPILING>\\033[0m "\n'
+		rules += '\t@printf "\\033[36m%s>\\033[0m "\n' % NAME
 
 		if   extension in ['.c']:
 			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s \$(GCC_INC_%s)%s -c -o \$@ \$<\n' % (NAME, opt, NAME, inc)
@@ -143,6 +146,8 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 		elif extension in ['.s', '.S', '.asm']:
 			rules += '\t\$(GCC) \$(GCC_OPT_%s)%s -c -o \$@ \$<\n'
+
+		rules += '\t@printf "\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n'
 
 	rules += '\n'
 

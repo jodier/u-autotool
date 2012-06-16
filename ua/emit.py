@@ -988,12 +988,12 @@ def configure(ctx):
 
 		#####################################################
 
-			if len(project['extras']):
+		if len(project['extras']):
 
-				for txt in project['extras']:
-					RULES += '%s\n' % txt
+			for txt in project['extras']:
+				RULES += '%s\n' % txt
 
-				RULES += '\n'
+			RULES += '\n'
 
 	#####################################################################
 	# TEMPLATE							    #

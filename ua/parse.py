@@ -496,7 +496,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						EXTRAS.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						EXTRAS.append(ua.utils.protect(ctx, node2.nodeValue.strip()))
 
 		#############################################################
 

@@ -31,24 +31,26 @@ INC_RE = re.compile('#include[ \t]*"([^"]+)"')
 
 #############################################################################
 
-def makedeps(ctx, L, fileName):
+def makedeps(ctx, L, old_fileName, new_fileName):
 	#####################################################################
 
 	try:
-		fp = open(fileName, "r")
+		fp = open(new_fileName, "r")
 
 		lines = fp.readlines()
 
 	except IOError:
-		ua.utils.ooops(ctx, 'Could not open file `%s`' % fileName)
+		ua.utils.ooops(ctx, 'From '%s', could not open file `%s`' % (old_fileName, new_fileName))
 
 		return False
 
 	#####################################################################
 
-	dirName = os.path.dirname(fileName)
+	dirName = os.path.dirname(new_fileName)
 
 	#####################################################################
+
+	old_fileName = new_fileName
 
 	for line in lines:
 
@@ -56,11 +58,11 @@ def makedeps(ctx, L, fileName):
 
 		if not m is None:
 
-			f = os.path.normpath(dirName + os.path.sep + m.group(1))
+			new_fileName = os.path.normpath(dirName + os.path.sep + m.group(1))
 
-			if makedeps(ctx, L, f) != False:
+			if makedeps(ctx, L, old_fileName, new_fileName) != False:
 
-				L.append('\\$(SRC_PREFIX)/%s' % f.replace('\\', '/'))		
+				L.append('\\$(SRC_PREFIX)/%s' % new_fileName.replace('\\', '/'))
 
 	#####################################################################
 
@@ -89,7 +91,7 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 	L = [src]
 
-	makedeps(ctx, L, dirname + os.path.sep + basename)
+	makedeps(ctx, L, 'none', dirname + os.path.sep + basename)
 
 	rules = '%s: \\\\\n %s\n' % (obj, ' \\\\\n '.join(L))
 

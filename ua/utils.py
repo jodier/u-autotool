@@ -210,10 +210,10 @@ def displayTree(T, level = 0):
 		myprint(T, level)
 
 #############################################################################
-# PATHS									    #
+# VALUES								    #
 #############################################################################
 
-OS_ENVIRON = {
+UA_ENVIRON = {
 	'BIN': '${OS_BIN}',
 	'INC': '${OS_INC}',
 	'LIB': '${OS_LIB}',
@@ -249,15 +249,29 @@ def resolveVar(ctx, s):
 		if len(part) > 3 and part[0] == '$' and part[+1] == '(' and part[-1] == ')':
 			part = part[+2: -1]
 
-			if not OS_ENVIRON.has_key(part):
+			if not UA_ENVIRON.has_key(part):
 				ooops(ctx, 'Internal variable `%s` not defined !' % part)
 
 			else:
-				result += OS_ENVIRON[part]
+				result += UA_ENVIRON[part]
 		else:
 			result += part
 
 	return result
+
+#############################################################################
+
+def process(ctx, name, s):
+
+	name_lower = name.lower()
+	name_upper = name.upper()
+
+	s = s.strip()
+
+	s = re.sub('(\$\([\s]*project_name[\s]*\))', name_lower, s)
+	s = re.sub('(\$\([\s]*PROJECT_NAME[\s]*\))', name_upper, s)
+
+	return s
 
 #############################################################################
 
@@ -281,8 +295,20 @@ def unprotect(ctx, s):
 
 #############################################################################
 
-def buildPaths(ctx, s):
-	s = resolveEnv(ctx, s)
+def process_and_protect(ctx, name, s):
+
+	return protect(ctx, process(ctx, name, s))
+
+#############################################################################
+
+def process_and_unprotect(ctx, name, s):
+
+	return unprotect(ctx, process(ctx, name, s))
+
+#############################################################################
+
+def buildPaths(ctx, name, s):
+	s = resolveEnv(ctx, process(ctx, name, s))
 
 	return [os.path.normpath(f).replace('\\', '/') for f in glob.iglob(s)]
 

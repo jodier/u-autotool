@@ -304,14 +304,10 @@ def projectNodes(ctx, projects):
 
 				#############################################
 
-				expr = node1.getStripedIAttribute('path')
+				paths = ua.utils.buildPaths(ctx, name, node1.getAttribute('path'))
 
-				#############################################
-
-				paths = ua.utils.buildPaths(ctx, expr)
-
-				opt = ua.utils.protect(ctx, node1.getStripedIAttribute('opt'))
-				inc = ua.utils.protect(ctx, node1.getStripedIAttribute('inc'))
+				opt = ua.utils.process_and_protect(ctx, name, node1.getAttribute('opt'))
+				inc = ua.utils.process_and_protect(ctx, name, node1.getAttribute('inc'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -354,7 +350,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'opt':
-				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
+				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -372,7 +368,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'inc':
-				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
+				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -390,7 +386,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'obj':
-				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
+				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -408,7 +404,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'lib':
-				value = ua.utils.protect(ctx, node1.getStripedIAttribute('value'))
+				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -430,7 +426,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_BUILD.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						PRE_BUILD.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_BUILD					    #
@@ -441,7 +437,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_BUILD.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						POST_BUILD.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# PRE_INSTALL					    #
@@ -452,7 +448,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_INSTALL.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						PRE_INSTALL.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_INSTALL					    #
@@ -463,7 +459,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_INSTALL.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						POST_INSTALL.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# PRE_CLEAN					    #
@@ -474,7 +470,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_CLEAN.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						PRE_CLEAN.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_CLEAN					    #
@@ -485,7 +481,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_CLEAN.append('\t' + ua.utils.protect(ctx, node2.nodeValue.strip()))
+						POST_CLEAN.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# EXTRAS					    #
@@ -496,7 +492,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						EXTRAS.append(ua.utils.protect(ctx, node2.nodeValue.strip()))
+						EXTRAS.append(ua.utils.process_and_protect(ctx, name, node2.nodeValue))
 
 		#############################################################
 
@@ -560,7 +556,7 @@ def linkNodes(ctx, links):
 
 		#############################################################
 
-		url = link.getStripedIAttribute('url')
+		url = ua.utils.resolveEnv(ctx, link.getStripedIAttribute('url'))
 
 		#############################################################
 

@@ -52,9 +52,11 @@ def makedeps(ctx, L, old_fileName, new_fileName):
 
 	old_fileName = new_fileName
 
+	#####################################################################
+
 	for line in lines:
 
-		m = INC_RE.match(line)
+		m = INC_RE.search(line)
 
 		if not m is None:
 
@@ -121,7 +123,7 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 			rules += '\t@\$(RM) \$(basename \$<).c\n'
 
 		elif extension in ['.s', '.S', '.asm']:
-			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s -c -o \$@ \$<\n'
+			rules += '\t@\$(GCC) \$(GCC_OPT_%s)%s -c -o \$@ \$<\n' % (NAME, opt)
 
 		rules += '\t@printf "\\033[69G[ \\033[32m Ok. \\033[0m ]\\n"\n'
 

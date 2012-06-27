@@ -222,54 +222,84 @@ UA_ENVIRON = {
 
 #############################################################################
 
+ENV_RE = re.compile('(\$\{[ \t]*([^ \t\}]+)[ \t]*\})')
+VAR_RE = re.compile('(\$\([ \t]*([^ \t\)]+)[ \t]*\))')
+
+#############################################################################
+
 def resolveEnv(ctx, s):
-	result = ''
 
-	for part in re.split('(\$\{[^\}]+\})', s):
+	while True:
+		#############################################################
 
-		if len(part) > 3 and part[0] == '$' and part[+1] == '{' and part[-1] == '}':
-			part = part[+2: -1]
+		m = ENV_RE.search(s)
 
-			if not os.environ.has_key(part):
-				ooops(ctx, 'Environnement variable `%s` not defined !' % part)
-			else:
-				result += os.environ[part]
+		if m is None:
+			break
+
+		#############################################################
+
+		key = m.group(2)
+		val = ((((''))))
+
+		if os.environ.has_key(key):
+			val = os.environ[key]
 		else:
-			result += part
+			ooops(ctx, 'Environ variable `%s` not defined !' % key)
 
-	return result
+		#############################################################
+
+		s = s[: m.start()] + val + s[m.end():]
+
+		#############################################################
+
+	return s
 
 #############################################################################
 
 def resolveVar(ctx, s):
-	result = ''
 
-	for part in re.split('(\$\([^\)]+\))', s):
+	while True:
+		#############################################################
 
-		if len(part) > 3 and part[0] == '$' and part[+1] == '(' and part[-1] == ')':
-			part = part[+2: -1]
+		m = ENV_RE.search(s)
 
-			if not UA_ENVIRON.has_key(part):
-				ooops(ctx, 'Internal variable `%s` not defined !' % part)
+		if m is None:
+			break
 
-			else:
-				result += UA_ENVIRON[part]
+		#############################################################
+
+		key = m.group(2)
+		val = ((((''))))
+
+		if UA_ENVIRON.has_key(key):
+			value = UA_ENVIRON[key]
 		else:
-			result += part
+			ooops(ctx, 'Internal variable `%s` not defined !' % key)
 
-	return result
+		#############################################################
+
+		s = s[: m.start()] + val + s[m.end():]
+
+		#############################################################
+
+	return s
+
+#############################################################################
+
+PROJECT_name_RE = re.compile('(\$\([ \t]*PROJECT_name[ \t]*\))')
+PROJECT_NAME_RE = re.compile('(\$\([ \t]*PROJECT_NAME[ \t]*\))')
 
 #############################################################################
 
 def process(ctx, name, s):
-
 	name_lower = name.lower()
 	name_upper = name.upper()
 
 	s = s.strip()
 
-	s = re.sub('(\$\([\s]*project_name[\s]*\))', name_lower, s)
-	s = re.sub('(\$\([\s]*PROJECT_NAME[\s]*\))', name_upper, s)
+	s = PROJECT_name_RE.sub(name_lower, s)
+	s = PROJECT_NAME_RE.sub(name_upper, s)
 
 	return s
 

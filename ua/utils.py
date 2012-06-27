@@ -222,8 +222,8 @@ UA_ENVIRON = {
 
 #############################################################################
 
-ENV_RE = re.compile('(\$\{[ \t]*([^ \t\}]+)[ \t]*\})')
-VAR_RE = re.compile('(\$\([ \t]*([^ \t\)]+)[ \t]*\))')
+ENV_RE = re.compile('\$\{[ \t]*([^ \t\}]+)[ \t]*\}')
+VAR_RE = re.compile('\$\([ \t]*([^ \t\)]+)[ \t]*\)')
 
 #############################################################################
 
@@ -239,7 +239,7 @@ def resolveEnv(ctx, s):
 
 		#############################################################
 
-		key = m.group(2)
+		key = m.group(1)
 		val = ((((''))))
 
 		if os.environ.has_key(key):
@@ -269,7 +269,7 @@ def resolveVar(ctx, s):
 
 		#############################################################
 
-		key = m.group(2)
+		key = m.group(1)
 		val = ((((''))))
 
 		if UA_ENVIRON.has_key(key):
@@ -287,8 +287,8 @@ def resolveVar(ctx, s):
 
 #############################################################################
 
-PROJECT_name_RE = re.compile('(\$\([ \t]*PROJECT_name[ \t]*\))')
-PROJECT_NAME_RE = re.compile('(\$\([ \t]*PROJECT_NAME[ \t]*\))')
+PROJECT_name_RE = re.compile('\$\([ \t]*PROJECT_name[ \t]*\)')
+PROJECT_NAME_RE = re.compile('\$\([ \t]*PROJECT_NAME[ \t]*\)')
 
 #############################################################################
 

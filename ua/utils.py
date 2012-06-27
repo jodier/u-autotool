@@ -325,13 +325,13 @@ def unprotect(ctx, s):
 
 #############################################################################
 
-def process_and_protect(ctx, name, s):
+def processAndProtect(ctx, name, s):
 
 	return protect(ctx, process(ctx, name, s))
 
 #############################################################################
 
-def process_and_unprotect(ctx, name, s):
+def processAndUnprotect(ctx, name, s):
 
 	return unprotect(ctx, process(ctx, name, s))
 

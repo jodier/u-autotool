@@ -306,8 +306,8 @@ def projectNodes(ctx, projects):
 
 				paths = ua.utils.buildPaths(ctx, name, node1.getAttribute('path'))
 
-				opt = ua.utils.process_and_protect(ctx, name, node1.getAttribute('opt'))
-				inc = ua.utils.process_and_protect(ctx, name, node1.getAttribute('inc'))
+				opt = ua.utils.processAndProtect(ctx, name, node1.getAttribute('opt'))
+				inc = ua.utils.processAndProtect(ctx, name, node1.getAttribute('inc'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -350,7 +350,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'opt':
-				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -368,7 +368,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'inc':
-				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -386,7 +386,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'obj':
-				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -404,7 +404,7 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'lib':
-				value = ua.utils.process_and_protect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
 				targets = node1.getItemsByUAttrName('targets')
 				fuses = node1.getItemsByLAttrName('fuses')
@@ -426,7 +426,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_BUILD.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						PRE_BUILD.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_BUILD					    #
@@ -437,7 +437,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_BUILD.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						POST_BUILD.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# PRE_INSTALL					    #
@@ -448,7 +448,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_INSTALL.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						PRE_INSTALL.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_INSTALL					    #
@@ -459,7 +459,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_INSTALL.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						POST_INSTALL.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# PRE_CLEAN					    #
@@ -470,7 +470,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_CLEAN.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						PRE_CLEAN.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_CLEAN					    #
@@ -481,7 +481,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_CLEAN.append('\t' + ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						POST_CLEAN.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# EXTRAS					    #
@@ -492,7 +492,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						EXTRAS.append(ua.utils.process_and_protect(ctx, name, node2.nodeValue))
+						EXTRAS.append(ua.utils.processAndProtect(ctx, name, node2.nodeValue))
 
 		#############################################################
 

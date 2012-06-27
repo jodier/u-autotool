@@ -273,7 +273,7 @@ def resolveVar(ctx, s):
 		val = ((((''))))
 
 		if UA_ENVIRON.has_key(key):
-			value = UA_ENVIRON[key]
+			val = UA_ENVIRON[key]
 		else:
 			ooops(ctx, 'Internal variable `%s` not defined !' % key)
 

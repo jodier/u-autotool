@@ -262,7 +262,7 @@ def resolveVar(ctx, s):
 	while True:
 		#############################################################
 
-		m = ENV_RE.search(s)
+		m = VAR_RE.search(s)
 
 		if m is None:
 			break

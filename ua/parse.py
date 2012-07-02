@@ -304,7 +304,9 @@ def projectNodes(ctx, projects):
 
 				#############################################
 
-				paths = ua.utils.buildPaths(ctx, name, node1.getAttribute('path'))
+				expr = node1.getAttribute('path')
+
+				paths = ua.utils.buildPaths(ctx, name, expr)
 
 				opt = ua.utils.processAndProtect(ctx, name, node1.getAttribute('opt'))
 				inc = ua.utils.processAndProtect(ctx, name, node1.getAttribute('inc'))

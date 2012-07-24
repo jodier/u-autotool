@@ -99,6 +99,13 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 	#####################################################################
 
+	if len(opt) > 0:
+		opt = ' ' + opt
+	if len(inc) > 0:
+		inc = ' ' + inc
+
+	#####################################################################
+
 	rules += '\t@install -d \`dirname \$@\`\n'
 
 	if ctx.verbose == False:

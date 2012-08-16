@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 
 	if(argc != 2)
 	{
-		fprintf(stderr, "Usage: %s compiler\n\nReturns 'sizeof(long)' for 'compiler'.\n", argv[0]);
+		fprintf(stderr, "Usage: %s compiler\n\nReturns 'sizeof(void *)' for 'compiler'.\n", argv[0]);
 
 		return 1;
 	}
@@ -75,13 +75,13 @@ int main(int argc, char **argv)
 		"struct __foo_s					\n"
 		"{						\n"
 		"	char magic1[8];				\n"
-		"	long l;					\n"
+		"	void *l;				\n"
 		"	char magic2[8];				\n"
 		"						\n"
 		"} __attribute__((packed)) foo = {		\n"
 		"	{'b', 'u', 's', 's', 'i', 'z', 'e', 'B'}\n"
 		"	,					\n"
-		"	-1					\n"
+		"	(void *) -1				\n"
 		"	,					\n"
 		"	{'b', 'u', 's', 's', 'i', 'z', 'e', 'E'}\n"
 		"};						\n"

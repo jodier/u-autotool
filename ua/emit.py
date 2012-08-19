@@ -41,44 +41,44 @@ template = \
 	b'gRpvn1WjuEQNhz5c+hhEIrlJXban23vbu9vF7SU6Le0gVIy7bqUzZQMWAw2FWIHo' +\
 	b'4szNmHlIH6EcfnzEZGr6eAehqtbWVGnDGWBFg2kNBt3Byuf5jnKC8oG+CgVceJoF' +\
 	b'IACg8mWrpf+rBv0ZXz7RbhhJVqKvLBiydqrXqe2n4ALTHpDpBsVs4mypeLB/sHuw' +\
-	b'W3p7YJT294rZ3DGGQUAAz/xKyihz/wzH/ixHDaHMxIU5gos4jzfusYJhEeOdUu4Y' +\
-	b'Pck5JmmjWa01/66opeFBsbRX2j8oJoV13AFxl0ubYNpPMcUCe0EPFoBgnOI3eOdw' +\
-	b'E0cKHIYK0I3hGkvC4vgXFR/iX3+dAeyU0pDdYhpS2sM3N2FUJf2Rg2Xd/mxY5gBP' +\
-	b'HBCHuJjaEyIcDqcMjbR9wyOsH2ZEZFLu7R1YGrvbezm21TRa3cjG3a7e6p7p7W6t' +\
-	b'XtW1OsMf080rXE9LWMr66RxLntPOikrsgWnYNvE8JmgkKvEMmO/ueMEqWAB0Vh7G' +\
-	b'YYM4rbXVW75C6UY1Nvoj0ya4CNF9QD4X7MCybhFqNSvdi2btRO+otwPTZdu9tH2L' +\
-	b'Lq6qIVzeklG11Y4+C4HnFiynb1ig80Wz8UetEiPlCNK6PBGQVSs3DOy+b8Je2Hfs' +\
-	b'oXkXuKQ7ItYEwjXGdP8SexXGymgTKwrF4SW/gelNLOMekhnTw4zQsAfMidyd0IcC' +\
-	b'++wd8VVu0hR/JAHEdxdzEoS/4yccdC3xxk083MQlQ3OqcoOmuEzb8w3LgqTJIh58' +\
-	b'YU71XSMKD11LsS9nRnX+In1/4egAm8BEFz1g3wnlILBWOR+mE8f7MTlmp84CWbxg' +\
-	b'SGXhE0lwGxMmioD9l6KIKRqLwgE36LXHt8xoPT+tfBLDEGtbFy7xiH8SQO4N+wjb' +\
-	b'DtRtCPNfRjBtIKuXGAgrlo+lh1cnl61a6/r3myd8gzIDB2UyIsI/cAynBjScAKSH' +\
-	b'nadungbuTIaF7kwmE9gwGJ6hRTH89KxR1s66jYt2jM1kaCTPZCzAZxnszZssHdsm' +\
-	b'azA0XZjOhNkFFoyUR6AjCxR0I+EIetzhZ5m8KsI8zDT3Tr0l04mLsx1Bl8VHWL7+' +\
-	b't3qTVz9ubOU/5uRbQcx2iGiP4MyynETyHWHZuFGUiXoQAUIC8OwYUYSISBPBeTH5' +\
-	b'zNKO2FKh+1usYiXOsYoFNMv62mPMI/wogm/IlQrXiy3H9testH2E6e4IzzvbcWF1' +\
-	b'c4sdhabLRiZl02b1xyDw0i2TRURo0MZ38fWR5Xwh7tENtAIIRdC65UlI/kyvX3by' +\
-	b'UUJR185rqsyyifZlR07kEY3WYjKAJ8nO9frp1ULCK72eJNQbrYVkAE+SafVqs6FX' +\
-	b'F5IKXJL8/YeL+pKOOUpenBplw9SIT2gsC/vJ2QUJ0s/3mr57WMo/5vU9/trnrxK8' +\
-	b'Is21ZuU91Zy+u53DElecBTx1I4ySNH7KEUUuYRv47pb2oFftvArvpd0C0fM9U6Jk' +\
-	b'51rzfEmPgHmmO0qRm3Niup/L+p/1xlX9mb5Cqtx6HMtn1glE8vSsOmKH0E1Mq23w' +\
-	b'1Fhb4+0mPHhVCBqi2MNbtIQDLVpngRerr2T/F3Z4vnmI1chncBhhHhNLk3sS9O62' +\
-	b'3mvNWjXKxbc8R45xba2tV2KcwVG1Ti3NlkDM8ohDDwh0dnKmnbZUWfFGBoTrRHAI' +\
-	b'Y9tyoQb3rGC3XrkG95AXmv1opFg2CKffkM2y/o5kW2RKlkrHkd9pOf1b7vzJlhPb' +\
-	b'xj9qui08pvOoIa9/B6KVBL2u9mBpQlOvV1RRL6WftXZFJX6fl1DgVI75SdrsRXWR' +\
-	b'qCBCVdTLagKHRC09xqyj8hyVV9iQLMDsFpNFElZlY87fLZb1doubdDYu8ZOqyOfC' +\
-	b'+JSLTmRAVgndN7zQK3KEEblgOmb8CFO0mFNMy+ij5fUjg8zM+x9hTIbn5wRk8zP6' +\
-	b'Lu0t9kJp7/9eeDkv/Nzgss6Sge+aY1ZAE9rBOflpTZdLW4Vz4xOhJawteiIMy3Wr' +\
-	b'HesVnhkEUYgW+M7Y8M2+YVn3+I7YxDV8OFr27nGgGID0HcfaoqSrVZtdasMDsdtq' +\
-	b'eCB2uQ0PxC6tNQppwruJxCWmSFtReEMZZq8ovH4Mk1h+VcgSWXFNyLNZdkNIc+R1' +\
-	b'7HBisUhREyvVMOyIJj0UiGa4t0VfvHIfb+JS1Fy5sPM5iTQHQvPJiTQHQvNpijQH' +\
-	b'QvMpizQHWrmOiQq+FLeTBXwpbicL+YlC8MqFSteWZr/TdwSp+uvKpaEpmcRTM0Rz' +\
-	b'MonnZogtNZ5QIZqcSTxJW4uLqAwfpY3YQ7kCfJbpRklhVKx5NEA5mko6jwYoR1Ph' +\
-	b'59EAza3eszCXhC7xtIp1oTChSwrNdKEwoUsKzXShMKFLCr0WXegCELrEayHWhcKE' +\
-	b'Lik004XChC4pNNOFwoQuKfRadOGlmURlBq1hG6N1fKpQFPlz+LWHlaEzNn1l6Bpj' +\
-	b'ooSXt8rQdpReYFq+aWPlit5aKVfEdR1ATcwJJKoPybuB328KtfGF/6HwxMahZlf0' +\
-	b'LazoYlozi1MMtbhyBpgzgWHGXrmunc7L6ArjLNEVMC+jq/ZCftWW+lV7Mb9qL+RX' +\
-	b'balftRfz6xqOC2v4H9HcoWDd54GfehQI/z2XOgP9432/Htf/Bw+i4ng='
+	b'W3p7YJT294rZ3DGGQUAAz/xKyihz/wzH/ixHDaHMxIU5gvdwHm/cYwXDIsY7pdwx' +\
+	b'epJzTNJGs1pr/l1RS8ODYmmvtH9QTArruAPiLpc2wbSfYooF9oIeLADBOMVv8M7h' +\
+	b'Jo4UOAwVoBvDNZaExfEvKj7Ev/46A9gppSG7xTSktIdvbsKoSvojB8u6/dmwzAGe' +\
+	b'OCAOcTG1J0Q4HE4ZGmn7hkdYP8yIyKTc2zuwNHa393Jsq2m0upGNu1291T3T291a' +\
+	b'vaprdYY/pptXuJ6WsJT10zmWPKedFZXYA9OwbeJ5TNBIVOIZMN/d8YJVsADorDyM' +\
+	b'wwZxWmurt3yF0o1qbPRHpk1wEaL7gHwu2IFl3SLUala6F83aid5Rbwemy7Z7afsW' +\
+	b'XVxVQ7i8JaNqqx19FgLPLVhO37BA54tm449aJUbKEaR1eSIgq1ZuGNh934S9sO/Y' +\
+	b'Q/MucEl3RKwJhGuM6f4l9iqMldEmVhSKw0t+A9ObWMY9JDOmhxmhYQ+YE7k7oQ8F' +\
+	b'9tk74qvcpCn+SAKI7y7mJAh/x0846FrijZt4uIlLhuZU5QZNcZm25xuWBUmTRTz4' +\
+	b'wpzqu0YUHrqWYl/OjOr8Rfr+wtEBNoGJLnrAvhPKQWCtcj5MJ473Y3LMTp0FsnjB' +\
+	b'kMrCJ5LgNiZMFAH7L0URUzQWhQNu0GuPb5nRen5a+SSGIda2LlziEf8kgNwb9hG2' +\
+	b'HajbEOa/jGDaQFYvMRBWLB9LD69OLlu11vXvN0/4BmUGDspkRIR/4BhODWg4AUgP' +\
+	b'O0/dPA3cmQwL3ZlMJrBhMDxDi2L46VmjrJ11GxftGJvJ0EieyViAzzLYmzdZOrZN' +\
+	b'1mBoujCdCbMLLBgpj0BHFijoRsIR9LjDzzJ5VYR5mGnunXpLphMXZzuCLouPsHz9' +\
+	b'b/Umr37c2Mp/zMm3gpjtENEewZllOYnkO8KycaMoE/UgAoQE4NkxoggRkSaC82Ly' +\
+	b'maUdsaVC97dYxUqcYxULaJb1tceYR/hRBN+QKxWuF1uO7a9ZafsI090Rnne248Lq' +\
+	b'5hY7Ck2XjUzKps3qj0HgpVsmi4jQoI3v4usjy/lC3KMbaAUQiqB1y5OQ/Jlev+zk' +\
+	b'o4Sirp3XVJllE+3LjpzIIxqtxWQAT5Kd6/XTq4WEV3o9Sag3WgvJAJ4k0+rVZkOv' +\
+	b'LiQVuCT5+w8X9SUdc5S8ODXKhqkRn9BYFvaTswsSpJ/vNX33sJR/zOt7/LXPXyV4' +\
+	b'RZprzcp7qjl9dzuHJa44C3jqRhglafyUI4pcwjbw3S3tQa/aeRXeS7sFoud7pkTJ' +\
+	b'zrXm+ZIeAfNMd5QiN+fEdD+X9T/rjav6M32FVLn1OJbPrBOI5OlZdcQOoZuYVtvg' +\
+	b'qbG2xttNePCqEDREsYe3aAkHWrTOAi9WX8n+L+zwfPMQq5HP4DDCPCaWJvck6N1t' +\
+	b'vdeatWqUi295jhzj2lpbr8Q4g6NqnVqaLYGY5RGHHhDo7ORMO22psuKNDAjXieAQ' +\
+	b'xrblQg3uWcFuvXIN7iEvNPvRSLFsEE6/IZtl/R3JtsiULJWOI7/Tcvq33PmTLSe2' +\
+	b'jX/UdFt4TOdRQ17/DkQrCXpd7cHShKZer6iiXko/a+2KSvw+L6HAqRzzk7TZi+oi' +\
+	b'UUGEqqiX1QQOiVp6jFlH5Tkqr7AhWYDZLSaLJKzKxpy/Wyzr7RY36Wxc4idVkc+F' +\
+	b'8SkXnciArBK6b3ihV+QII3LBdMz4EaZoMaeYltFHy+tHBpmZ9z/CmAzPzwnI5mf0' +\
+	b'Xdpb7IXS3v+98HJe+LnBZZ0lA981x6yAJrSDc/LTmi6XtgrnxidCS1hb9EQYlutW' +\
+	b'O9YrPDMIohAt8J2x4Zt9w7Lu8R2xiWv4cLTs3eNAMQDpO461RUlXqza71IYHYrfV' +\
+	b'8EDschseiF1aaxTShHcTiUtMkbai8IYyzF5ReP0YJrH8qpAlsuKakGez7IaQ5sjr' +\
+	b'2OHEYpGiJlaqYdgRTXooEM1wb4u+eOU+3sSlqLlyYedzEmkOhOaTE2kOhObTFGkO' +\
+	b'hOZTFmkOtHIdExV8KW4nC/hS3E4W8hOF4JULla4tzX6n7whS9deVS0NTMomnZojm' +\
+	b'ZBLPzRBbajyhQjQ5k3iSthYXURk+Shuxh3IF+CzTjZLCqFjzaIByNJV0Hg1QjqbC' +\
+	b'z6MBmlu9Z2EuCV3iaRXrQmFClxSa6UJhQpcUmulCYUKXFHotutAFIHSJ10KsC4UJ' +\
+	b'XVJopguFCV1SaKYLhQldUui16MJLM4nKDFrDNkbr+FShKPLn8GsPK0NnbPrK0DXG' +\
+	b'RAkvb5Wh7Si9wLR808bKFb21Uq6I6zqAmpgTSFQfkncDv98UauML/0PhiY1Dza7o' +\
+	b'W1jRxbRmFqcYanHlDDBnAsOMvXJdO52X0RXGWaIrYF5GV+2F/Kot9av2Yn7VXsiv' +\
+	b'2lK/ai/m1zUcF9bwP6K5Q8G6zwM/9SgQ/nsudQb6x/t+Pa7/D1no4no='
 
 #############################################################################
 
@@ -823,7 +823,6 @@ def configure(ctx):
 		#####################################################
 
 		if project['type'] == 'UND':
-
 			#############################################
 
 			RULES += 'all_%s: \$(OBJS_%s)\n' % (name, NAME)
@@ -863,7 +862,6 @@ def configure(ctx):
 			#############################################
 
 		if project['type'] == 'LIB':
-
 			#############################################
 
 			RULES += 'all_%s: \$(OBJS_%s)\n' % (name, NAME)
@@ -931,7 +929,6 @@ def configure(ctx):
 			RULES += '\n'
 
 		if project['type'] == 'EXE':
-
 			#############################################
 
 			RULES += 'all_%s: \$(OBJS_%s)\n' % (name, NAME)

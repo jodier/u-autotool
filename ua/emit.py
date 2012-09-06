@@ -275,10 +275,8 @@ def configure(ctx):
 
 	#####################################################################
 
-	XXXS = ctx.option_deps.   union  (ctx.needed_deps)
-	YYYS = ctx.option_deps.difference(ctx.needed_deps)
-
-#	print(ctx.option_deps, XXXS, YYYS)
+	XXXS = ctx.option_deps.   union  (ctx.needed_deps)	# optional = 0
+	YYYS = ctx.option_deps.difference(ctx.needed_deps)	# optional = 1
 
 	#####################################################################
 
@@ -309,7 +307,6 @@ def configure(ctx):
 			TESTS += '  #########\n\n'
 
 			for dep in L:
-
 				name = dep['name']
 				lang = dep['lang']
 
@@ -343,6 +340,7 @@ def configure(ctx):
 					 '%s\n\n' % txt +\
 					 'EOF\n\n'
 
+				TESTS += '  echo %s $opt_%s_resolved $inc_%s_resolved -o /tmp/__tmp_$$ /tmp/__tmp_$$%s $lib_%s_resolved\n\n' % (ua.utils.COMPS[lang], name, name, ua.utils.EXTS[lang], name)
 				TESTS += '  %s $opt_%s_resolved $inc_%s_resolved -o /tmp/__tmp_$$ /tmp/__tmp_$$%s $lib_%s_resolved\n\n' % (ua.utils.COMPS[lang], name, name, ua.utils.EXTS[lang], name)
 
 				TESTS += '  #########\n\n'
@@ -528,6 +526,8 @@ def configure(ctx):
 
 		for use in project['uses']:
 
+			isOk = False
+
 			for dep in ctx.deps:
 
 				if use == dep['name']:
@@ -535,7 +535,13 @@ def configure(ctx):
 					incs1 += ' $inc_%s' % use
 					libs1 += ' $lib_%s' % use
 
+					isOk = True
+
 					break
+
+			if isOk == False:
+
+				ua.utils.error(ctx, 'Undefined dependency `%s` !' % use)
 
 		#############################################################
 

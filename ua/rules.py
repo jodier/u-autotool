@@ -31,7 +31,12 @@ INC_RE = re.compile('#include[ \t]*"([^"]+)"')
 
 #############################################################################
 
-def makedeps(ctx, L, old_fileName, new_fileName):
+def makedeps(ctx, L, M, old_fileName, new_fileName):
+
+	if new_fileName in M:
+
+		return False
+
 	#####################################################################
 
 	try:
@@ -54,6 +59,10 @@ def makedeps(ctx, L, old_fileName, new_fileName):
 
 	#####################################################################
 
+	M.append(new_fileName)
+
+	#####################################################################
+
 	for line in lines:
 
 		m = INC_RE.search(line)
@@ -62,7 +71,7 @@ def makedeps(ctx, L, old_fileName, new_fileName):
 
 			new_fileName = os.path.normpath(dirName + os.path.sep + m.group(1))
 
-			if makedeps(ctx, L, old_fileName, new_fileName) != False:
+			if makedeps(ctx, L, M, old_fileName, new_fileName) != False:
 
 				L.append('\\$(SRC_PREFIX)/%s' % new_fileName.replace('\\', '/'))
 
@@ -92,8 +101,9 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 	#####################################################################
 
 	L = [src]
+	M = [   ]
 
-	makedeps(ctx, L, 'none', dirname + os.path.sep + basename)
+	makedeps(ctx, L, M, 'none', dirname + os.path.sep + basename)
 
 	rules = '%s: \\\\\n %s\n' % (obj, ' \\\\\n '.join(L))
 

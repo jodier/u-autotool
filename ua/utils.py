@@ -62,7 +62,7 @@ def getStripedResolvedIAttribute(self, ctx, name):
 
 	return s
 
-xml.dom.minidom.Element.getStripedIAttribute = \
+xml.dom.minidom.Element.getStripedResolvedIAttribute = \
 					getStripedResolvedIAttribute
 
 #############################################################################
@@ -75,7 +75,7 @@ def getStripedResolvedLAttribute(self, ctx, name):
 
 	return s.lower()
 
-xml.dom.minidom.Element.getStripedLAttribute = \
+xml.dom.minidom.Element.getStripedResolvedLAttribute = \
 					getStripedResolvedLAttribute
 
 #############################################################################
@@ -88,7 +88,7 @@ def getStripedResolvedUAttribute(self, ctx, name):
 
 	return s.upper()
 
-xml.dom.minidom.Element.getStripedUAttribute = \
+xml.dom.minidom.Element.getStripedResolvedUAttribute = \
 					getStripedResolvedUAttribute
 
 #############################################################################
@@ -139,8 +139,8 @@ def getResolvedItemsByLAttrName(self, name):
 
 	return result
 
-xml.dom.minidom.Element.getItemsByLAttrName = \
-					getItemsByLAttrName
+xml.dom.minidom.Element.getResolvedItemsByLAttrName = \
+					getResolvedItemsByLAttrName
 
 #############################################################################
 
@@ -158,8 +158,8 @@ def getResolvedItemsByUAttrName(self, name):
 
 	return result
 
-xml.dom.minidom.Element.getItemsByUAttrName = \
-					getItemsByUAttrName
+xml.dom.minidom.Element.getResolvedItemsByUAttrName = \
+					getResolvedItemsByUAttrName
 
 #############################################################################
 # CONTEXT								    #

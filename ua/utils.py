@@ -125,7 +125,7 @@ xml.dom.minidom.Element.getItemsByUAttrName = \
 #############################################################################
 #############################################################################
 
-def getResolvedItemsByLAttrName(self, name):
+def getResolvedItemsByLAttrName(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
@@ -144,7 +144,7 @@ xml.dom.minidom.Element.getResolvedItemsByLAttrName = \
 
 #############################################################################
 
-def getResolvedItemsByUAttrName(self, name):
+def getResolvedItemsByUAttrName(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')

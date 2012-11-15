@@ -287,19 +287,10 @@ def resolveVar(ctx, s):
 
 #############################################################################
 
-PROJECT_name_RE = re.compile('\$\([ \t]*PROJECT_name[ \t]*\)')
-PROJECT_NAME_RE = re.compile('\$\([ \t]*PROJECT_NAME[ \t]*\)')
-
-#############################################################################
-
-def process(ctx, name, s):
-	name_lower = name.lower()
-	name_upper = name.upper()
-
-	s = s.strip()
-
-	s = PROJECT_name_RE.sub(name_lower, s)
-	s = PROJECT_NAME_RE.sub(name_upper, s)
+def resolve(ctx, s):
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
+	s = resolveEnv(ctx, s)
 
 	return s
 
@@ -325,6 +316,24 @@ def unprotect(ctx, s):
 
 #############################################################################
 
+PROJECT_name_RE = re.compile('\$\([ \t]*PROJECT_name[ \t]*\)')
+PROJECT_NAME_RE = re.compile('\$\([ \t]*PROJECT_NAME[ \t]*\)')
+
+#############################################################################
+
+def process(ctx, name, s):
+	name_lower = name.lower()
+	name_upper = name.upper()
+
+	s = s.strip()
+
+	s = PROJECT_name_RE.sub(name_lower, s)
+	s = PROJECT_NAME_RE.sub(name_upper, s)
+
+	return s
+
+#############################################################################
+
 def processAndProtect(ctx, name, s):
 
 	return protect(ctx, process(ctx, name, s))
@@ -338,7 +347,7 @@ def processAndUnprotect(ctx, name, s):
 #############################################################################
 
 def buildPaths(ctx, name, s):
-	s = resolveVar(ctx, resolveEnv(ctx, process(ctx, name, s)))
+	s = resolveEnv(ctx, process(ctx, name, s))
 
 	return [os.path.normpath(f).replace('\\', '/') for f in glob.iglob(s)]
 

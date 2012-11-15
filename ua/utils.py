@@ -338,7 +338,7 @@ def processAndUnprotect(ctx, name, s):
 #############################################################################
 
 def buildPaths(ctx, name, s):
-	s = resolveEnv(ctx, process(ctx, name, s))
+	s = resolveVar(ctx, resolveEnv(ctx, process(ctx, name, s)))
 
 	return [os.path.normpath(f).replace('\\', '/') for f in glob.iglob(s)]
 

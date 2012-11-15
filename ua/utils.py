@@ -52,6 +52,47 @@ xml.dom.minidom.Element.getStripedUAttribute = \
 					getStripedUAttribute
 
 #############################################################################
+#############################################################################
+
+def getStripedResolvedIAttribute(self, ctx, name):
+	s = self.getAttribute(name).strip()
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
+	s = resolveVar(ctx, s)
+
+	return s
+
+xml.dom.minidom.Element.getStripedIAttribute = \
+					getStripedResolvedIAttribute
+
+#############################################################################
+
+def getStripedResolvedLAttribute(self, ctx, name):
+	s = self.getAttribute(name).strip()
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
+	s = resolveVar(ctx, s)
+
+	return s.lower()
+
+xml.dom.minidom.Element.getStripedLAttribute = \
+					getStripedResolvedLAttribute
+
+#############################################################################
+
+def getStripedResolvedUAttribute(self, ctx, name):
+	s = self.getAttribute(name).strip()
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
+	s = resolveVar(ctx, s)
+
+	return s.upper()
+
+xml.dom.minidom.Element.getStripedUAttribute = \
+					getStripedResolvedUAttribute
+
+#############################################################################
+#############################################################################
 
 def getItemsByLAttrName(self, name):
 	s = self.getAttribute(name).strip().lower()
@@ -70,6 +111,45 @@ xml.dom.minidom.Element.getItemsByLAttrName = \
 
 def getItemsByUAttrName(self, name):
 	s = self.getAttribute(name).strip().upper()
+
+	if len(s) == 0:
+		result = [                ]
+	else:
+		result = re.split('\W+', s)
+
+	return result
+
+xml.dom.minidom.Element.getItemsByUAttrName = \
+					getItemsByUAttrName
+
+#############################################################################
+#############################################################################
+
+def getResolvedItemsByLAttrName(self, name):
+	s = self.getAttribute(name).strip()
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
+	s = resolveVar(ctx, s)
+	s = s.lower()
+
+	if len(s) == 0:
+		result = [                ]
+	else:
+		result = re.split('\W+', s)
+
+	return result
+
+xml.dom.minidom.Element.getItemsByLAttrName = \
+					getItemsByLAttrName
+
+#############################################################################
+
+def getResolvedItemsByUAttrName(self, name):
+	s = self.getAttribute(name).strip()
+	s = s.replace('!(', '$(')
+	s = s.replace('!{', '${')
+	s = resolveVar(ctx, s)
+	s = s.upper()
 
 	if len(s) == 0:
 		result = [                ]
@@ -282,15 +362,6 @@ def resolveVar(ctx, s):
 		s = s[: m.start()] + val + s[m.end():]
 
 		#############################################################
-
-	return s
-
-#############################################################################
-
-def resolve(ctx, s):
-	s = s.replace('!(', '$(')
-	s = s.replace('!{', '${')
-	s = resolveEnv(ctx, s)
 
 	return s
 

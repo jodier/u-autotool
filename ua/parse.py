@@ -311,8 +311,8 @@ def projectNodes(ctx, projects):
 				opt = ua.utils.processAndProtect(ctx, name, node1.getAttribute('opt'))
 				inc = ua.utils.processAndProtect(ctx, name, node1.getAttribute('inc'))
 
-				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
 
 				#############################################
 
@@ -354,8 +354,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'opt':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
 
 				dic = {
 					'value': value,
@@ -372,8 +372,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'inc':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
 
 				dic = {
 					'value': value,
@@ -390,8 +390,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'obj':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
 
 				dic = {
 					'value': value,
@@ -408,8 +408,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'lib':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = node1.getItemsByUAttrName('targets')
+				fuses = node1.getItemsByLAttrName('fuses')
 
 				dic = {
 					'value': value,
@@ -506,8 +506,8 @@ def projectNodes(ctx, projects):
 
 		#############################################################
 
-		targets = ua.utils.resolve(ctx, project.getItemsByUAttrName('targets'))
-		fuses = ua.utils.resolve(ctx, project.getItemsByLAttrName('fuses'))
+		targets = project.getItemsByUAttrName('targets')
+		fuses = project.getItemsByLAttrName('fuses')
 
 		#############################################################
 
@@ -566,8 +566,8 @@ def linkNodes(ctx, links):
 		base = os.path.basename(url).replace('\\', '/')
 		rid = os.path.relpath2(dir).replace('\\', '/')
 
-		targets = ua.utils.resolve(ctx, link.getItemsByUAttrName('targets'))
-		fuses = ua.utils.resolve(ctx, link.getItemsByLAttrName('fuses'))
+		targets = link.getItemsByUAttrName('targets')
+		fuses = link.getItemsByLAttrName('fuses')
 
 		#############################################################
 

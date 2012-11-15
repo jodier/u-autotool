@@ -58,7 +58,7 @@ def getStripedResolvedIAttribute(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
-	s = resolveVar(ctx, s)
+	s = resolveEnv(ctx, s)
 
 	return s
 
@@ -71,7 +71,7 @@ def getStripedResolvedLAttribute(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
-	s = resolveVar(ctx, s)
+	s = resolveEnv(ctx, s)
 
 	return s.lower()
 
@@ -84,7 +84,7 @@ def getStripedResolvedUAttribute(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
-	s = resolveVar(ctx, s)
+	s = resolveEnv(ctx, s)
 
 	return s.upper()
 
@@ -129,7 +129,7 @@ def getResolvedItemsByLAttrName(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
-	s = resolveVar(ctx, s)
+	s = resolveEnv(ctx, s)
 	s = s.lower()
 
 	if len(s) == 0:
@@ -148,7 +148,7 @@ def getResolvedItemsByUAttrName(self, ctx, name):
 	s = self.getAttribute(name).strip()
 	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
-	s = resolveVar(ctx, s)
+	s = resolveEnv(ctx, s)
 	s = s.upper()
 
 	if len(s) == 0:

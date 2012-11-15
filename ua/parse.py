@@ -53,8 +53,8 @@ def fuseNodes(ctx, fuses):
 
 				#############################################
 
-				name = resolve(ctx, node1.getStripedLAttribute('name'))
-				opt = resolve(ctx, node1.getStripedIAttribute('opt'))
+				name = ua.utils.resolve(ctx, node1.getStripedLAttribute('name'))
+				opt = ua.utils.resolve(ctx, node1.getStripedIAttribute('opt'))
 
 				#############################################
 
@@ -78,7 +78,7 @@ def fuseNodes(ctx, fuses):
 
 		#############################################################
 
-		name = resolve(ctx, fuse.getStripedIAttribute('name'))
+		name = ua.utils.resolve(ctx, fuse.getStripedIAttribute('name'))
 		default = fuse.getStripedLAttribute('default')
 		enabled = fuse.getStripedLAttribute('enabled')
 		help = fuse.getStripedIAttribute('help')
@@ -115,9 +115,9 @@ def depNodes(ctx, deps):
 	for dep in deps:
 		#############################################################
 
-		name = resolve(ctx, dep.getStripedLAttribute('name'))
-		vers = resolve(ctx, dep.getStripedLAttribute('vers'))
-		lang = resolve(ctx, dep.getStripedLAttribute('lang'))
+		name = ua.utils.resolve(ctx, dep.getStripedLAttribute('name'))
+		vers = ua.utils.resolve(ctx, dep.getStripedLAttribute('vers'))
+		lang = ua.utils.resolve(ctx, dep.getStripedLAttribute('lang'))
 
 		if not ua.utils.COMPS.has_key(lang):
 			ua.utils.ooops(ctx, 'In dep `%s`: unkwnown language: `%s`' % (name, lang))
@@ -235,9 +235,9 @@ def projectNodes(ctx, projects):
 	for project in projects:
 		#############################################################
 
-		name = resolve(ctx, project.getStripedIAttribute('name'))
-		type = resolve(ctx, project.getStripedUAttribute('type'))
-		link = resolve(ctx, project.getStripedUAttribute('link'))
+		name = ua.utils.resolve(ctx, project.getStripedIAttribute('name'))
+		type = ua.utils.resolve(ctx, project.getStripedUAttribute('type'))
+		link = ua.utils.resolve(ctx, project.getStripedUAttribute('link'))
 
 		#############################################################
 
@@ -311,8 +311,8 @@ def projectNodes(ctx, projects):
 				opt = ua.utils.processAndProtect(ctx, name, node1.getAttribute('opt'))
 				inc = ua.utils.processAndProtect(ctx, name, node1.getAttribute('inc'))
 
-				targets = resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
+				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
 
 				#############################################
 
@@ -338,9 +338,9 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'use':
-				dep = resolve(ctx, node1.getStripedLAttribute('name'))
+				dep = ua.utils.resolve(ctx, node1.getStripedLAttribute('name'))
 
-				if resolve(ctx, node1.getStripedLAttribute('optional')) == 'yes':
+				if ua.utils.resolve(ctx, node1.getStripedLAttribute('optional')) == 'yes':
 					ctx.option_deps.add(dep)
 				else:
 					ctx.needed_deps.add(dep)
@@ -354,8 +354,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'opt':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
+				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
 
 				dic = {
 					'value': value,
@@ -372,8 +372,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'inc':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
+				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
 
 				dic = {
 					'value': value,
@@ -390,8 +390,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'obj':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
+				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
 
 				dic = {
 					'value': value,
@@ -408,8 +408,8 @@ def projectNodes(ctx, projects):
 			if node1.nodeName == 'lib':
 				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = resolve(ctx, node1.getItemsByUAttrName('targets'))
-				fuses = resolve(ctx, node1.getItemsByLAttrName('fuses'))
+				targets = ua.utils.resolve(ctx, node1.getItemsByUAttrName('targets'))
+				fuses = ua.utils.resolve(ctx, node1.getItemsByLAttrName('fuses'))
 
 				dic = {
 					'value': value,
@@ -506,8 +506,8 @@ def projectNodes(ctx, projects):
 
 		#############################################################
 
-		targets = resolve(ctx, project.getItemsByUAttrName('targets'))
-		fuses = resolve(ctx, project.getItemsByLAttrName('fuses'))
+		targets = ua.utils.resolve(ctx, project.getItemsByUAttrName('targets'))
+		fuses = ua.utils.resolve(ctx, project.getItemsByLAttrName('fuses'))
 
 		#############################################################
 
@@ -566,8 +566,8 @@ def linkNodes(ctx, links):
 		base = os.path.basename(url).replace('\\', '/')
 		rid = os.path.relpath2(dir).replace('\\', '/')
 
-		targets = resolve(ctx, link.getItemsByUAttrName('targets'))
-		fuses = resolve(ctx, link.getItemsByLAttrName('fuses'))
+		targets = ua.utils.resolve(ctx, link.getItemsByUAttrName('targets'))
+		fuses = ua.utils.resolve(ctx, link.getItemsByLAttrName('fuses'))
 
 		#############################################################
 

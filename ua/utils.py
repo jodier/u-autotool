@@ -29,72 +29,67 @@ import os, re, sys, glob, subprocess, xml.dom.minidom
 # XML									    #
 #############################################################################
 
-def getStripedIAttribute(self, name):
+def getStripedIdentAttribute(self, name):
 	return self.getAttribute(name).strip()
 
-xml.dom.minidom.Element.getStripedIAttribute = \
-					getStripedIAttribute
+xml.dom.minidom.Element.getStripedIdentAttribute = \
+					getStripedIdentAttribute
 
 #############################################################################
 
-def getStripedLAttribute(self, name):
+def getStripedLowerAttribute(self, name):
 	return self.getAttribute(name).strip().lower()
 
-xml.dom.minidom.Element.getStripedLAttribute = \
-					getStripedLAttribute
+xml.dom.minidom.Element.getStripedLowerAttribute = \
+					getStripedLowerAttribute
 
 #############################################################################
 
-def getStripedUAttribute(self, name):
+def getStripedUpperAttribute(self, name):
 	return self.getAttribute(name).strip().upper()
 
-xml.dom.minidom.Element.getStripedUAttribute = \
-					getStripedUAttribute
+xml.dom.minidom.Element.getStripedUpperAttribute = \
+					getStripedUpperAttribute
 
 #############################################################################
-#############################################################################
 
-def getStripedResolvedIAttribute(self, ctx, name):
+def getStripedResolvedIdentAttribute(self, ctx, name):
 	s = self.getAttribute(name).strip()
-	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
 	s = resolveEnv(ctx, s)
 
 	return s
 
-xml.dom.minidom.Element.getStripedResolvedIAttribute = \
-					getStripedResolvedIAttribute
+xml.dom.minidom.Element.getStripedResolvedIdentAttribute = \
+					getStripedResolvedIdentAttribute
 
 #############################################################################
 
-def getStripedResolvedLAttribute(self, ctx, name):
+def getStripedResolvedLowerAttribute(self, ctx, name):
 	s = self.getAttribute(name).strip()
-	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
 	s = resolveEnv(ctx, s)
 
 	return s.lower()
 
-xml.dom.minidom.Element.getStripedResolvedLAttribute = \
-					getStripedResolvedLAttribute
+xml.dom.minidom.Element.getStripedResolvedLowerAttribute = \
+					getStripedResolvedLowerAttribute
 
 #############################################################################
 
-def getStripedResolvedUAttribute(self, ctx, name):
+def getStripedResolvedUpperAttribute(self, ctx, name):
 	s = self.getAttribute(name).strip()
-	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
 	s = resolveEnv(ctx, s)
 
 	return s.upper()
 
-xml.dom.minidom.Element.getStripedResolvedUAttribute = \
-					getStripedResolvedUAttribute
+xml.dom.minidom.Element.getStripedResolvedUpperAttribute = \
+					getStripedResolvedUpperAttribute
 
 #############################################################################
-#############################################################################
 
-def getItemsByLAttrName(self, name):
+def getLowerItemsByAttrName(self, name):
 	s = self.getAttribute(name).strip().lower()
 
 	if len(s) == 0:
@@ -104,12 +99,12 @@ def getItemsByLAttrName(self, name):
 
 	return result
 
-xml.dom.minidom.Element.getItemsByLAttrName = \
-					getItemsByLAttrName
+xml.dom.minidom.Element.getLowerItemsByAttrName = \
+					getLowerItemsByAttrName
 
 #############################################################################
 
-def getItemsByUAttrName(self, name):
+def getUpperItemsByAttrName(self, name):
 	s = self.getAttribute(name).strip().upper()
 
 	if len(s) == 0:
@@ -119,15 +114,13 @@ def getItemsByUAttrName(self, name):
 
 	return result
 
-xml.dom.minidom.Element.getItemsByUAttrName = \
-					getItemsByUAttrName
+xml.dom.minidom.Element.getUpperItemsByAttrName = \
+					getUpperItemsByAttrName
 
 #############################################################################
-#############################################################################
 
-def getResolvedItemsByLAttrName(self, ctx, name):
+def getResolvedLowerItemsByAttrName(self, ctx, name):
 	s = self.getAttribute(name).strip()
-	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
 	s = resolveEnv(ctx, s)
 	s = s.lower()
@@ -139,14 +132,13 @@ def getResolvedItemsByLAttrName(self, ctx, name):
 
 	return result
 
-xml.dom.minidom.Element.getResolvedItemsByLAttrName = \
-					getResolvedItemsByLAttrName
+xml.dom.minidom.Element.getResolvedLowerItemsByAttrName = \
+					getResolvedLowerItemsByAttrName
 
 #############################################################################
 
-def getResolvedItemsByUAttrName(self, ctx, name):
+def getResolvedUpperItemsByAttrName(self, ctx, name):
 	s = self.getAttribute(name).strip()
-	s = s.replace('!(', '$(')
 	s = s.replace('!{', '${')
 	s = resolveEnv(ctx, s)
 	s = s.upper()
@@ -158,8 +150,8 @@ def getResolvedItemsByUAttrName(self, ctx, name):
 
 	return result
 
-xml.dom.minidom.Element.getResolvedItemsByUAttrName = \
-					getResolvedItemsByUAttrName
+xml.dom.minidom.Element.getResolvedUpperItemsByAttrName = \
+					getResolvedUpperItemsByAttrName
 
 #############################################################################
 # CONTEXT								    #
@@ -234,7 +226,7 @@ class context:
 		# OTHER							    #
 		#############################################################
 
-		self.debug = '-O0'
+		self.debug = '-O2'
 
 		self.verbose = False
 
@@ -300,10 +292,11 @@ UA_ENVIRON = {
 	'SRC': '${OS_SRC}',
 }
 
-#############################################################################
-
 ENV_RE = re.compile('\$\{[ \t]*([^ \t\}]+)[ \t]*\}')
 VAR_RE = re.compile('\$\([ \t]*([^ \t\)]+)[ \t]*\)')
+
+PROJECT_name_RE = re.compile('\$\([ \t]*PROJECT_name[ \t]*\)')
+PROJECT_NAME_RE = re.compile('\$\([ \t]*PROJECT_NAME[ \t]*\)')
 
 #############################################################################
 
@@ -329,7 +322,7 @@ def resolveEnv(ctx, s):
 
 		#############################################################
 
-		s = s[: m.start()] + val + s[m.end():]
+		s = s[: m.start()] + val + s[m.end(): ]
 
 		#############################################################
 
@@ -359,7 +352,7 @@ def resolveVar(ctx, s):
 
 		#############################################################
 
-		s = s[: m.start()] + val + s[m.end():]
+		s = s[: m.start()] + val + s[m.end(): ]
 
 		#############################################################
 
@@ -387,12 +380,7 @@ def unprotect(ctx, s):
 
 #############################################################################
 
-PROJECT_name_RE = re.compile('\$\([ \t]*PROJECT_name[ \t]*\)')
-PROJECT_NAME_RE = re.compile('\$\([ \t]*PROJECT_NAME[ \t]*\)')
-
-#############################################################################
-
-def process(ctx, name, s):
+def patch(ctx, name, s):
 	name_lower = name.lower()
 	name_upper = name.upper()
 
@@ -405,20 +393,25 @@ def process(ctx, name, s):
 
 #############################################################################
 
-def processAndProtect(ctx, name, s):
+def patchAndProtect(ctx, name, s):
+	s = patch(ctx, name, s)
+	s = protect(ctx, s)
 
-	return protect(ctx, process(ctx, name, s))
+	return s
 
 #############################################################################
 
-def processAndUnprotect(ctx, name, s):
+def patchAndUnprotect(ctx, name, s):
+	s = patch(ctx, name, s)
+	s = unprotect(ctx, s)
 
-	return unprotect(ctx, process(ctx, name, s))
+	return s
 
 #############################################################################
 
 def buildPaths(ctx, name, s):
-	s = resolveEnv(ctx, process(ctx, name, s))
+	s = patch(ctx, name, s)
+	s = resolveEnv(ctx, s)
 
 	return [os.path.normpath(f).replace('\\', '/') for f in glob.iglob(s)]
 
@@ -482,6 +475,7 @@ def fatal(ctx, msg):
 #############################################################################
 
 def status(ctx):
+
 	if ctx.debug_nr > 0\
 	   or		\
 	   ctx.ooops_nr > 0\
@@ -490,14 +484,20 @@ def status(ctx):
 
 		print('')
 
-		if ctx.debug_nr > 0:
+		if   ctx.debug_nr > 1:
 			print('There are %d \'debug\' messages !' % ctx.debug_nr)
+		elif ctx.debug_nr > 0:
+			print('There is %d \'debug\' message !' % ctx.debug_nr)
 
-		if ctx.ooops_nr > 0:
+		if   ctx.ooops_nr > 1:
 			print('There are %d \'ooops\' messages !' % ctx.ooops_nr)
+		elif ctx.ooops_nr > 0:
+			print('There is %d \'ooops\' message !' % ctx.ooops_nr)
 
-		if ctx.error_nr > 0:
+		if   ctx.error_nr > 1:
 			print('There are %d \'error\' messages !' % ctx.error_nr)
+		elif ctx.error_nr > 0:
+			print('There is %d \'error\' message !' % ctx.error_nr)
 
 #############################################################################
 

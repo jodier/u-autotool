@@ -53,8 +53,9 @@ def fuseNodes(ctx, fuses):
 
 				#############################################
 
-				name = node1.getStripedResolvedLAttribute(ctx, 'name')
-				opt = node1.getStripedResolvedIAttribute(ctx, 'opt')
+				name = node1.getStripedResolvedLowerAttribute(ctx, 'name')
+
+				opt = ua.utils.protect(ctx, node1.getStripedIdentAttribute('opt'))
 
 				#############################################
 
@@ -78,10 +79,10 @@ def fuseNodes(ctx, fuses):
 
 		#############################################################
 
-		name = fuse.getStripedResolvedIAttribute(ctx, 'name')
-		default = fuse.getStripedLAttribute('default')
-		enabled = fuse.getStripedLAttribute('enabled')
-		help = fuse.getStripedIAttribute('help')
+		name = fuse.getStripedResolvedIdentAttribute(ctx, 'name')
+		default = fuse.getStripedLowerAttribute('default')
+		enabled = fuse.getStripedLowerAttribute('enabled')
+		help = fuse.getStripedIdentAttribute('help')
 
 		#############################################################
 
@@ -115,9 +116,9 @@ def depNodes(ctx, deps):
 	for dep in deps:
 		#############################################################
 
-		name = dep.getStripedResolvedLAttribute(ctx, 'name')
-		vers = dep.getStripedResolvedLAttribute(ctx, 'vers')
-		lang = dep.getStripedResolvedLAttribute(ctx, 'lang')
+		name = dep.getStripedResolvedLowerAttribute(ctx, 'name')
+		vers = dep.getStripedResolvedLowerAttribute(ctx, 'vers')
+		lang = dep.getStripedResolvedLowerAttribute(ctx, 'lang')
 
 		if not ua.utils.COMPS.has_key(lang):
 			ua.utils.ooops(ctx, 'In dep `%s`: unkwnown language: `%s`' % (name, lang))
@@ -138,7 +139,7 @@ def depNodes(ctx, deps):
 
 			if node1.nodeName == 'desc':
 
-				for target in node1.getItemsByUAttrName('targets'):
+				for target in node1.getUpperItemsByAttrName('targets'):
 
 					#####################################
 					ctx.build_targets.add(target)
@@ -162,7 +163,7 @@ def depNodes(ctx, deps):
 						#############################
 
 						if node2.nodeName == 'opt':
-							value = node2.getStripedIAttribute('value')
+							value = node2.getStripedIdentAttribute('value')
 							opt          += ' ' + ua.utils.protect(ctx, value)
 							opt_resolved += ' ' + ua.utils.unprotect(ctx, value)
 
@@ -171,7 +172,7 @@ def depNodes(ctx, deps):
 						#############################
 
 						if node2.nodeName == 'inc':
-							value = node2.getStripedIAttribute('value')
+							value = node2.getStripedIdentAttribute('value')
 							inc          += ' ' + ua.utils.protect(ctx, value)
 							inc_resolved += ' ' + ua.utils.unprotect(ctx, value)
 
@@ -180,7 +181,7 @@ def depNodes(ctx, deps):
 						#############################
 
 						if node2.nodeName == 'lib':
-							value = node2.getStripedIAttribute('value')
+							value = node2.getStripedIdentAttribute('value')
 							lib          += ' ' + ua.utils.protect(ctx, value)
 							lib_resolved += ' ' + ua.utils.unprotect(ctx, value)
 
@@ -235,9 +236,9 @@ def projectNodes(ctx, projects):
 	for project in projects:
 		#############################################################
 
-		name = project.getStripedResolvedIAttribute(ctx, 'name')
-		type = project.getStripedResolvedUAttribute(ctx, 'type')
-		link = project.getStripedResolvedUAttribute(ctx, 'link')
+		name = project.getStripedResolvedIdentAttribute(ctx, 'name')
+		type = project.getStripedResolvedUpperAttribute(ctx, 'type')
+		link = project.getStripedResolvedUpperAttribute(ctx, 'link')
 
 		#############################################################
 
@@ -308,11 +309,11 @@ def projectNodes(ctx, projects):
 
 				paths = ua.utils.buildPaths(ctx, name, expr)
 
-				opt = ua.utils.processAndProtect(ctx, name, node1.getAttribute('opt'))
-				inc = ua.utils.processAndProtect(ctx, name, node1.getAttribute('inc'))
+				opt = ua.utils.patchAndProtect(ctx, name, node1.getAttribute('opt'))
+				inc = ua.utils.patchAndProtect(ctx, name, node1.getAttribute('inc'))
 
-				targets = node1.getResolvedItemsByUAttrName(ctx, 'targets')
-				fuses = node1.getResolvedItemsByLAttrName(ctx, 'fuses')
+				targets = node1.getResolvedUpperItemsByAttrName(ctx, 'targets')
+				fuses = node1.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 				#############################################
 
@@ -338,9 +339,9 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'use':
-				dep = node1.getStripedResolvedLAttribute(ctx, 'name')
+				dep = node1.getStripedResolvedLowerAttribute(ctx, 'name')
 
-				if node1.getStripedResolvedLAttribute(ctx, 'optional') == 'yes':
+				if node1.getStripedResolvedLowerAttribute(ctx, 'optional') == 'yes':
 					ctx.option_deps.add(dep)
 				else:
 					ctx.needed_deps.add(dep)
@@ -352,10 +353,10 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'opt':
-				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.patchAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = node1.getResolvedItemsByUAttrName(ctx, 'targets')
-				fuses = node1.getResolvedItemsByLAttrName(ctx, 'fuses')
+				targets = node1.getResolvedUpperItemsByAttrName(ctx, 'targets')
+				fuses = node1.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 				dic = {
 					'value': value,
@@ -370,10 +371,10 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'inc':
-				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.patchAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = node1.getResolvedItemsByUAttrName(ctx, 'targets')
-				fuses = node1.getResolvedItemsByLAttrName(ctx, 'fuses')
+				targets = node1.getResolvedUpperItemsByAttrName(ctx, 'targets')
+				fuses = node1.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 				dic = {
 					'value': value,
@@ -388,10 +389,10 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'obj':
-				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.patchAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = node1.getResolvedItemsByUAttrName(ctx, 'targets')
-				fuses = node1.getResolvedItemsByLAttrName(ctx, 'fuses')
+				targets = node1.getResolvedUpperItemsByAttrName(ctx, 'targets')
+				fuses = node1.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 				dic = {
 					'value': value,
@@ -406,10 +407,10 @@ def projectNodes(ctx, projects):
 			#####################################################
 
 			if node1.nodeName == 'lib':
-				value = ua.utils.processAndProtect(ctx, name, node1.getAttribute('value'))
+				value = ua.utils.patchAndProtect(ctx, name, node1.getAttribute('value'))
 
-				targets = node1.getResolvedItemsByUAttrName(ctx, 'targets')
-				fuses = node1.getResolvedItemsByLAttrName(ctx, 'fuses')
+				targets = node1.getResolvedUpperItemsByAttrName(ctx, 'targets')
+				fuses = node1.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 				dic = {
 					'value': value,
@@ -428,7 +429,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_BUILD.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						PRE_BUILD.append('\t' + ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_BUILD					    #
@@ -439,7 +440,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_BUILD.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						POST_BUILD.append('\t' + ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# PRE_INSTALL					    #
@@ -450,7 +451,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_INSTALL.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						PRE_INSTALL.append('\t' + ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_INSTALL					    #
@@ -461,7 +462,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_INSTALL.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						POST_INSTALL.append('\t' + ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# PRE_CLEAN					    #
@@ -472,7 +473,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						PRE_CLEAN.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						PRE_CLEAN.append('\t' + ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# POST_CLEAN					    #
@@ -483,7 +484,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						POST_CLEAN.append('\t' + ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						POST_CLEAN.append('\t' + ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 			#####################################################
 			# EXTRAS					    #
@@ -494,7 +495,7 @@ def projectNodes(ctx, projects):
 				for node2 in node1.childNodes:
 
 					if node2.nodeType == 0x004:
-						EXTRAS.append(ua.utils.processAndProtect(ctx, name, node2.nodeValue))
+						EXTRAS.append(ua.utils.patchAndProtect(ctx, name, node2.nodeValue))
 
 		#############################################################
 
@@ -506,8 +507,8 @@ def projectNodes(ctx, projects):
 
 		#############################################################
 
-		targets = project.getResolvedItemsByUAttrName(ctx, 'targets')
-		fuses = project.getResolvedItemsByLAttrName(ctx, 'fuses')
+		targets = project.getResolvedUpperItemsByAttrName(ctx, 'targets')
+		fuses = project.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 		#############################################################
 
@@ -558,7 +559,7 @@ def linkNodes(ctx, links):
 
 		#############################################################
 
-		url = ua.utils.resolveEnv(ctx, link.getStripedIAttribute('url'))
+		url = link.getStripedResolvedIdentAttribute(ctx, 'url')
 
 		#############################################################
 
@@ -566,8 +567,8 @@ def linkNodes(ctx, links):
 		base = os.path.basename(url).replace('\\', '/')
 		rid = os.path.relpath2(dir).replace('\\', '/')
 
-		targets = link.getResolvedItemsByUAttrName(ctx, 'targets')
-		fuses = link.getResolvedItemsByLAttrName(ctx, 'fuses')
+		targets = link.getResolvedUpperItemsByAttrName(ctx, 'targets')
+		fuses = link.getResolvedLowerItemsByAttrName(ctx, 'fuses')
 
 		#############################################################
 

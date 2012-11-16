@@ -73,7 +73,8 @@ def makedeps(ctx, L, M, old_fileName, new_fileName):
 
 			if makedeps(ctx, L, M, old_fileName, new_fileName) != False:
 
-				L.append('\\$(SRC_PREFIX)/%s' % new_fileName.replace('\\', '/'))
+				L.append('\\$(SRC_PREFIX)/%s' % \
+						new_fileName.replace('\\', '/'))
 
 	#####################################################################
 
@@ -94,16 +95,26 @@ def buildRules(ctx, NAME, src, opt, inc, targets, fuses):
 
 	#####################################################################
 
-	obj = ('\\$(PWD_PREFIX)/%s/%s_%s%s') % (dirname.replace('\\', '/'), NAME, shortname, EXTENSION)
+	if len(dirname) > 0:
+		obj = ('\\$(PWD_PREFIX)/%s/%s_%s%s') % (dirname.replace('\\', '/'), NAME, shortname, EXTENSION)
 
-	src = ('\\$(SRC_PREFIX)/%s/'+'%s%s') % (dirname.replace('\\', '/'),       shortname, extension)
+		src = ('\\$(SRC_PREFIX)/%s/'+'%s%s') % (dirname.replace('\\', '/'),       shortname, extension)
+
+		fname = dirname + os.path.sep + basename
+
+	else:
+		obj = ('\\$(PWD_PREFIX)/%s_%s%s') % (NAME, shortname, EXTENSION)
+
+		src = ('\\$(SRC_PREFIX)/'+'%s%s') % (      shortname, extension)
+
+		fname = basename
 
 	#####################################################################
 
 	L = [src]
 	M = [   ]
 
-	makedeps(ctx, L, M, 'none', dirname + os.path.sep + basename)
+	makedeps(ctx, L, M, 'none', fname)
 
 	rules = '%s: \\\\\n %s\n' % (obj, ' \\\\\n '.join(L))
 

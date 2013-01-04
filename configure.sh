@@ -242,7 +242,11 @@ do
     --project-suffix=*)
       PROJECT_SUFFIX=$arg
       ;;
-%s    -h | --help)
+%s    --enable-*)
+      ;;
+    --disable-*)
+      ;;
+    -h | --help)
       configure_help
       ;;
     *)

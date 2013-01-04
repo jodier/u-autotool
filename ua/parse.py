@@ -139,7 +139,7 @@ def depNodes(ctx, deps):
 
 			if node1.nodeName == 'desc':
 
-				for target in node1.getUpperItemsByAttrName('targets'):
+				for target in node1.getResolvedUpperItemsByAttrName(ctx, 'targets'):
 
 					#####################################
 					ctx.build_targets.add(target)
@@ -325,6 +325,7 @@ def projectNodes(ctx, projects):
 							'path': path,
 							'opt': opt,
 							'inc': inc,
+
 							'targets': targets,
 							'fuses': fuses,
 						}
@@ -360,6 +361,7 @@ def projectNodes(ctx, projects):
 
 				dic = {
 					'value': value,
+
 					'targets': targets,
 					'fuses': fuses,
 				}
@@ -378,6 +380,7 @@ def projectNodes(ctx, projects):
 
 				dic = {
 					'value': value,
+
 					'targets': targets,
 					'fuses': fuses,
 				}
@@ -396,6 +399,7 @@ def projectNodes(ctx, projects):
 
 				dic = {
 					'value': value,
+
 					'targets': targets,
 					'fuses': fuses,
 				}
@@ -414,6 +418,7 @@ def projectNodes(ctx, projects):
 
 				dic = {
 					'value': value,
+
 					'targets': targets,
 					'fuses': fuses,
 				}

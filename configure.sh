@@ -73,87 +73,91 @@ BISON='bison -yd'
 TAR='tar'
 
 #############################################################################
-
-cat > /tmp/businfo_$$.c << EOF
-
-struct __foo1_s
-{
-	char magic1[8];
-	void *x;
-	char magic2[8];
-
-} __attribute__((packed)) foo1 = {
-	{'b', 'u', 's', 's', 'i', 'z', 'e', 'B'}
-	,
-	(void *) 0xFFFFFFFFU
-	,
-	{'b', 'u', 's', 's', 'i', 'z', 'e', 'E'}
-};
-
-struct __foo2_s
-{
-	char magic1[9];
-	unsigned int x;
-	char magic2[9];
-
-} __attribute__((packed)) foo2 = {
-	{'b', 'u', 's', 'o', 'r', 'd', 'e', 'r', 'B'}
-	,
-	(unsigned int) 0x04030201U
-	,
-	{'b', 'u', 's', 'o', 'r', 'd', 'e', 'r', 'E'}
-};
-
-EOF
-
+#
+#cat > /tmp/businfo_$$.c << EOF
+#
+#struct __foo1_s
+#{
+#	char magic1[8];
+#	void *x;
+#	char magic2[8];
+#
+#} __attribute__((packed)) foo1 = {
+#	{'b', 'u', 's', 's', 'i', 'z', 'e', 'B'}
+#	,
+#	(void *) 0xFFFFFFFFU
+#	,
+#	{'b', 'u', 's', 's', 'i', 'z', 'e', 'E'}
+#};
+#
+#struct __foo2_s
+#{
+#	char magic1[9];
+#	unsigned int x;
+#	char magic2[9];
+#
+#} __attribute__((packed)) foo2 = {
+#	{'b', 'u', 's', 'o', 'r', 'd', 'e', 'r', 'B'}
+#	,
+#	(unsigned int) 0x04030201U
+#	,
+#	{'b', 'u', 's', 'o', 'r', 'd', 'e', 'r', 'E'}
+#};
+#
+#EOF
+#
 #############################################################################
-(
-  $GCC -c -o /tmp/businfo_$$.o /tmp/businfo_$$.c
+#(
+#  $GCC -c -o /tmp/businfo_$$.o /tmp/businfo_$$.c
+#
+#) || exit 1
+#
+#DATA=$(od -An -t x1 -v /tmp/businfo_$$.o)
+#DATA=${DATA// /}
+#DATA=${DATA//
+#/}
+#
+#BUSSIZE=$(awk -v DATA="$DATA" 'BEGIN {
+#	x = index(DATA, "62757373697a6542"); // bussizeB
+#	y = index(DATA, "62757373697a6545"); // bussizeE
+#
+#	print 4 * (y - x - 16);
+#}')
+#
+#BUSORDER=$(awk -v DATA="$DATA" 'BEGIN {
+#	x = index(DATA, "6275736f7264657242"); // busorderB
+#	y = index(DATA, "6275736f7264657245"); // busorderE
+#
+#	print substr(DATA, x + 18, y - x - 18);
+#}')
+#
+#if [[ $BUSSIZE != 8 && $BUSSIZE != 16 && $BUSSIZE != 32 && $BUSSIZE != 64 ]]
+#then
+#  echo 'Invalid pointer size'
+#
+#  exit 1
+#fi
+#
+#case $BUSORDER
+#in
+#  *01020304)
+#    OS_BUSORDER=__IS_LIT_ENDIAN
+#    ;;
+#  *04030201)
+#    OS_BUSORDER=__IS_BIG_ENDIAN
+#    ;;
+#  *)
+#    echo 'Invalid endianness'
+#
+#    exit 1
+#esac
+#
+#rm /tmp/businfo_$$.c
+#rm /tmp/businfo_$$.o
 
-) || exit 1
+BUSSIZE=32
 
-DATA=$(od -An -t x1 -v /tmp/businfo_$$.o)
-DATA=${DATA// /}
-DATA=${DATA//
-/}
-
-BUSSIZE=$(awk -v DATA="$DATA" 'BEGIN {
-	x = index(DATA, "62757373697a6542"); // bussizeB
-	y = index(DATA, "62757373697a6545"); // bussizeE
-
-	print 4 * (y - x - 16);
-}')
-
-BUSORDER=$(awk -v DATA="$DATA" 'BEGIN {
-	x = index(DATA, "6275736f7264657242"); // busorderB
-	y = index(DATA, "6275736f7264657245"); // busorderE
-
-	print substr(DATA, x + 18, y - x - 18);
-}')
-
-if [[ $BUSSIZE != 8 && $BUSSIZE != 16 && $BUSSIZE != 32 && $BUSSIZE != 64 ]]
-then
-  echo 'Invalid pointer size'
-
-  exit 1
-fi
-
-case $BUSORDER
-in
-  *01020304)
-    OS_BUSORDER=__IS_LIT_ENDIAN
-    ;;
-  *04030201)
-    OS_BUSORDER=__IS_BIG_ENDIAN
-    ;;
-  *)
-    echo 'Invalid endianness'
-
-    exit 1
-esac
-
-rm /tmp/businfo_$$.c
-rm /tmp/businfo_$$.o
+OS_BUSORDER=__IS_LIT_ENDIAN
 
 #############################################################################
 

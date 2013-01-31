@@ -226,20 +226,20 @@ def entry_point(argv):
 
 	if O is None:
 		if   not options.gprof is None:
-			ctx.debug = '-O0 -g -p'
+			ctx.debug = '-O0 -ggdb -p'
 			ctx.cmdline += ' --gprof'
 		elif not options.debug is None:
-			ctx.debug = '-O0 -g'
+			ctx.debug = '-O0 -ggdb'
 			ctx.cmdline += ' --debug'
 		else:
 			ctx.debug = '-O2'
 			ctx.cmdline += ' -O2'
 	else:
 		if   not options.gprof is None:
-			ctx.debug = '-O%s -g -p' % O
+			ctx.debug = '-O%s -ggdb -p' % O
 			ctx.cmdline += ' --gprof'
 		elif not options.debug is None:
-			ctx.debug = '-O%s -g' % O
+			ctx.debug = '-O%s -ggdb' % O
 			ctx.cmdline += ' --debug'
 		else:
 			ctx.debug = '-O%s' % O

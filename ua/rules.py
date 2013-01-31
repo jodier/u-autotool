@@ -45,7 +45,7 @@ def makedeps(ctx, L, M, old_fileName, new_fileName):
 		lines = fp.readlines()
 
 	except IOError:
-		ua.utils.ooops(ctx, 'From `%s`, could not open file `%s`' % (old_fileName, new_fileName))
+		#ua.utils.ooops(ctx, 'From `%s`, could not open file `%s`' % (old_fileName, new_fileName))
 
 		return False
 

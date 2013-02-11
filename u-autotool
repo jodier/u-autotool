@@ -232,8 +232,8 @@ def entry_point(argv):
 			ctx.debug = '-O0 -g3 -gdwarf-2'
 			ctx.cmdline += ' --debug'
 		else:
-			ctx.debug = '-O2'
-			ctx.cmdline += ' -O2'
+			ctx.debug = '-O3'
+			ctx.cmdline += ' -O3'
 	else:
 		if   not options.gprof is None:
 			ctx.debug = '-O%s -g3 -gdwarf-2 -p' % O
